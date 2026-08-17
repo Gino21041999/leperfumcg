@@ -194,7 +194,7 @@ const editUserId = document.getElementById('editUserId');
 let currentImageData = '';
 
 // Check if already logged in
-if (sessionStorage.getItem('admin_logged_in')) {
+if (localStorage.getItem('admin_logged_in')) {
     showAdminPanel();
 }
 
@@ -206,8 +206,8 @@ loginForm.addEventListener('submit', function(e) {
     
     const user = loginUser(email, password);
     if (user) {
-        sessionStorage.setItem('admin_logged_in', 'true');
-        sessionStorage.setItem('current_user', JSON.stringify(user));
+        localStorage.setItem('admin_logged_in', 'true');
+        localStorage.setItem('current_user', JSON.stringify(user));
         showAdminPanel();
     } else {
         alert('Correo o contraseña incorrectos');
@@ -228,8 +228,8 @@ function showAdminPanel() {
 
 // Logout
 logoutBtn.addEventListener('click', function() {
-    sessionStorage.removeItem('admin_logged_in');
-    sessionStorage.removeItem('current_user');
+    localStorage.removeItem('admin_logged_in');
+    localStorage.removeItem('current_user');
     loginContainer.style.display = 'flex';
     adminPanel.style.display = 'none';
     accountMenu.classList.remove('open');
@@ -247,7 +247,7 @@ document.addEventListener('click', function() {
 
 // Update account info
 function updateAccountInfo() {
-    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    const user = JSON.parse(localStorage.getItem('current_user'));
     if (user) {
         const initial = (user.name || 'U').charAt(0).toUpperCase();
         document.getElementById('accountAvatar').textContent = initial;
@@ -654,7 +654,7 @@ window.editUser = function(id) {
 
 window.deleteUser = function(id) {
     const users = getUsers();
-    const currentUser = JSON.parse(sessionStorage.getItem('current_user'));
+    const currentUser = JSON.parse(localStorage.getItem('current_user'));
     
     if (currentUser && currentUser.id === id) {
         alert('No puedes eliminar tu propia cuenta');
@@ -968,7 +968,7 @@ businessForm.addEventListener('submit', function(e) {
 // Profile settings modal
 document.getElementById('profileSettingsBtn').addEventListener('click', function() {
     accountMenu.classList.remove('open');
-    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    const user = JSON.parse(localStorage.getItem('current_user'));
     if (user) {
         document.getElementById('profileName').value = user.name || '';
         document.getElementById('profileEmail').value = user.email || '';
@@ -987,7 +987,7 @@ document.getElementById('cancelProfileBtn').addEventListener('click', function()
 
 document.getElementById('profileForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    const user = JSON.parse(localStorage.getItem('current_user'));
     if (!user) return;
     
     const users = getUsers();
@@ -998,7 +998,7 @@ document.getElementById('profileForm').addEventListener('submit', function(e) {
         const newPass = document.getElementById('profilePassword').value;
         if (newPass) users[index].password = newPass;
         saveUsers(users);
-        sessionStorage.setItem('current_user', JSON.stringify(users[index]));
+        localStorage.setItem('current_user', JSON.stringify(users[index]));
         updateAccountInfo();
     }
     profileModal.style.display = 'none';
