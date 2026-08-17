@@ -175,8 +175,12 @@
 
                 <!-- Descripción -->
                 <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea id="productDescription" rows="3" required placeholder="Describe tu producto..."></textarea>
+                    <div class="description-header">
+                        <label>Descripción</label>
+                        <button type="button" id="regenerateDesc" class="btn-regenerate">🔄 Regenerar</button>
+                    </div>
+                    <textarea id="productDescription" rows="3" placeholder="Se genera automáticamente al escribir nombre y marca..."></textarea>
+                    <small class="auto-desc-hint">La descripción se genera automáticamente cuando escribes el nombre y la marca</small>
                 </div>
 
                 <!-- Características -->
