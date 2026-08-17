@@ -137,12 +137,19 @@ const productForm = document.getElementById('productForm');
 const productsSection = document.getElementById('productsSection');
 const formSection = document.getElementById('formSection');
 const formTitle = document.getElementById('formTitle');
-const navBtns = document.querySelectorAll('.nav-btn[data-section]');
+const navTabs = document.querySelectorAll('.nav-tab[data-section]');
 const addNewBtn = document.getElementById('addNewBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 const businessSection = document.getElementById('businessSection');
 const businessForm = document.getElementById('businessForm');
+const emptyProducts = document.getElementById('emptyProducts');
+
+// Account menu
+const accountMenu = document.getElementById('accountMenu');
+const accountBtn = document.getElementById('accountBtn');
+const profileModal = document.getElementById('profileModal');
+const panelModal = document.getElementById('panelModal');
 
 // Image upload elements
 const imageUpload = document.getElementById('imageUpload');
@@ -165,6 +172,11 @@ const saveCategoryBtn = document.getElementById('saveCategoryBtn');
 const categoryNameInput = document.getElementById('categoryName');
 const categoryIconInput = document.getElementById('categoryIcon');
 const editCategoryId = document.getElementById('editCategoryId');
+
+// Sections for navigation
+const ordersSection = document.getElementById('ordersSection');
+const customersSection = document.getElementById('customersSection');
+const reportsSection = document.getElementById('reportsSection');
 
 // Users elements
 const usersSection = document.getElementById('usersSection');
@@ -211,6 +223,7 @@ function showAdminPanel() {
     renderCategoriesList();
     renderUsersList();
     loadBusinessInfo();
+    updateAccountInfo();
 }
 
 // Logout
@@ -219,32 +232,56 @@ logoutBtn.addEventListener('click', function() {
     sessionStorage.removeItem('current_user');
     loginContainer.style.display = 'flex';
     adminPanel.style.display = 'none';
+    accountMenu.classList.remove('open');
 });
 
+// Account menu toggle
+accountBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    accountMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', function() {
+    accountMenu.classList.remove('open');
+});
+
+// Update account info
+function updateAccountInfo() {
+    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    if (user) {
+        const initial = (user.name || 'U').charAt(0).toUpperCase();
+        document.getElementById('accountAvatar').textContent = initial;
+        document.getElementById('dropdownAvatar').textContent = initial;
+        document.getElementById('dropdownName').textContent = user.name;
+        document.getElementById('dropdownEmail').textContent = user.email;
+    }
+}
+
 // Navigation
-navBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        navBtns.forEach(b => b.classList.remove('active'));
+navTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+        navTabs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
         
-        const section = this.dataset.section;
-        productsSection.style.display = 'none';
-        formSection.style.display = 'none';
-        categoriesSection.style.display = 'none';
-        usersSection.style.display = 'none';
-        businessSection.style.display = 'none';
+        const allSections = [productsSection, formSection, categoriesSection, usersSection, ordersSection, customersSection, reportsSection, businessSection];
+        allSections.forEach(s => { if (s) s.style.display = 'none'; });
         
+        const section = this.dataset.section;
         if (section === 'products') {
             productsSection.style.display = 'block';
-        } else if (section === 'add') {
-            resetForm();
-            formSection.style.display = 'block';
+            renderProductsTable();
         } else if (section === 'categories') {
             categoriesSection.style.display = 'block';
             renderCategoriesList();
         } else if (section === 'users') {
             usersSection.style.display = 'block';
             renderUsersList();
+        } else if (section === 'orders') {
+            ordersSection.style.display = 'block';
+        } else if (section === 'customers') {
+            customersSection.style.display = 'block';
+        } else if (section === 'reports') {
+            reportsSection.style.display = 'block';
         } else if (section === 'business') {
             businessSection.style.display = 'block';
         }
@@ -657,7 +694,7 @@ productImageInput.addEventListener('change', function(e) {
 
 removeImageBtn.addEventListener('click', function() {
     currentImageData = '';
-    imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+    imagePreview.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
     productImageInput.value = '';
     removeImageBtn.style.display = 'none';
 });
@@ -687,34 +724,51 @@ function renderProductsTable() {
     
     productsTableBody.innerHTML = '';
     
+    if (products.length === 0) {
+        document.querySelector('.products-table').style.display = 'none';
+        emptyProducts.style.display = 'block';
+    } else {
+        document.querySelector('.products-table').style.display = 'block';
+        emptyProducts.style.display = 'none';
+    }
+    
     products.forEach(product => {
         const typeLabels = (product.type || []).map(t => {
             const labels = { arabe: 'Árabe', disenador: 'Diseñador', replica: 'Réplica', artesanal: 'Artesanal' };
             return labels[t] || t;
-        }).join(', ');
+        });
         
         const genderLabels = { hombre: 'Hombre', mujer: 'Mujer', unisex: 'Unisex' };
         const genderLabel = genderLabels[product.gender] || '-';
         
         const photoCell = product.image 
             ? `<img src="${product.image}" class="table-thumb" alt="${product.name}">`
-            : '<span class="no-photo">📷</span>';
+            : '<div class="no-photo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
         
         const priceHTML = product.discount > 0 
-            ? `<span class="price-original">$${product.price.toFixed(2)}</span> <span class="price-discount">$${(product.price * (1 - product.discount / 100)).toFixed(2)}</span>`
-            : `$${product.price.toFixed(2)}`;
+            ? `<span class="price-original">$${product.price.toFixed(2)}</span><span class="price-discount">$${(product.price * (1 - product.discount / 100)).toFixed(2)}</span>`
+            : `<span class="price-normal">$${product.price.toFixed(2)}</span>`;
+        
+        const stock = product.stock || 0;
+        let stockClass = 'stock-ok';
+        let stockLabel = stock + ' disp.';
+        if (stock === 0) { stockClass = 'stock-out'; stockLabel = 'Agotado'; }
+        else if (stock <= 5) { stockClass = 'stock-low'; stockLabel = stock + ' disp.'; }
+        
+        const conditionClass = product.condition === 'used' ? 'condition-used' : 'condition-new';
+        const conditionLabel = product.condition === 'used' ? 'Usado' : 'Nuevo';
         
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${photoCell}</td>
             <td><strong>${product.name}</strong><br><small class="text-muted">${product.brand || ''}</small></td>
-            <td><span class="type-tags">${typeLabels || '-'}</span></td>
+            <td>${typeLabels.map(t => '<span class="type-tag">' + t + '</span>').join(' ') || '<span class="text-muted">-</span>'}</td>
             <td>${genderLabel}</td>
             <td>${priceHTML}</td>
-            <td>${product.discount > 0 ? product.discount + '%' : '-'}</td>
-            <td>${product.sku || '-'}</td>
-            <td>${product.stock || 0}</td>
-            <td>${product.condition === 'new' ? 'Nuevo' : 'Usado'}</td>
+            <td>${product.discount > 0 ? product.discount + '%' : '<span class="text-muted">-</span>'}</td>
+            <td>${product.sku || '<span class="text-muted">-</span>'}</td>
+            <td><span class="stock-badge ${stockClass}">${stockLabel}</span></td>
+            <td><span class="condition-badge ${conditionClass}">${conditionLabel}</span></td>
             <td class="actions-btn">
                 <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
                 <button class="btn-delete" onclick="deleteProduct(${product.id})">Eliminar</button>
@@ -727,18 +781,19 @@ function renderProductsTable() {
 // Add new button
 addNewBtn.addEventListener('click', function() {
     resetForm();
-    productsSection.style.display = 'none';
+    const allSections = [productsSection, categoriesSection, usersSection, ordersSection, customersSection, reportsSection, businessSection];
+    allSections.forEach(s => { if (s) s.style.display = 'none'; });
     formSection.style.display = 'block';
-    navBtns.forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-section="add"]').classList.add('active');
+    formTitle.textContent = 'Agregar Producto';
 });
 
 // Cancel button
 cancelBtn.addEventListener('click', function() {
-    productsSection.style.display = 'block';
     formSection.style.display = 'none';
-    navBtns.forEach(b => b.classList.remove('active'));
+    productsSection.style.display = 'block';
+    navTabs.forEach(t => t.classList.remove('active'));
     document.querySelector('[data-section="products"]').classList.add('active');
+    renderProductsTable();
 });
 
 // Reset form
@@ -747,7 +802,7 @@ function resetForm() {
     document.getElementById('productId').value = '';
     formTitle.textContent = 'Agregar Producto';
     currentImageData = '';
-    imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+    imagePreview.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
     removeImageBtn.style.display = 'none';
     document.getElementById('typeGroup').style.display = 'block';
     document.getElementById('genderGroup').style.display = 'block';
@@ -789,7 +844,7 @@ window.editProduct = function(id) {
             removeImageBtn.style.display = 'block';
         } else {
             currentImageData = '';
-            imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+            imagePreview.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
             removeImageBtn.style.display = 'none';
         }
         
@@ -799,10 +854,9 @@ window.editProduct = function(id) {
         document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
         
         formTitle.textContent = 'Editar Producto';
-        productsSection.style.display = 'none';
+        const allSections = [productsSection, categoriesSection, usersSection, ordersSection, customersSection, reportsSection, businessSection];
+        allSections.forEach(s => { if (s) s.style.display = 'none'; });
         formSection.style.display = 'block';
-        navBtns.forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-section="add"]').classList.add('active');
     }
 };
 
@@ -860,10 +914,9 @@ productForm.addEventListener('submit', function(e) {
     saveProducts(products);
     renderProductsTable();
     
-    productsSection.style.display = 'block';
     formSection.style.display = 'none';
-    businessSection.style.display = 'none';
-    navBtns.forEach(b => b.classList.remove('active'));
+    productsSection.style.display = 'block';
+    navTabs.forEach(t => t.classList.remove('active'));
     document.querySelector('[data-section="products"]').classList.add('active');
 });
 
@@ -907,4 +960,78 @@ businessForm.addEventListener('submit', function(e) {
     
     saveBusiness(business);
     alert('Información guardada correctamente');
+});
+
+// Profile settings modal
+document.getElementById('profileSettingsBtn').addEventListener('click', function() {
+    accountMenu.classList.remove('open');
+    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    if (user) {
+        document.getElementById('profileName').value = user.name || '';
+        document.getElementById('profileEmail').value = user.email || '';
+        document.getElementById('profilePassword').value = '';
+    }
+    profileModal.style.display = 'flex';
+});
+
+document.getElementById('closeProfileModal').addEventListener('click', function() {
+    profileModal.style.display = 'none';
+});
+
+document.getElementById('cancelProfileBtn').addEventListener('click', function() {
+    profileModal.style.display = 'none';
+});
+
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const user = JSON.parse(sessionStorage.getItem('current_user'));
+    if (!user) return;
+    
+    const users = getUsers();
+    const index = users.findIndex(u => u.id === user.id);
+    if (index !== -1) {
+        users[index].name = document.getElementById('profileName').value;
+        users[index].email = document.getElementById('profileEmail').value;
+        const newPass = document.getElementById('profilePassword').value;
+        if (newPass) users[index].password = newPass;
+        saveUsers(users);
+        sessionStorage.setItem('current_user', JSON.stringify(users[index]));
+        updateAccountInfo();
+    }
+    profileModal.style.display = 'none';
+    alert('Perfil actualizado');
+});
+
+// Panel settings modal
+document.getElementById('panelSettingsBtn').addEventListener('click', function() {
+    accountMenu.classList.remove('open');
+    const business = getBusiness();
+    document.getElementById('panelCompanyName').value = business.name || '';
+    document.getElementById('panelSlogan').value = business.slogan || '';
+    panelModal.style.display = 'flex';
+});
+
+document.getElementById('closePanelModal').addEventListener('click', function() {
+    panelModal.style.display = 'none';
+});
+
+document.getElementById('cancelPanelBtn').addEventListener('click', function() {
+    panelModal.style.display = 'none';
+});
+
+document.getElementById('panelSettingsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const business = getBusiness();
+    business.name = document.getElementById('panelCompanyName').value;
+    business.slogan = document.getElementById('panelSlogan').value;
+    saveBusiness(business);
+    panelModal.style.display = 'none';
+    alert('Configuración del panel actualizada');
+});
+
+// Close modals on overlay click
+[profileModal, panelModal].forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
 });

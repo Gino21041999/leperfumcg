@@ -5,63 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LE PERFUM CG - Panel Admin</title>
     <link rel="stylesheet" href="admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Login -->
     <div class="login-container" id="loginContainer">
         <div class="login-box">
-            <h1>Admin</h1>
+            <div class="login-brand">
+                <svg class="login-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="22" y="4" width="16" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="30" y1="46" x2="30" y2="54" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="24" y1="54" x2="36" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M26 18 C26 18, 30 22, 34 18 C34 18, 34 28, 30 32 C26 28, 26 18, 26 18Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+                </svg>
+                <span>LE PERFUM CG</span>
+            </div>
             <form id="loginForm">
-                <input type="email" id="loginEmail" placeholder="Correo" required>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
                 <input type="password" id="loginPassword" placeholder="Contraseña" required>
-                <button type="submit">Entrar</button>
+                <button type="submit">Iniciar Sesión</button>
             </form>
         </div>
     </div>
 
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel" style="display: none;">
+
+        <!-- Header / Navbar -->
         <header class="admin-header">
-            <h1>LE PERFUM CG - Admin</h1>
-            <nav class="admin-nav">
-                <button class="nav-btn active" data-section="products">Productos</button>
-                <button class="nav-btn" data-section="add">Agregar</button>
-                <button class="nav-btn" data-section="categories">Categorías</button>
-                <button class="nav-btn" data-section="users">Usuarios</button>
-                <button class="nav-btn" data-section="business">Mi Negocio</button>
-                <a href="index.html" class="nav-btn view-site">Ver Sitio</a>
-                <button class="nav-btn logout" id="logoutBtn">Salir</button>
+            <div class="header-left">
+                <a href="index.html" class="brand-link">
+                    <svg class="brand-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                        <rect x="22" y="4" width="16" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="30" y1="46" x2="30" y2="54" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="24" y1="54" x2="36" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M26 18 C26 18, 30 22, 34 18 C34 18, 34 28, 30 32 C26 28, 26 18, 26 18Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
+                    </svg>
+                    <span class="brand-name">LE PERFUM CG</span>
+                </a>
+            </div>
+
+            <nav class="admin-nav" id="adminNav">
+                <button class="nav-tab active" data-section="products">Productos</button>
+                <button class="nav-tab" data-section="categories">Categorías</button>
+                <button class="nav-tab" data-section="orders">Pedidos</button>
+                <button class="nav-tab" data-section="customers">Clientes</button>
+                <button class="nav-tab" data-section="users">Usuarios</button>
+                <button class="nav-tab" data-section="reports">Reportes</button>
+                <button class="nav-tab" data-section="business">Mi Negocio</button>
             </nav>
+
+            <div class="header-right">
+                <button class="btn-add" id="addNewBtn" title="Nuevo Producto">
+                    <span>+</span> Nuevo
+                </button>
+                <a href="index.html" class="btn-view-site" target="_blank" title="Ver Sitio">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+                <div class="account-menu" id="accountMenu">
+                    <button class="account-btn" id="accountBtn">
+                        <div class="account-avatar" id="accountAvatar">A</div>
+                        <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="account-dropdown" id="accountDropdown">
+                        <div class="dropdown-user-info">
+                            <div class="dropdown-avatar" id="dropdownAvatar">A</div>
+                            <div>
+                                <div class="dropdown-name" id="dropdownName">Administrador</div>
+                                <div class="dropdown-email" id="dropdownEmail">admin@leperfumcg.com</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" id="profileSettingsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Configuración del Perfil
+                        </button>
+                        <button class="dropdown-item" id="panelSettingsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            Configuración del Panel
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item dropdown-logout" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <!-- Lista de Productos -->
         <section class="section" id="productsSection">
             <div class="section-header">
                 <h2>Mis Productos</h2>
-                <button class="btn-primary" id="addNewBtn">+ Nuevo</button>
             </div>
 
-            <!-- Filtros -->
             <div class="filters-bar">
-                <select id="filterCategory" class="filter-select">
-                    <option value="all">Todas las categorías</option>
-                    <option value="perfume">Perfumes</option>
-                    <option value="libro">Libros</option>
-                </select>
-                <select id="filterType" class="filter-select">
-                    <option value="all">Todos los tipos</option>
-                    <option value="arabe">Árabe</option>
-                    <option value="disenador">Diseñador</option>
-                    <option value="replica">Réplica</option>
-                    <option value="artesanal">Artesanal</option>
-                </select>
-                <select id="filterGender" class="filter-select">
-                    <option value="all">Todos los géneros</option>
-                    <option value="hombre">Hombre</option>
-                    <option value="mujer">Mujer</option>
-                    <option value="unisex">Unisex</option>
-                </select>
+                <div class="filter-group">
+                    <label>Categoría</label>
+                    <select id="filterCategory" class="filter-select">
+                        <option value="all">Todas</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Tipo</label>
+                    <select id="filterType" class="filter-select">
+                        <option value="all">Todos</option>
+                        <option value="arabe">Árabe</option>
+                        <option value="disenador">Diseñador</option>
+                        <option value="replica">Réplica</option>
+                        <option value="artesanal">Artesanal</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Género</label>
+                    <select id="filterGender" class="filter-select">
+                        <option value="all">Todos</option>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="unisex">Unisex</option>
+                    </select>
+                </div>
             </div>
 
             <div class="products-table">
@@ -84,6 +150,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="empty-state" id="emptyProducts" style="display:none;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <p>No hay productos aún. Crea tu primer producto.</p>
+            </div>
         </section>
 
         <!-- Formulario Agregar/Editar -->
@@ -93,20 +163,18 @@
             </div>
             <form class="product-form" id="productForm">
                 <input type="hidden" id="productId">
-                
-                <!-- Imagen -->
+
                 <div class="form-group">
                     <label>Foto del Producto</label>
                     <div class="image-upload" id="imageUpload">
                         <div class="image-preview" id="imagePreview">
-                            <span class="preview-placeholder">📷 Click para subir foto</span>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                         </div>
                         <input type="file" id="productImage" accept="image/*" hidden>
                     </div>
                     <button type="button" class="btn-remove-image" id="removeImage" style="display:none;">Quitar imagen</button>
                 </div>
 
-                <!-- Nombre y Marca -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Nombre del Producto</label>
@@ -118,43 +186,21 @@
                     </div>
                 </div>
 
-                <!-- Categoría -->
                 <div class="form-group">
                     <label>Categoría</label>
-                    <select id="productCategory" required>
-                        <option value="perfume">Perfume</option>
-                        <option value="libro">Libro</option>
-                    </select>
+                    <select id="productCategory" required></select>
                 </div>
 
-                <!-- Tipo de perfume (checkboxes) -->
                 <div class="form-group" id="typeGroup">
-                    <label>Tipo de Perfume (selecciona varios)</label>
+                    <label>Tipo de Perfume</label>
                     <div class="checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="productType" value="arabe">
-                            <span class="checkbox-custom"></span>
-                            Árabe
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="productType" value="disenador">
-                            <span class="checkbox-custom"></span>
-                            Diseñador
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="productType" value="replica">
-                            <span class="checkbox-custom"></span>
-                            Réplica
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="productType" value="artesanal">
-                            <span class="checkbox-custom"></span>
-                            Artesanal
-                        </label>
+                        <label class="checkbox-label"><input type="checkbox" name="productType" value="arabe"><span class="checkbox-custom"></span>Árabe</label>
+                        <label class="checkbox-label"><input type="checkbox" name="productType" value="disenador"><span class="checkbox-custom"></span>Diseñador</label>
+                        <label class="checkbox-label"><input type="checkbox" name="productType" value="replica"><span class="checkbox-custom"></span>Réplica</label>
+                        <label class="checkbox-label"><input type="checkbox" name="productType" value="artesanal"><span class="checkbox-custom"></span>Artesanal</label>
                     </div>
                 </div>
 
-                <!-- Género -->
                 <div class="form-group" id="genderGroup">
                     <label>Género</label>
                     <select id="productGender">
@@ -164,7 +210,6 @@
                     </select>
                 </div>
 
-                <!-- Precio y Descuento -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>Precio ($)</label>
@@ -176,7 +221,6 @@
                     </div>
                 </div>
 
-                <!-- SKU, Stock y Condición -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>SKU</label>
@@ -195,25 +239,22 @@
                     </div>
                 </div>
 
-                <!-- Descripción -->
                 <div class="form-group">
                     <div class="description-header">
                         <label>Descripción</label>
-                        <button type="button" id="regenerateDesc" class="btn-regenerate">🔄 Regenerar</button>
+                        <button type="button" id="regenerateDesc" class="btn-regenerate">Regenerar</button>
                     </div>
                     <textarea id="productDescription" rows="3" placeholder="Se genera automáticamente al escribir nombre y marca..."></textarea>
                     <small class="auto-desc-hint">La descripción se genera automáticamente cuando escribes el nombre y la marca</small>
                 </div>
 
-                <!-- Características -->
                 <div class="form-group">
                     <label>Características (una por línea)</label>
                     <textarea id="productFeatures" rows="4" placeholder="50ml&#10;Duración: 8-12 horas&#10;Edición limitada"></textarea>
                 </div>
 
-                <!-- Etiquetas -->
                 <div class="form-group">
-                    <label>Etiquetas (una por línea)</label>
+                    <label>Etiquetas (separadas por coma)</label>
                     <input type="text" id="productTags" placeholder="nuevo, exclusivo, oferta">
                 </div>
 
@@ -230,9 +271,8 @@
                 <h2>Mis Categorías</h2>
                 <button class="btn-primary" id="addCategoryBtn">+ Nueva Categoría</button>
             </div>
-            <p class="section-desc">Administra las categorías de productos de tu catálogo. Puedes agregar, editar o eliminar categorías.</p>
-            
-            <!-- Formulario nueva categoría -->
+            <p class="section-desc">Administra las categorías de productos de tu catálogo.</p>
+
             <div class="category-form-box" id="categoryFormBox" style="display: none;">
                 <div class="form-row">
                     <div class="form-group">
@@ -251,8 +291,28 @@
                 </div>
             </div>
 
-            <div class="categories-list" id="categoriesList">
-                <!-- Categorías se cargan dinámicamente -->
+            <div class="categories-list" id="categoriesList"></div>
+        </section>
+
+        <!-- Sección Pedidos -->
+        <section class="section" id="ordersSection" style="display: none;">
+            <div class="section-header">
+                <h2>Pedidos</h2>
+            </div>
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <p>Próximamente: Gestión de pedidos y seguimiento de entregas.</p>
+            </div>
+        </section>
+
+        <!-- Sección Clientes -->
+        <section class="section" id="customersSection" style="display: none;">
+            <div class="section-header">
+                <h2>Clientes</h2>
+            </div>
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <p>Próximamente: Base de datos de clientes y historial de compras.</p>
             </div>
         </section>
 
@@ -263,7 +323,6 @@
                 <button class="btn-primary" id="addUserBtn">+ Nuevo Usuario</button>
             </div>
 
-            <!-- Formulario de usuario -->
             <div class="category-form-box" id="userFormBox" style="display: none;">
                 <h3 id="userFormTitle">Nuevo Usuario</h3>
                 <input type="hidden" id="editUserId">
@@ -282,17 +341,28 @@
                 <div class="form-group">
                     <label>Rol</label>
                     <select id="userRole">
-                        <option value="editor">Editor (puede editar productos)</option>
-                        <option value="admin">Administrador (acceso total)</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">Administrador</option>
                     </select>
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn-save" id="saveUserBtn">Guardar</button>
-                    <button type="button" class="btn-cancel" id="cancelUserBtn">Cancelar</button>
+                    <button type="button" class="btn-primary" id="saveUserBtn">Guardar</button>
+                    <button type="button" class="btn-secondary" id="cancelUserBtn">Cancelar</button>
                 </div>
             </div>
 
             <div class="users-list" id="usersList"></div>
+        </section>
+
+        <!-- Sección Reportes -->
+        <section class="section" id="reportsSection" style="display: none;">
+            <div class="section-header">
+                <h2>Reportes</h2>
+            </div>
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <p>Próximamente: Analíticas de ventas, productos más vendidos y reportes financieros.</p>
+            </div>
         </section>
 
         <!-- Sección Mi Negocio -->
@@ -305,33 +375,28 @@
                     <label>Nombre del Negocio</label>
                     <input type="text" id="businessName" placeholder="Ej: LE PERFUM CG">
                 </div>
-
                 <div class="form-group">
                     <label>Slogan / Descripción</label>
                     <input type="text" id="businessSlogan" placeholder="Ej: Perfumes & Libros de Autor">
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label>Teléfono</label>
-                        <input type="tel" id="businessPhone" placeholder="Ej: +505 8888-8888">
+                        <input type="tel" id="businessPhone" placeholder="Ej: +504 8888-8888">
                     </div>
                     <div class="form-group">
                         <label>WhatsApp</label>
-                        <input type="tel" id="businessWhatsApp" placeholder="Ej: +505 8888-8888">
+                        <input type="tel" id="businessWhatsApp" placeholder="Ej: +504 8888-8888">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label>Correo Electrónico</label>
                     <input type="email" id="businessEmail" placeholder="Ej: contacto@leperfumcg.com">
                 </div>
-
                 <div class="form-group">
                     <label>Dirección</label>
-                    <input type="text" id="businessAddress" placeholder="Ej: Managua, Nicaragua">
+                    <input type="text" id="businessAddress" placeholder="Ej: San Pedro Sula, Honduras">
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label>Moneda</label>
@@ -345,12 +410,10 @@
                         <input type="number" id="businessExchangeRate" placeholder="Ej: 24.50" step="0.01" value="24.50">
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label>Descuento Global (%) - Aplica a todos los productos</label>
+                    <label>Descuento Global (%)</label>
                     <input type="number" id="businessGlobalDiscount" placeholder="0" min="0" max="100" value="0">
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label>Facebook</label>
@@ -361,22 +424,71 @@
                         <input type="url" id="businessInstagram" placeholder="URL de Instagram">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label>TikTok</label>
                     <input type="url" id="businessTiktok" placeholder="URL de TikTok">
                 </div>
-
                 <div class="form-group">
                     <label>Mensaje del Footer</label>
                     <input type="text" id="businessFooter" placeholder="Ej: Todos los derechos reservados">
                 </div>
-
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Guardar Cambios</button>
                 </div>
             </form>
         </section>
+
+        <!-- Profile Settings Modal -->
+        <div class="modal-overlay" id="profileModal" style="display:none;">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3>Configuración del Perfil</h3>
+                    <button class="modal-close" id="closeProfileModal">&times;</button>
+                </div>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="profileName" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" id="profileEmail" placeholder="Tu correo">
+                    </div>
+                    <div class="form-group">
+                        <label>Nueva Contraseña (dejar vacío para no cambiar)</label>
+                        <input type="password" id="profilePassword" placeholder="Nueva contraseña">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelProfileBtn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Panel Settings Modal -->
+        <div class="modal-overlay" id="panelModal" style="display:none;">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3>Configuración del Panel</h3>
+                    <button class="modal-close" id="closePanelModal">&times;</button>
+                </div>
+                <form id="panelSettingsForm">
+                    <div class="form-group">
+                        <label>Nombre de la Empresa</label>
+                        <input type="text" id="panelCompanyName" placeholder="Ej: LE PERFUM CG">
+                    </div>
+                    <div class="form-group">
+                        <label>Slogan</label>
+                        <input type="text" id="panelSlogan" placeholder="Ej: Perfumes & Libros de Autor">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelPanelBtn">Cancelar</button>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script src="admin.js"></script>
