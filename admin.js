@@ -2,6 +2,9 @@ const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
 const USERS_KEY = 'leperfumcg_users';
 const GITHUB_TOKEN_KEY = 'leperfumcg_github_token';
+const REPO_OWNER = 'LEPERFUMCG';
+const REPO_NAME = 'leperfumcg';
+const REPO_BRANCH = 'main';
 
 const defaultBusiness = {
     name: 'LE PERFUM CG',
@@ -115,6 +118,63 @@ function getCategories() {
 
 function saveCategories(categories) {
     localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+}
+
+// ---- GitHub Publish ----
+async function pushToGitHub(path, data, message) {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    if (!token) return { ok: false, error: 'No hay token de GitHub configurado' };
+
+    const apiBase = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path;
+
+    let sha = null;
+    try {
+        const existing = await fetch(apiBase, {
+            headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (existing.ok) {
+            const fileData = await existing.json();
+            sha = fileData.sha;
+        }
+    } catch (e) {}
+
+    const body = {
+        message: message,
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
+        branch: REPO_BRANCH
+    };
+    if (sha) body.sha = sha;
+
+    try {
+        const res = await fetch(apiBase, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'token ' + token,
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify(body)
+        });
+        if (res.ok) return { ok: true };
+        const err = await res.json();
+        return { ok: false, error: err.message || 'Error desconocido' };
+    } catch (e) {
+        return { ok: false, error: e.message };
+    }
+}
+
+async function saveAndPublish() {
+    const results = [];
+    const products = getProducts();
+    const business = getBusiness();
+    const cats = getCategories();
+    const r1 = await pushToGitHub('data/products.json', products, 'Update products from admin panel');
+    results.push('Productos: ' + (r1.ok ? 'Publicado (' + products.length + ' productos)' : r1.error));
+    const r2 = await pushToGitHub('data/business.json', business, 'Update business info from admin panel');
+    results.push('Negocio: ' + (r2.ok ? 'Publicado' : r2.error));
+    const r3 = await pushToGitHub('data/categories.json', cats, 'Update categories from admin panel');
+    results.push('Categorías: ' + (r3.ok ? 'Publicado' : r3.error));
+    return results;
 }
 
 function populateCategorySelect() {
