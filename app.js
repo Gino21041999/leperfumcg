@@ -80,9 +80,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let contactParts = [];
         if (business.email) contactParts.push(`📧 ${business.email}`);
         if (business.phone) contactParts.push(`📱 ${business.phone}`);
-        if (business.whatsapp) contactParts.push(`💬 WhatsApp: ${business.whatsapp}`);
+        if (business.whatsapp) {
+            const whatsappNum = business.whatsapp.replace(/[^0-9]/g, '');
+            contactParts.push(`💬 <a href="https://wa.me/${whatsappNum}" target="_blank" class="whatsapp-link">WhatsApp</a>`);
+        }
         if (business.address) contactParts.push(`📍 ${business.address}`);
-        document.getElementById('footerContact').textContent = contactParts.join(' | ');
+        document.getElementById('footerContact').innerHTML = contactParts.join(' | ');
         
         let socialHTML = '';
         if (business.facebook) socialHTML += `<a href="${business.facebook}" target="_blank" class="social-link">Facebook</a>`;

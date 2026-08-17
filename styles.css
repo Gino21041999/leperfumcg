@@ -236,6 +236,19 @@ body {
     font-size: 1.1rem;
 }
 
+/* WhatsApp Link */
+.whatsapp-link {
+    color: #25D366 !important;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.whatsapp-link:hover {
+    color: #128C7E !important;
+    text-decoration: underline;
+}
+
 /* Products Grid */
 .products-grid {
     display: grid;
