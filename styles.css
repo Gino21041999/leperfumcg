@@ -43,7 +43,7 @@ body {
 .header {
     background: var(--primary);
     color: var(--white);
-    padding: 50px 0 35px;
+    padding: 40px 0 30px;
     text-align: center;
     border-bottom: 1px solid var(--border);
 }
@@ -59,8 +59,8 @@ body {
 .admin-link {
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.85rem;
-    padding: 8px 20px;
+    font-size: 0.8rem;
+    padding: 8px 18px;
     border: 1px solid var(--accent);
     border-radius: 30px;
     transition: var(--transition);
@@ -77,27 +77,27 @@ body {
 
 .logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 700;
-    letter-spacing: 8px;
-    margin-bottom: 10px;
+    letter-spacing: 6px;
+    margin-bottom: 8px;
     color: var(--accent);
     text-shadow: 0 0 30px var(--accent-glow);
 }
 
 .tagline {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 300;
     color: var(--text-secondary);
-    letter-spacing: 4px;
-    margin-bottom: 35px;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
     text-transform: uppercase;
 }
 
 .nav {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
@@ -105,9 +105,9 @@ body {
     background: transparent;
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
-    padding: 10px 30px;
+    padding: 10px 28px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
     border-radius: 30px;
@@ -127,10 +127,10 @@ body {
 /* Hero */
 .hero {
     text-align: center;
-    padding: 80px 20px;
+    padding: 70px 20px;
     background: linear-gradient(180deg, var(--primary) 0%, var(--primary-medium) 100%);
     border-radius: var(--radius);
-    margin: 40px 0;
+    margin: 40px 0 30px;
     border: 1px solid var(--border);
     position: relative;
     overflow: hidden;
@@ -160,7 +160,7 @@ body {
 
 .hero h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: var(--text-primary);
     margin-bottom: 15px;
     font-weight: 600;
@@ -169,18 +169,79 @@ body {
 
 .hero p {
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1rem;
     max-width: 500px;
     margin: 0 auto;
     letter-spacing: 1px;
 }
 
+/* Advanced Filters */
+.advanced-filters {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-chip {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    transition: var(--transition);
+    letter-spacing: 1px;
+}
+
+.filter-chip:hover,
+.filter-chip.active {
+    background: var(--accent);
+    color: var(--primary);
+    border-color: var(--accent);
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
 /* Products Grid */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 20px 0 80px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 10px 0 60px;
 }
 
 /* Product Card */
@@ -194,14 +255,14 @@ body {
 }
 
 .product-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     border-color: var(--accent);
     box-shadow: var(--shadow-hover);
 }
 
 .product-image {
     width: 100%;
-    height: 300px;
+    height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,10 +270,23 @@ body {
     background: var(--primary-medium);
     border-bottom: 1px solid var(--border);
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
-.product-card:hover .product-image {
-    background: var(--primary-light);
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-emoji {
+    font-size: 4.5rem;
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-emoji {
+    transform: scale(1.1);
 }
 
 .product-image.perfume {
@@ -231,44 +305,110 @@ body {
     background: linear-gradient(180deg, #151a25 0%, #1a1a1a 100%);
 }
 
+/* Badges */
+.product-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+}
+
+.badge-type {
+    background: rgba(212, 175, 55, 0.85);
+    color: #0a0a0a;
+}
+
+.badge-gender {
+    background: rgba(100, 149, 237, 0.85);
+    color: #ffffff;
+}
+
+.badge-brand {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .product-info {
-    padding: 25px;
+    padding: 22px;
 }
 
 .product-category {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 3px;
     color: var(--accent);
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .product-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 .product-description {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
+/* Price */
 .product-price {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--accent);
     letter-spacing: 1px;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.price-original {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.price-final {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #28a745;
+    letter-spacing: 1px;
+}
+
+.price-discount-badge {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
 }
 
 /* Product Detail Modal */
@@ -337,6 +477,13 @@ body {
     justify-content: center;
     font-size: 6rem;
     border-radius: var(--radius) 0 0 var(--radius);
+    overflow: hidden;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .detail-image.product-image.perfume {
@@ -348,17 +495,25 @@ body {
 }
 
 .detail-info {
-    padding: 45px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
+.detail-brand {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
 .detail-info h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -366,29 +521,41 @@ body {
 .detail-category {
     font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     color: var(--accent);
     font-weight: 600;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .detail-description {
     color: var(--text-secondary);
-    margin-bottom: 25px;
-    line-height: 1.9;
-    font-size: 0.95rem;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-size: 0.9rem;
 }
 
 .detail-price {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--accent);
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     letter-spacing: 1px;
 }
 
+.detail-price-original {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.detail-price-final {
+    color: #28a745;
+    font-size: 1.5rem;
+}
+
 .detail-features {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .detail-features h4 {
@@ -396,7 +563,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--text-primary);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     font-weight: 600;
 }
 
@@ -405,25 +572,25 @@ body {
 }
 
 .detail-features li {
-    padding: 8px 0;
+    padding: 7px 0;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     border-bottom: 1px solid var(--border);
 }
 
 .detail-features li::before {
     content: "—";
     color: var(--accent);
-    margin-right: 12px;
+    margin-right: 10px;
 }
 
 .contact-btn {
     background: var(--accent);
     color: var(--primary);
     border: none;
-    padding: 16px 35px;
+    padding: 14px 30px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     border-radius: 30px;
@@ -442,23 +609,23 @@ body {
     background: var(--primary);
     color: var(--text-primary);
     text-align: center;
-    padding: 50px 20px;
+    padding: 45px 20px;
     margin-top: 40px;
     border-top: 1px solid var(--border);
 }
 
 .footer p {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .contact-info {
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 0.5px;
 }
 
 .social-links {
-    margin-top: 20px;
+    margin-top: 18px;
     display: flex;
     justify-content: center;
     gap: 25px;
@@ -467,7 +634,7 @@ body {
 .social-link {
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: var(--transition);
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -479,7 +646,16 @@ body {
     text-shadow: 0 0 10px var(--accent-glow);
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
     .header-top {
         flex-direction: column;
@@ -487,21 +663,54 @@ body {
     }
 
     .logo {
-        font-size: 2.2rem;
+        font-size: 2rem;
         letter-spacing: 4px;
     }
 
     .tagline {
-        font-size: 0.85rem;
-        letter-spacing: 3px;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+    }
+
+    .hero {
+        padding: 50px 15px;
+        margin: 25px 0 20px;
     }
 
     .hero h2 {
         font-size: 2rem;
     }
 
+    .hero p {
+        font-size: 0.9rem;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-image {
+        height: 250px;
+    }
+
+    .advanced-filters {
+        padding: 18px;
+    }
+
+    .filter-chips {
+        gap: 8px;
+    }
+
+    .filter-chip {
+        padding: 6px 16px;
+        font-size: 0.75rem;
+    }
+
     .detail-content {
         grid-template-columns: 1fr;
+        max-height: 95vh;
     }
 
     .detail-image {
@@ -510,15 +719,66 @@ body {
     }
 
     .detail-info {
-        padding: 30px;
+        padding: 25px;
     }
 
-    .products-grid {
-        grid-template-columns: 1fr;
+    .detail-info h2 {
+        font-size: 1.6rem;
+    }
+
+    .detail-price {
+        font-size: 1.3rem;
+    }
+
+    .social-links {
+        flex-direction: column;
+        gap: 12px;
     }
 }
 
-/* Animaciones de entrada */
+/* Small Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 1.6rem;
+    }
+
+    .nav-btn {
+        padding: 8px 18px;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+
+    .product-image {
+        height: 220px;
+    }
+
+    .product-emoji {
+        font-size: 3.5rem;
+    }
+
+    .product-info {
+        padding: 18px;
+    }
+
+    .product-name {
+        font-size: 1.2rem;
+    }
+
+    .hero h2 {
+        font-size: 1.7rem;
+    }
+
+    .badge {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+    }
+}
+
+/* Animaciones */
 .product-card {
     animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     opacity: 0;
@@ -542,7 +802,7 @@ body {
 .product-card:nth-child(5) { animation-delay: 0.5s; }
 .product-card:nth-child(6) { animation-delay: 0.6s; }
 
-/* Scrollbar elegante */
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -560,7 +820,6 @@ body {
     background: var(--accent);
 }
 
-/* Selección de texto */
 ::selection {
     background: var(--accent);
     color: var(--primary);

@@ -32,9 +32,34 @@
                 <p>Colección exclusiva de perfumes artesanales y libros que inspiran</p>
             </section>
 
+            <!-- Filtros avanzados -->
+            <div class="advanced-filters" id="advancedFilters">
+                <div class="filter-group">
+                    <label>Tipo:</label>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-type="all">Todos</button>
+                        <button class="filter-chip" data-type="arabe">Árabe</button>
+                        <button class="filter-chip" data-type="disenador">Diseñador</button>
+                        <button class="filter-chip" data-type="replica">Réplica</button>
+                        <button class="filter-chip" data-type="artesanal">Artesanal</button>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Género:</label>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-gender="all">Todos</button>
+                        <button class="filter-chip" data-gender="hombre">Hombre</button>
+                        <button class="filter-chip" data-gender="mujer">Mujer</button>
+                        <button class="filter-chip" data-gender="unisex">Unisex</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="products-grid" id="productsGrid">
                 <!-- Productos se cargan dinámicamente -->
             </div>
+
+            <p class="no-results" id="noResults" style="display:none;">No se encontraron productos con estos filtros.</p>
         </div>
     </main>
 
@@ -43,6 +68,7 @@
             <button class="close-btn" id="closeDetail">&times;</button>
             <div class="detail-image" id="detailImage"></div>
             <div class="detail-info">
+                <p class="detail-brand" id="detailBrand"></p>
                 <h2 id="detailName"></h2>
                 <p class="detail-category" id="detailCategory"></p>
                 <p class="detail-description" id="detailDescription"></p>
@@ -56,7 +82,7 @@
     <footer class="footer">
         <div class="container">
             <p id="footerText">&copy; 2026 LE PERFUM CG - Todos los derechos reservados</p>
-            <p class="contact-info" id="footerContact">Contacto: leperfumcg@email.com | WhatsApp: +505 8888-8888</p>
+            <p class="contact-info" id="footerContact"></p>
             <div class="social-links" id="socialLinks"></div>
         </div>
     </footer>

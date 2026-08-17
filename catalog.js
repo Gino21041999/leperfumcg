@@ -4,30 +4,73 @@ const BUSINESS_KEY = 'leperfumcg_business';
 const defaultProducts = [
     {
         id: 1,
-        name: "Élise Noir",
+        name: "Oud Royal",
         category: "perfume",
-        price: "$85.00",
-        description: "Una fragancia misteriosa y elegante. Notas de pimienta negra, rosa Damasco y ámbar oscuro.",
-        emoji: "🌹",
-        features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"]
+        type: ["arabe"],
+        gender: "unisex",
+        brand: "Attar Collection",
+        price: 85.00,
+        discount: 10,
+        description: "Una fragancia misteriosa y elegante. Notas de oud, pimienta negra, rosa Damasco y ámbar oscuro.",
+        features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"],
+        image: "",
+        tags: ["nuevo", "exclusivo"]
     },
     {
         id: 2,
-        name: "Jardín Secreto",
+        name: "Bleu de Chanel",
         category: "perfume",
-        price: "$72.00",
-        description: "Un viaje a un jardín mediterráneo. Notas frescas de bergamota, jazmín y madera de cedro.",
-        emoji: "🌸",
-        features: ["Frasco de diseño exclusivo", "75ml Eau de Parfum", "Duración: 6-8 horas", "Ideal para uso diario"]
+        type: ["disenador"],
+        gender: "hombre",
+        brand: "Chanel",
+        price: 120.00,
+        discount: 0,
+        description: "Fresca, aromática y magnética. Notas de limón, menta, jengibre y sándalo.",
+        features: ["Frasco de diseño exclusivo", "100ml Eau de Parfum", "Duración: 8-10 horas", "Original importado"],
+        image: "",
+        tags: ["bestseller"]
     },
     {
         id: 3,
-        name: "El Arte de Sentir",
-        category: "libro",
-        price: "$28.00",
-        description: "Una colección de poemas que exploran las emociones humanas a través de metáforas sensoriales.",
-        emoji: "📚",
-        features: ["240 páginas", "Tapa dura con barniz especial", "Edición ilustrada", "Papel premium"]
+        name: "FlowerBomb",
+        category: "perfume",
+        type: ["disenador"],
+        gender: "mujer",
+        brand: "Viktor & Rolf",
+        price: 95.00,
+        discount: 5,
+        description: "Un estallido de flores. Notas de patchouli, rosa, peonia y moscata.",
+        features: ["100ml Eau de Parfum", "Duración: 10-12 horas", "Frasco icónico", "Original"],
+        image: "",
+        tags: ["popular"]
+    },
+    {
+        id: 4,
+        name: "Amber Oud Gold",
+        category: "perfume",
+        type: ["arabe", "replica"],
+        gender: "hombre",
+        brand: "Al Haramain",
+        price: 45.00,
+        discount: 15,
+        description: "Réplica de alta calidad del clásico amber oud. Notas amaderadas y especiadas.",
+        features: ["100ml", "Duración: 6-8 horas", "Réplica premium", "Frasco premium"],
+        image: "",
+        tags: ["oferta"]
+    },
+    {
+        id: 5,
+        name: "Clásico Artesanal",
+        category: "perfume",
+        type: ["artesanal"],
+        gender: "unisex",
+        brand: "Casa Local",
+        price: 35.00,
+        discount: 0,
+        description: "Fragancia artesanal hecha a mano con ingredientes naturales locales.",
+        features: ["30ml frasco artesanal", "Ingredientes naturales", "Duración: 4-6 horas", "Edición limitada"],
+        image: "",
+        tags: ["artesanal", "local"]
     }
 ];
 
@@ -40,6 +83,7 @@ const defaultBusiness = {
     address: 'Managua, Nicaragua',
     currency: 'USD',
     exchangeRate: 24.50,
+    globalDiscount: 0,
     facebook: '',
     instagram: '',
     footer: 'Todos los derechos reservados'

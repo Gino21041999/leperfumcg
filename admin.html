@@ -25,7 +25,7 @@
     <div class="admin-panel" id="adminPanel" style="display: none;">
         <header class="admin-header">
             <h1>LE PERFUM CG - Admin</h1>
-            <nav>
+            <nav class="admin-nav">
                 <button class="nav-btn active" data-section="products">Productos</button>
                 <button class="nav-btn" data-section="add">Agregar</button>
                 <button class="nav-btn" data-section="business">Mi Negocio</button>
@@ -38,16 +38,41 @@
         <section class="section" id="productsSection">
             <div class="section-header">
                 <h2>Mis Productos</h2>
-                <button class="btn-primary" id="addNewBtn">+ Nuevo Producto</button>
+                <button class="btn-primary" id="addNewBtn">+ Nuevo</button>
             </div>
+
+            <!-- Filtros -->
+            <div class="filters-bar">
+                <select id="filterCategory" class="filter-select">
+                    <option value="all">Todas las categorías</option>
+                    <option value="perfume">Perfumes</option>
+                    <option value="libro">Libros</option>
+                </select>
+                <select id="filterType" class="filter-select">
+                    <option value="all">Todos los tipos</option>
+                    <option value="arabe">Árabe</option>
+                    <option value="disenador">Diseñador</option>
+                    <option value="replica">Réplica</option>
+                    <option value="artesanal">Artesanal</option>
+                </select>
+                <select id="filterGender" class="filter-select">
+                    <option value="all">Todos los géneros</option>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                    <option value="unisex">Unisex</option>
+                </select>
+            </div>
+
             <div class="products-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Icono</th>
+                            <th>Foto</th>
                             <th>Nombre</th>
-                            <th>Categoría</th>
+                            <th>Tipo</th>
+                            <th>Género</th>
                             <th>Precio</th>
+                            <th>Dto.</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -65,50 +90,104 @@
             <form class="product-form" id="productForm">
                 <input type="hidden" id="productId">
                 
+                <!-- Imagen -->
                 <div class="form-group">
-                    <label>Nombre del Producto</label>
-                    <input type="text" id="productName" required placeholder="Ej: Élise Noir">
+                    <label>Foto del Producto</label>
+                    <div class="image-upload" id="imageUpload">
+                        <div class="image-preview" id="imagePreview">
+                            <span class="preview-placeholder">📷 Click para subir foto</span>
+                        </div>
+                        <input type="file" id="productImage" accept="image/*" hidden>
+                    </div>
+                    <button type="button" class="btn-remove-image" id="removeImage" style="display:none;">Quitar imagen</button>
                 </div>
 
+                <!-- Nombre y Marca -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Categoría</label>
-                        <select id="productCategory" required>
-                            <option value="perfume">Perfume</option>
-                            <option value="libro">Libro</option>
-                        </select>
+                        <label>Nombre del Producto</label>
+                        <input type="text" id="productName" required placeholder="Ej: Oud Royal">
                     </div>
                     <div class="form-group">
-                        <label>Precio</label>
-                        <input type="text" id="productPrice" required placeholder="Ej: $85.00">
+                        <label>Marca</label>
+                        <input type="text" id="productBrand" placeholder="Ej: Attar Collection">
                     </div>
                 </div>
 
+                <!-- Categoría -->
                 <div class="form-group">
-                    <label>Icono/Emoji</label>
-                    <div class="emoji-picker">
-                        <button type="button" class="emoji-btn" data-emoji="🌹">🌹</button>
-                        <button type="button" class="emoji-btn" data-emoji="🌸">🌸</button>
-                        <button type="button" class="emoji-btn" data-emoji="✨">✨</button>
-                        <button type="button" class="emoji-btn" data-emoji="💎">💎</button>
-                        <button type="button" class="emoji-btn" data-emoji="🌺">🌺</button>
-                        <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
-                        <button type="button" class="emoji-btn" data-emoji="📚">📚</button>
-                        <button type="button" class="emoji-btn" data-emoji="📖">📖</button>
-                        <button type="button" class="emoji-btn" data-emoji="💌">💌</button>
-                        <button type="button" class="emoji-btn" data-emoji="📕">📕</button>
-                    </div>
-                    <input type="text" id="productEmoji" required placeholder="Selecciona un emoji o escribe uno">
+                    <label>Categoría</label>
+                    <select id="productCategory" required>
+                        <option value="perfume">Perfume</option>
+                        <option value="libro">Libro</option>
+                    </select>
                 </div>
 
+                <!-- Tipo de perfume (checkboxes) -->
+                <div class="form-group" id="typeGroup">
+                    <label>Tipo de Perfume (selecciona varios)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="productType" value="arabe">
+                            <span class="checkbox-custom"></span>
+                            Árabe
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="productType" value="disenador">
+                            <span class="checkbox-custom"></span>
+                            Diseñador
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="productType" value="replica">
+                            <span class="checkbox-custom"></span>
+                            Réplica
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="productType" value="artesanal">
+                            <span class="checkbox-custom"></span>
+                            Artesanal
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Género -->
+                <div class="form-group" id="genderGroup">
+                    <label>Género</label>
+                    <select id="productGender">
+                        <option value="unisex">Unisex</option>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                    </select>
+                </div>
+
+                <!-- Precio y Descuento -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Precio ($)</label>
+                        <input type="number" id="productPrice" required placeholder="Ej: 85.00" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Descuento (%)</label>
+                        <input type="number" id="productDiscount" placeholder="0" min="0" max="100" value="0">
+                    </div>
+                </div>
+
+                <!-- Descripción -->
                 <div class="form-group">
                     <label>Descripción</label>
                     <textarea id="productDescription" rows="3" required placeholder="Describe tu producto..."></textarea>
                 </div>
 
+                <!-- Características -->
                 <div class="form-group">
                     <label>Características (una por línea)</label>
-                    <textarea id="productFeatures" rows="4" required placeholder="Vidrio artesanal&#10;50ml&#10;Duración: 8-12 horas"></textarea>
+                    <textarea id="productFeatures" rows="4" placeholder="50ml&#10;Duración: 8-12 horas&#10;Edición limitada"></textarea>
+                </div>
+
+                <!-- Etiquetas -->
+                <div class="form-group">
+                    <label>Etiquetas (una por línea)</label>
+                    <input type="text" id="productTags" placeholder="nuevo, exclusivo, oferta">
                 </div>
 
                 <div class="form-actions">
@@ -169,6 +248,11 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label>Descuento Global (%) - Aplica a todos los productos</label>
+                    <input type="number" id="businessGlobalDiscount" placeholder="0" min="0" max="100" value="0">
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label>Facebook</label>
@@ -178,6 +262,11 @@
                         <label>Instagram</label>
                         <input type="url" id="businessInstagram" placeholder="URL de Instagram">
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label>TikTok</label>
+                    <input type="url" id="businessTiktok" placeholder="URL de TikTok">
                 </div>
 
                 <div class="form-group">

@@ -2,7 +2,6 @@ const ADMIN_PASSWORD = 'admin123';
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
 
-// Default business info
 const defaultBusiness = {
     name: 'LE PERFUM CG',
     slogan: 'Perfumes & Libros de Autor',
@@ -12,48 +11,47 @@ const defaultBusiness = {
     address: 'Managua, Nicaragua',
     currency: 'USD',
     exchangeRate: 24.50,
+    globalDiscount: 0,
     facebook: '',
     instagram: '',
+    tiktok: '',
     footer: 'Todos los derechos reservados'
 };
 
-// Default products
 const defaultProducts = [
     {
         id: 1,
-        name: "Élise Noir",
+        name: "Oud Royal",
         category: "perfume",
-        price: "$85.00",
-        description: "Una fragancia misteriosa y elegante. Notas de pimienta negra, rosa Damasco y ámbar oscuro.",
-        emoji: "🌹",
-        features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"]
+        type: ["arabe"],
+        gender: "unisex",
+        brand: "Attar Collection",
+        price: 85.00,
+        discount: 10,
+        description: "Una fragancia misteriosa y elegante. Notas de oud, pimienta negra y ámbar oscuro.",
+        features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"],
+        image: "",
+        tags: ["nuevo", "exclusivo"]
     },
     {
         id: 2,
-        name: "Jardín Secreto",
+        name: "Bleu de Chanel",
         category: "perfume",
-        price: "$72.00",
-        description: "Un viaje a un jardín mediterráneo. Notas frescas de bergamota, jazmín y madera de cedro.",
-        emoji: "🌸",
-        features: ["Frasco de diseño exclusivo", "75ml Eau de Parfum", "Duración: 6-8 horas", "Ideal para uso diario"]
-    },
-    {
-        id: 3,
-        name: "El Arte de Sentir",
-        category: "libro",
-        price: "$28.00",
-        description: "Una colección de poemas que exploran las emociones humanas a través de metáforas sensoriales.",
-        emoji: "📚",
-        features: ["240 páginas", "Tapa dura con barniz especial", "Edición ilustrada", "Papel premium"]
+        type: ["disenador"],
+        gender: "hombre",
+        brand: "Chanel",
+        price: 120.00,
+        discount: 0,
+        description: "Fresca, aromática y magnética. Notas de limón, menta, jengibre y sándalo.",
+        features: ["100ml Eau de Parfum", "Duración: 8-10 horas", "Original importado"],
+        image: "",
+        tags: ["bestseller"]
     }
 ];
 
-// Initialize products
 function getProducts() {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-        return JSON.parse(stored);
-    }
+    if (stored) return JSON.parse(stored);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
     return defaultProducts;
 }
@@ -62,12 +60,9 @@ function saveProducts(products) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
 }
 
-// Business info functions
 function getBusiness() {
     const stored = localStorage.getItem(BUSINESS_KEY);
-    if (stored) {
-        return JSON.parse(stored);
-    }
+    if (stored) return JSON.parse(stored);
     localStorage.setItem(BUSINESS_KEY, JSON.stringify(defaultBusiness));
     return defaultBusiness;
 }
@@ -89,10 +84,21 @@ const navBtns = document.querySelectorAll('.nav-btn[data-section]');
 const addNewBtn = document.getElementById('addNewBtn');
 const cancelBtn = document.getElementById('cancelBtn');
 const logoutBtn = document.getElementById('logoutBtn');
-const emojiBtns = document.querySelectorAll('.emoji-btn');
-const emojiInput = document.getElementById('productEmoji');
 const businessSection = document.getElementById('businessSection');
 const businessForm = document.getElementById('businessForm');
+
+// Image upload elements
+const imageUpload = document.getElementById('imageUpload');
+const productImageInput = document.getElementById('productImage');
+const imagePreview = document.getElementById('imagePreview');
+const removeImageBtn = document.getElementById('removeImage');
+
+// Filter elements
+const filterCategory = document.getElementById('filterCategory');
+const filterType = document.getElementById('filterType');
+const filterGender = document.getElementById('filterGender');
+
+let currentImageData = '';
 
 // Check if already logged in
 if (sessionStorage.getItem('admin_logged_in')) {
@@ -147,18 +153,92 @@ navBtns.forEach(btn => {
     });
 });
 
-// Render products table
+// Show/hide type and gender based on category
+document.getElementById('productCategory').addEventListener('change', function() {
+    const isPerfume = this.value === 'perfume';
+    document.getElementById('typeGroup').style.display = isPerfume ? 'block' : 'none';
+    document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
+});
+
+// Image upload
+imageUpload.addEventListener('click', function() {
+    productImageInput.click();
+});
+
+productImageInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        if (file.size > 500000) {
+            alert('La imagen es muy grande. Máximo 500KB.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            currentImageData = event.target.result;
+            imagePreview.innerHTML = `<img src="${currentImageData}" alt="Preview">`;
+            removeImageBtn.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+removeImageBtn.addEventListener('click', function() {
+    currentImageData = '';
+    imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+    productImageInput.value = '';
+    removeImageBtn.style.display = 'none';
+});
+
+// Filters
+filterCategory.addEventListener('change', renderProductsTable);
+filterType.addEventListener('change', renderProductsTable);
+filterGender.addEventListener('change', renderProductsTable);
+
+// Render products table with filters
 function renderProductsTable() {
-    const products = getProducts();
+    let products = getProducts();
+    
+    const catFilter = filterCategory.value;
+    const typeFilter = filterType.value;
+    const genderFilter = filterGender.value;
+    
+    if (catFilter !== 'all') {
+        products = products.filter(p => p.category === catFilter);
+    }
+    if (typeFilter !== 'all') {
+        products = products.filter(p => p.type && p.type.includes(typeFilter));
+    }
+    if (genderFilter !== 'all') {
+        products = products.filter(p => p.gender === genderFilter);
+    }
+    
     productsTableBody.innerHTML = '';
     
     products.forEach(product => {
+        const typeLabels = (product.type || []).map(t => {
+            const labels = { arabe: 'Árabe', disenador: 'Diseñador', replica: 'Réplica', artesanal: 'Artesanal' };
+            return labels[t] || t;
+        }).join(', ');
+        
+        const genderLabels = { hombre: 'Hombre', mujer: 'Mujer', unisex: 'Unisex' };
+        const genderLabel = genderLabels[product.gender] || '-';
+        
+        const photoCell = product.image 
+            ? `<img src="${product.image}" class="table-thumb" alt="${product.name}">`
+            : '<span class="no-photo">📷</span>';
+        
+        const priceHTML = product.discount > 0 
+            ? `<span class="price-original">$${product.price.toFixed(2)}</span> <span class="price-discount">$${(product.price * (1 - product.discount / 100)).toFixed(2)}</span>`
+            : `$${product.price.toFixed(2)}`;
+        
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${product.emoji}</td>
-            <td><strong>${product.name}</strong></td>
-            <td><span class="category-badge ${product.category}">${product.category === 'perfume' ? 'Perfume' : 'Libro'}</span></td>
-            <td>${product.price}</td>
+            <td>${photoCell}</td>
+            <td><strong>${product.name}</strong><br><small class="text-muted">${product.brand || ''}</small></td>
+            <td><span class="type-tags">${typeLabels || '-'}</span></td>
+            <td>${genderLabel}</td>
+            <td>${priceHTML}</td>
+            <td>${product.discount > 0 ? product.discount + '%' : '-'}</td>
             <td class="actions-btn">
                 <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
                 <button class="btn-delete" onclick="deleteProduct(${product.id})">Eliminar</button>
@@ -167,15 +247,6 @@ function renderProductsTable() {
         productsTableBody.appendChild(row);
     });
 }
-
-// Emoji picker
-emojiBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        emojiBtns.forEach(b => b.classList.remove('selected'));
-        this.classList.add('selected');
-        emojiInput.value = this.dataset.emoji;
-    });
-});
 
 // Add new button
 addNewBtn.addEventListener('click', function() {
@@ -199,7 +270,12 @@ function resetForm() {
     productForm.reset();
     document.getElementById('productId').value = '';
     formTitle.textContent = 'Agregar Producto';
-    emojiBtns.forEach(b => b.classList.remove('selected'));
+    currentImageData = '';
+    imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+    removeImageBtn.style.display = 'none';
+    document.getElementById('typeGroup').style.display = 'block';
+    document.getElementById('genderGroup').style.display = 'block';
+    document.querySelectorAll('input[name="productType"]').forEach(cb => cb.checked = false);
 }
 
 // Edit product
@@ -210,22 +286,37 @@ window.editProduct = function(id) {
     if (product) {
         document.getElementById('productId').value = product.id;
         document.getElementById('productName').value = product.name;
+        document.getElementById('productBrand').value = product.brand || '';
         document.getElementById('productCategory').value = product.category;
         document.getElementById('productPrice').value = product.price;
-        document.getElementById('productEmoji').value = product.emoji;
+        document.getElementById('productDiscount').value = product.discount || 0;
         document.getElementById('productDescription').value = product.description;
-        document.getElementById('productFeatures').value = product.features.join('\n');
+        document.getElementById('productFeatures').value = (product.features || []).join('\n');
+        document.getElementById('productTags').value = (product.tags || []).join(', ');
+        document.getElementById('productGender').value = product.gender || 'unisex';
         
-        formTitle.textContent = 'Editar Producto';
-        
-        // Select emoji
-        emojiBtns.forEach(b => {
-            b.classList.remove('selected');
-            if (b.dataset.emoji === product.emoji) {
-                b.classList.add('selected');
-            }
+        // Type checkboxes
+        document.querySelectorAll('input[name="productType"]').forEach(cb => {
+            cb.checked = (product.type || []).includes(cb.value);
         });
         
+        // Image
+        if (product.image) {
+            currentImageData = product.image;
+            imagePreview.innerHTML = `<img src="${product.image}" alt="Preview">`;
+            removeImageBtn.style.display = 'block';
+        } else {
+            currentImageData = '';
+            imagePreview.innerHTML = '<span class="preview-placeholder">📷 Click para subir foto</span>';
+            removeImageBtn.style.display = 'none';
+        }
+        
+        // Show/hide type and gender
+        const isPerfume = product.category === 'perfume';
+        document.getElementById('typeGroup').style.display = isPerfume ? 'block' : 'none';
+        document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
+        
+        formTitle.textContent = 'Editar Producto';
         productsSection.style.display = 'none';
         formSection.style.display = 'block';
         navBtns.forEach(b => b.classList.remove('active'));
@@ -250,24 +341,33 @@ productForm.addEventListener('submit', function(e) {
     const products = getProducts();
     const productId = document.getElementById('productId').value;
     const features = document.getElementById('productFeatures').value.split('\n').filter(f => f.trim());
+    const tags = document.getElementById('productTags').value.split(',').map(t => t.trim()).filter(t => t);
+    
+    const selectedTypes = [];
+    document.querySelectorAll('input[name="productType"]:checked').forEach(cb => {
+        selectedTypes.push(cb.value);
+    });
     
     const productData = {
         name: document.getElementById('productName').value,
+        brand: document.getElementById('productBrand').value,
         category: document.getElementById('productCategory').value,
-        price: document.getElementById('productPrice').value,
-        emoji: document.getElementById('productEmoji').value || '📦',
+        type: selectedTypes,
+        gender: document.getElementById('productGender').value,
+        price: parseFloat(document.getElementById('productPrice').value),
+        discount: parseInt(document.getElementById('productDiscount').value) || 0,
         description: document.getElementById('productDescription').value,
-        features: features
+        features: features,
+        image: currentImageData,
+        tags: tags
     };
     
     if (productId) {
-        // Edit existing
         const index = products.findIndex(p => p.id === parseInt(productId));
         if (index !== -1) {
             products[index] = { ...products[index], ...productData };
         }
     } else {
-        // Add new
         productData.id = Date.now();
         products.push(productData);
     }
@@ -275,7 +375,6 @@ productForm.addEventListener('submit', function(e) {
     saveProducts(products);
     renderProductsTable();
     
-    // Show products list
     productsSection.style.display = 'block';
     formSection.style.display = 'none';
     businessSection.style.display = 'none';
@@ -294,8 +393,10 @@ function loadBusinessInfo() {
     document.getElementById('businessAddress').value = business.address || '';
     document.getElementById('businessCurrency').value = business.currency || 'USD';
     document.getElementById('businessExchangeRate').value = business.exchangeRate || 24.50;
+    document.getElementById('businessGlobalDiscount').value = business.globalDiscount || 0;
     document.getElementById('businessFacebook').value = business.facebook || '';
     document.getElementById('businessInstagram').value = business.instagram || '';
+    document.getElementById('businessTiktok').value = business.tiktok || '';
     document.getElementById('businessFooter').value = business.footer || '';
 }
 
@@ -312,8 +413,10 @@ businessForm.addEventListener('submit', function(e) {
         address: document.getElementById('businessAddress').value,
         currency: document.getElementById('businessCurrency').value,
         exchangeRate: parseFloat(document.getElementById('businessExchangeRate').value) || 24.50,
+        globalDiscount: parseInt(document.getElementById('businessGlobalDiscount').value) || 0,
         facebook: document.getElementById('businessFacebook').value,
         instagram: document.getElementById('businessInstagram').value,
+        tiktok: document.getElementById('businessTiktok').value,
         footer: document.getElementById('businessFooter').value
     };
     
