@@ -449,22 +449,41 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!searchWrapper.contains(e.target)) searchWrapper.classList.remove('open');
     });
 
-    // ---- Quick Filters ----
-    document.querySelectorAll('.filter-chip[data-filter]').forEach(chip => {
-        chip.addEventListener('click', function() {
+    // ---- Quick Filters (Select Dropdowns) ----
+    function updateFilterDots() {
+        const o = document.getElementById('dotOlfactory');
+        const g = document.getElementById('dotGender');
+        const oc = document.getElementById('dotOccasion');
+        if (o) o.classList.toggle('active', currentOlfactory !== 'all');
+        if (g) g.classList.toggle('active', currentGender !== 'all');
+        if (oc) oc.classList.toggle('active', currentOccasion !== 'all');
+
+        const clearBtn = document.getElementById('clearFilters');
+        const anyActive = currentOlfactory !== 'all' || currentGender !== 'all' || currentOccasion !== 'all';
+        if (clearBtn) clearBtn.classList.toggle('visible', anyActive);
+    }
+
+    document.querySelectorAll('.filter-select[data-filter]').forEach(sel => {
+        sel.addEventListener('change', function() {
             const filterType = this.dataset.filter;
-            const value = this.dataset.value;
-
-            // Update active state within the same filter group
-            this.closest('.filter-chips').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
-
+            const value = this.value;
             if (filterType === 'olfactory') currentOlfactory = value;
             else if (filterType === 'gender') currentGender = value;
             else if (filterType === 'occasion') currentOccasion = value;
-
+            updateFilterDots();
             renderProducts();
         });
+    });
+
+    document.getElementById('clearFilters').addEventListener('click', function() {
+        currentOlfactory = 'all';
+        currentGender = 'all';
+        currentOccasion = 'all';
+        document.getElementById('filterOlfactory').value = 'all';
+        document.getElementById('filterGender').value = 'all';
+        document.getElementById('filterOccasion').value = 'all';
+        updateFilterDots();
+        renderProducts();
     });
 
     // ---- Header Scroll ----

@@ -117,39 +117,42 @@
                 <p class="section-subtitle">Fragancias seleccionadas por nuestros expertos en perfumería</p>
             </div>
 
-            <!-- Quick Filters -->
-            <div class="quick-filters">
-                <div class="filter-row">
-                    <label>Familia Olfativa</label>
-                    <div class="filter-chips" id="olfactoryFilters">
-                        <button class="filter-chip active" data-filter="olfactory" data-value="all">Todas</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="amaderado">Amaderado</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="citrico">Cítrico</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="floral">Floral</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="oriental">Oriental</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="gourmand">Gourmand</button>
-                        <button class="filter-chip" data-filter="olfactory" data-value="cuero">Cuero</button>
+            <!-- Inline Filter Bar -->
+            <div class="filter-bar" id="filterBar">
+                <div class="filter-dropdowns">
+                    <div class="filter-select-wrap">
+                        <select id="filterOlfactory" class="filter-select" data-filter="olfactory">
+                            <option value="all">Familia Olfativa</option>
+                            <option value="amaderado">Amaderado</option>
+                            <option value="citrico">Cítrico</option>
+                            <option value="floral">Floral</option>
+                            <option value="oriental">Oriental</option>
+                            <option value="gourmand">Gourmand</option>
+                            <option value="cuero">Cuero</option>
+                        </select>
+                        <span class="filter-dot" id="dotOlfactory"></span>
+                    </div>
+                    <div class="filter-select-wrap">
+                        <select id="filterGender" class="filter-select" data-filter="gender">
+                            <option value="all">Género</option>
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                            <option value="unisex">Unisex</option>
+                        </select>
+                        <span class="filter-dot" id="dotGender"></span>
+                    </div>
+                    <div class="filter-select-wrap">
+                        <select id="filterOccasion" class="filter-select" data-filter="occasion">
+                            <option value="all">Ocasión</option>
+                            <option value="noche">Noche</option>
+                            <option value="diario">Diario</option>
+                            <option value="verano">Verano</option>
+                            <option value="invierno">Invierno</option>
+                        </select>
+                        <span class="filter-dot" id="dotOccasion"></span>
                     </div>
                 </div>
-                <div class="filter-row">
-                    <label>Género</label>
-                    <div class="filter-chips" id="genderFilters">
-                        <button class="filter-chip active" data-filter="gender" data-value="all">Todos</button>
-                        <button class="filter-chip" data-filter="gender" data-value="hombre">Hombre</button>
-                        <button class="filter-chip" data-filter="gender" data-value="mujer">Mujer</button>
-                        <button class="filter-chip" data-filter="gender" data-value="unisex">Unisex</button>
-                    </div>
-                </div>
-                <div class="filter-row">
-                    <label>Ocasión</label>
-                    <div class="filter-chips" id="occasionFilters">
-                        <button class="filter-chip active" data-filter="occasion" data-value="all">Todas</button>
-                        <button class="filter-chip" data-filter="occasion" data-value="noche">Noche</button>
-                        <button class="filter-chip" data-filter="occasion" data-value="diario">Diario</button>
-                        <button class="filter-chip" data-filter="occasion" data-value="verano">Verano</button>
-                        <button class="filter-chip" data-filter="occasion" data-value="invierno">Invierno</button>
-                    </div>
-                </div>
+                <button class="filter-clear" id="clearFilters">Limpiar Filtros</button>
             </div>
 
             <!-- Product Grid -->
