@@ -760,6 +760,11 @@ function renderProductsTable() {
         
         const conditionClass = product.condition === 'used' ? 'condition-used' : 'condition-new';
         const conditionLabel = product.condition === 'used' ? 'Usado' : 'Nuevo';
+
+        const olfactoryLabels = { amaderado: 'Amaderado', citrico: 'Cítrico', floral: 'Floral', oriental: 'Oriental', gourmand: 'Gourmand', cuero: 'Cuero' };
+        const occasionLabels = { noche: 'Noche', diario: 'Diario', verano: 'Verano', invierno: 'Invierno' };
+        const olfactoryLabel = product.olfactory ? (olfactoryLabels[product.olfactory] || product.olfactory) : '<span class="text-muted">-</span>';
+        const occasionLabel = product.occasion ? (occasionLabels[product.occasion] || product.occasion) : '<span class="text-muted">-</span>';
         
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -772,6 +777,8 @@ function renderProductsTable() {
             <td>${product.sku || '<span class="text-muted">-</span>'}</td>
             <td><span class="stock-badge ${stockClass}">${stockLabel}</span></td>
             <td><span class="condition-badge ${conditionClass}">${conditionLabel}</span></td>
+            <td>${olfactoryLabel}</td>
+            <td>${occasionLabel}</td>
             <td class="actions-btn">
                 <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
                 <button class="btn-delete" onclick="deleteProduct(${product.id})">Eliminar</button>
@@ -813,6 +820,8 @@ function resetForm() {
     document.getElementById('productSku').value = '';
     document.getElementById('productStock').value = '0';
     document.getElementById('productCondition').value = 'new';
+    document.getElementById('productOlfactory').value = '';
+    document.getElementById('productOccasion').value = '';
 }
 
 // Edit product
@@ -834,6 +843,8 @@ window.editProduct = function(id) {
         document.getElementById('productSku').value = product.sku || '';
         document.getElementById('productStock').value = product.stock || 0;
         document.getElementById('productCondition').value = product.condition || 'new';
+        document.getElementById('productOlfactory').value = product.olfactory || '';
+        document.getElementById('productOccasion').value = product.occasion || '';
         
         // Type checkboxes
         document.querySelectorAll('input[name="productType"]').forEach(cb => {
@@ -901,7 +912,9 @@ productForm.addEventListener('submit', function(e) {
         tags: tags,
         sku: document.getElementById('productSku').value,
         stock: parseInt(document.getElementById('productStock').value) || 0,
-        condition: document.getElementById('productCondition').value
+        condition: document.getElementById('productCondition').value,
+        olfactory: document.getElementById('productOlfactory').value,
+        occasion: document.getElementById('productOccasion').value
     };
     
     if (productId) {
