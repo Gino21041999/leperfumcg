@@ -123,7 +123,18 @@ const defaultBusiness = {
 function getProducts() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-        return JSON.parse(stored);
+        let parsed = JSON.parse(stored);
+        let changed = false;
+        parsed = parsed.map(p => {
+            if (!p.olfactory) { p.olfactory = ''; changed = true; }
+            if (!p.occasion) { p.occasion = ''; changed = true; }
+            if (!p.notes) { p.notes = { top: '', heart: '', base: '' }; changed = true; }
+            if (!p.condition) { p.condition = 'new'; changed = true; }
+            if (p.stock === undefined) { p.stock = 0; changed = true; }
+            return p;
+        });
+        if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+        return parsed;
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts));
     return defaultProducts;

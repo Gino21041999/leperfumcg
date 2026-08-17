@@ -30,7 +30,7 @@
     --font-sans: 'Inter', -apple-system, sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
     font-family: var(--font-sans);
@@ -38,12 +38,15 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     font-size: 14px;
+    overflow-x: hidden;
+    min-width: 0;
 }
 
 .container {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 24px;
+    overflow: hidden;
 }
 
 /* ========================================
@@ -94,7 +97,7 @@ body {
 .header-inner {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 16px;
     height: 64px;
 }
 
@@ -237,6 +240,7 @@ body {
     top: calc(100% + 8px);
     right: 0;
     width: 320px;
+    max-width: calc(100vw - 32px);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -348,6 +352,7 @@ body {
 .hero-bg {
     position: absolute;
     inset: 0;
+    overflow: hidden;
     background: 
         radial-gradient(ellipse at 70% 50%, rgba(212,175,55,0.08) 0%, transparent 60%),
         radial-gradient(ellipse at 30% 80%, rgba(212,175,55,0.04) 0%, transparent 50%),
@@ -1569,9 +1574,15 @@ body {
 @media (max-width: 480px) {
     .container { padding: 0 14px; }
 
-    .header-inner { gap: 8px; height: 52px; }
-    .brand-name { font-size: 0.8rem; letter-spacing: 1.5px; }
-    .brand-icon { width: 22px; height: 22px; }
+    .header-inner { gap: 6px; height: 52px; }
+    .brand-name { font-size: 0.75rem; letter-spacing: 1px; }
+    .brand-icon { width: 20px; height: 20px; }
+    .brand { gap: 6px; }
+
+    .header-actions { gap: 0; }
+    .icon-btn { padding: 5px; min-width: 0; }
+    .icon-btn svg { width: 16px; height: 16px; }
+    .currency-toggle { min-width: 0; font-size: 0.7rem; }
 
     .hero { padding: 40px 0; min-height: 260px; }
     .hero-title { font-size: 1.7rem; }
