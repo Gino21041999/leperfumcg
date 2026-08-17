@@ -60,6 +60,7 @@ body {
     font-size: 0.72rem;
     color: var(--text-muted);
     letter-spacing: 0.5px;
+    overflow: hidden;
 }
 
 .top-bar-inner {
@@ -88,6 +89,7 @@ body {
     top: 0;
     z-index: 100;
     transition: box-shadow var(--transition);
+    overflow-x: hidden;
 }
 
 .header.scrolled {
@@ -107,7 +109,8 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .brand-icon {
@@ -180,7 +183,8 @@ body {
     display: flex;
     align-items: center;
     gap: 4px;
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .icon-btn {
@@ -480,6 +484,8 @@ body {
 
 .catalog-section {
     padding: 60px 0;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .section-title-wrap {
@@ -869,6 +875,8 @@ body {
     background: var(--bg-surface);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .notes-grid {
@@ -913,6 +921,8 @@ body {
 
 .reviews-section {
     padding: 60px 0;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .reviews-grid {
@@ -986,6 +996,8 @@ body {
     background: var(--bg-surface);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .benefits-grid {
@@ -1375,6 +1387,8 @@ body {
     background: var(--bg-body);
     border-top: 1px solid var(--border);
     padding: 50px 0 30px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .footer-inner {
