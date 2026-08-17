@@ -1,15 +1,15 @@
 {
-    "name": "LE PERFUM CG",
-    "slogan": "Perfumes & Libros de Autor",
-    "phone": "+504 8888-8888",
-    "whatsapp": "+504 8888-8888",
-    "email": "leperfumcg@email.com",
-    "address": "San Pedro Sula, Honduras",
-    "currency": "HNL",
-    "exchangeRate": 24.50,
-    "globalDiscount": 0,
-    "facebook": "",
-    "instagram": "",
-    "tiktok": "",
-    "footer": "Todos los derechos reservados"
+  "name": "LE PERFUM CG",
+  "slogan": "Perfumes & Libros de Autor",
+  "phone": "+504 8888-8888",
+  "whatsapp": "+504 8888-8888",
+  "email": "leperfumcg@email.com",
+  "address": "San Pedro Sula, Honduras",
+  "currency": "HNL",
+  "exchangeRate": 24.5,
+  "globalDiscount": 0,
+  "facebook": "",
+  "instagram": "",
+  "tiktok": "",
+  "footer": "Todos los derechos reservados"
 }
