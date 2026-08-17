@@ -1,4 +1,14 @@
 [
-    { "id": 1, "name": "Perfume", "icon": "\uD83C\uDF38", "isDefault": true },
-    { "id": 2, "name": "Libro", "icon": "\uD83D\uDCDA", "isDefault": true }
+  {
+    "id": 1,
+    "name": "Perfume",
+    "icon": "🌸",
+    "isDefault": true
+  },
+  {
+    "id": 2,
+    "name": "Libro",
+    "icon": "📚",
+    "isDefault": true
+  }
 ]
