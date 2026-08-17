@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LE PERFUM CG - Panel Admin</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1>LE PERFUM CG</h1>
+            <p>Panel de Administración</p>
+            <form id="loginForm">
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="hint">Contraseña: admin123</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <header class="admin-header">
+            <h1>LE PERFUM CG - Admin</h1>
+            <nav>
+                <button class="nav-btn active" data-section="products">Productos</button>
+                <button class="nav-btn" data-section="add">Agregar</button>
+                <button class="nav-btn" data-section="business">Mi Negocio</button>
+                <a href="index.html" class="nav-btn view-site">Ver Sitio</a>
+                <button class="nav-btn logout" id="logoutBtn">Salir</button>
+            </nav>
+        </header>
+
+        <!-- Lista de Productos -->
+        <section class="section" id="productsSection">
+            <div class="section-header">
+                <h2>Mis Productos</h2>
+                <button class="btn-primary" id="addNewBtn">+ Nuevo Producto</button>
+            </div>
+            <div class="products-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Icono</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Formulario Agregar/Editar -->
+        <section class="section" id="formSection" style="display: none;">
+            <div class="section-header">
+                <h2 id="formTitle">Agregar Producto</h2>
+            </div>
+            <form class="product-form" id="productForm">
+                <input type="hidden" id="productId">
+                
+                <div class="form-group">
+                    <label>Nombre del Producto</label>
+                    <input type="text" id="productName" required placeholder="Ej: Élise Noir">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select id="productCategory" required>
+                            <option value="perfume">Perfume</option>
+                            <option value="libro">Libro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <input type="text" id="productPrice" required placeholder="Ej: $85.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Icono/Emoji</label>
+                    <div class="emoji-picker">
+                        <button type="button" class="emoji-btn" data-emoji="🌹">🌹</button>
+                        <button type="button" class="emoji-btn" data-emoji="🌸">🌸</button>
+                        <button type="button" class="emoji-btn" data-emoji="✨">✨</button>
+                        <button type="button" class="emoji-btn" data-emoji="💎">💎</button>
+                        <button type="button" class="emoji-btn" data-emoji="🌺">🌺</button>
+                        <button type="button" class="emoji-btn" data-emoji="🦋">🦋</button>
+                        <button type="button" class="emoji-btn" data-emoji="📚">📚</button>
+                        <button type="button" class="emoji-btn" data-emoji="📖">📖</button>
+                        <button type="button" class="emoji-btn" data-emoji="💌">💌</button>
+                        <button type="button" class="emoji-btn" data-emoji="📕">📕</button>
+                    </div>
+                    <input type="text" id="productEmoji" required placeholder="Selecciona un emoji o escribe uno">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="productDescription" rows="3" required placeholder="Describe tu producto..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Características (una por línea)</label>
+                    <textarea id="productFeatures" rows="4" required placeholder="Vidrio artesanal&#10;50ml&#10;Duración: 8-12 horas"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Producto</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Sección Mi Negocio -->
+        <section class="section" id="businessSection" style="display: none;">
+            <div class="section-header">
+                <h2>Mi Negocio</h2>
+            </div>
+            <form class="product-form" id="businessForm">
+                <div class="form-group">
+                    <label>Nombre del Negocio</label>
+                    <input type="text" id="businessName" placeholder="Ej: LE PERFUM CG">
+                </div>
+
+                <div class="form-group">
+                    <label>Slogan / Descripción</label>
+                    <input type="text" id="businessSlogan" placeholder="Ej: Perfumes & Libros de Autor">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="businessPhone" placeholder="Ej: +505 8888-8888">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp</label>
+                        <input type="tel" id="businessWhatsApp" placeholder="Ej: +505 8888-8888">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="businessEmail" placeholder="Ej: contacto@leperfumcg.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <input type="text" id="businessAddress" placeholder="Ej: Managua, Nicaragua">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Moneda</label>
+                        <select id="businessCurrency">
+                            <option value="USD">$ Dólares (USD)</option>
+                            <option value="HNL">L. Lempiras (HNL)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tasa de Cambio (1 USD = ?)</label>
+                        <input type="number" id="businessExchangeRate" placeholder="Ej: 24.50" step="0.01" value="24.50">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <input type="url" id="businessFacebook" placeholder="URL de Facebook">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="url" id="businessInstagram" placeholder="URL de Instagram">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mensaje del Footer</label>
+                    <input type="text" id="businessFooter" placeholder="Ej: Todos los derechos reservados">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

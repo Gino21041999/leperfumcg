@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LE PERFUM CG - Catálogo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div>
+                    <h1 class="logo" id="headerLogo">LE PERFUM CG</h1>
+                    <p class="tagline" id="headerSlogan">Perfumes & Libros de Autor</p>
+                </div>
+                <a href="admin.html" class="admin-link">⚙️ Admin</a>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-filter="all">Todos</button>
+                <button class="nav-btn" data-filter="perfume">Perfumes</button>
+                <button class="nav-btn" data-filter="libro">Libros</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="hero">
+                <h2>Descubre tu esencia</h2>
+                <p>Colección exclusiva de perfumes artesanales y libros que inspiran</p>
+            </section>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Productos se cargan dinámicamente -->
+            </div>
+        </div>
+    </main>
+
+    <section class="product-detail" id="productDetail">
+        <div class="detail-content">
+            <button class="close-btn" id="closeDetail">&times;</button>
+            <div class="detail-image" id="detailImage"></div>
+            <div class="detail-info">
+                <h2 id="detailName"></h2>
+                <p class="detail-category" id="detailCategory"></p>
+                <p class="detail-description" id="detailDescription"></p>
+                <p class="detail-price" id="detailPrice"></p>
+                <div class="detail-features" id="detailFeatures"></div>
+                <button class="contact-btn">Consultar disponibilidad</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p id="footerText">&copy; 2026 LE PERFUM CG - Todos los derechos reservados</p>
+            <p class="contact-info" id="footerContact">Contacto: leperfumcg@email.com | WhatsApp: +505 8888-8888</p>
+            <div class="social-links" id="socialLinks"></div>
+        </div>
+    </footer>
+
+    <script src="catalog.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
