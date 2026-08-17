@@ -470,8 +470,19 @@
                     <label>Mensaje del Footer</label>
                     <input type="text" id="businessFooter" placeholder="Ej: Todos los derechos reservados">
                 </div>
+                <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+                <h3 style="font-size:0.9rem;margin-bottom:12px;color:var(--accent);">Publicar en GitHub</h3>
+                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:12px;">Para que los cambios se vean en la tienda pública, necesitas un token de GitHub. Ve a github.com → Settings → Developer settings → Personal access tokens → Generate new token (scope: repo).</p>
+                <div class="form-group">
+                    <label>GitHub Token</label>
+                    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+                </div>
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn-primary" id="publishBtn" style="background:var(--green);">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+                        Publicar en Tienda
+                    </button>
                 </div>
             </form>
         </section>
@@ -529,6 +540,7 @@
         </div>
     </div>
 
+    <script src="catalog.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>

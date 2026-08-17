@@ -504,8 +504,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ---- Init ----
-    loadBusinessInfo();
-    renderProducts();
-    updateCartCount();
-    updateWishlistCount();
+    initCatalog().then(function() {
+        loadBusinessInfo();
+        renderProducts();
+        updateCartCount();
+        updateWishlistCount();
+    });
 });

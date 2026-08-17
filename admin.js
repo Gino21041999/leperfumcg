@@ -1,6 +1,7 @@
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
 const USERS_KEY = 'leperfumcg_users';
+const GITHUB_TOKEN_KEY = 'leperfumcg_github_token';
 
 const defaultBusiness = {
     name: 'LE PERFUM CG',
@@ -1002,6 +1003,9 @@ function loadBusinessInfo() {
     document.getElementById('businessInstagram').value = business.instagram || '';
     document.getElementById('businessTiktok').value = business.tiktok || '';
     document.getElementById('businessFooter').value = business.footer || '';
+
+    const savedToken = localStorage.getItem(GITHUB_TOKEN_KEY);
+    document.getElementById('githubToken').value = savedToken || '';
 }
 
 // Business form submit
@@ -1025,7 +1029,32 @@ businessForm.addEventListener('submit', function(e) {
     };
     
     saveBusiness(business);
+
+    const tokenInput = document.getElementById('githubToken').value.trim();
+    if (tokenInput) {
+        localStorage.setItem(GITHUB_TOKEN_KEY, tokenInput);
+    }
+
     alert('Información guardada correctamente');
+});
+
+// Publish button
+document.getElementById('publishBtn').addEventListener('click', async function() {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    if (!token) {
+        alert('Primero debes configurar tu GitHub Token en la sección de "Mi Negocio".');
+        return;
+    }
+    this.disabled = true;
+    this.textContent = 'Publicando...';
+    try {
+        const results = await saveAndPublish();
+        alert('Resultado de la publicación:\n\n' + results.join('\n'));
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+    this.disabled = false;
+    this.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Publicar en Tienda';
 });
 
 // Profile settings modal
