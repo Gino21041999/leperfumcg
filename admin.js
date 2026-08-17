@@ -105,8 +105,8 @@ function saveBusiness(business) {
 // Categories functions
 const CATEGORIES_KEY = 'leperfumcg_categories';
 const defaultCategories = [
-    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true },
-    { id: 2, name: 'Libro', icon: '📚', isDefault: true }
+    { id: 1, name: 'Perfume', isDefault: true },
+    { id: 2, name: 'Libro', isDefault: true }
 ];
 
 function getCategories() {
