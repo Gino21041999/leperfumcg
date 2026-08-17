@@ -425,7 +425,7 @@ function renderCategoriesList() {
             </div>
             <div class="category-item-actions">
                 <button class="btn-edit" onclick="editCategory(${cat.id})">Editar</button>
-                ${!cat.isDefault ? `<button class="btn-delete" onclick="deleteCategory(${cat.id})">Eliminar</button>` : ''}
+                <button class="btn-delete" onclick="deleteCategory(${cat.id})">Eliminar</button>
             </div>
         `;
         categoriesList.appendChild(item);
@@ -514,18 +514,21 @@ window.editCategory = function(id) {
 window.deleteCategory = function(id) {
     const categories = getCategories();
     const cat = categories.find(c => c.id === id);
-    if (!cat || cat.isDefault) return;
+    if (!cat) return;
     
     const products = getProducts();
     const productCount = products.filter(p => p.category === cat.name.toLowerCase()).length;
     
+    const fallbackCategory = categories.find(c => c.id !== id);
+    const fallbackName = fallbackCategory ? fallbackCategory.name.toLowerCase() : 'perfume';
+    
     if (productCount > 0) {
-        if (!confirm(`Hay ${productCount} producto(s) en "${cat.name}". Si eliminas esta categoría, los productos se cambiarán a "Perfume". ¿Continuar?`)) {
+        if (!confirm(`Hay ${productCount} producto(s) en "${cat.name}". Si eliminas esta categoría, los productos se moverán a "${fallbackCategory ? fallbackCategory.name : fallbackName}". ¿Continuar?`)) {
             return;
         }
         products.forEach(p => {
             if (p.category === cat.name.toLowerCase()) {
-                p.category = 'perfume';
+                p.category = fallbackName;
             }
         });
         saveProducts(products);
