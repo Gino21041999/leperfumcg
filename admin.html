@@ -28,6 +28,7 @@
             <nav class="admin-nav">
                 <button class="nav-btn active" data-section="products">Productos</button>
                 <button class="nav-btn" data-section="add">Agregar</button>
+                <button class="nav-btn" data-section="categories">Categorías</button>
                 <button class="nav-btn" data-section="business">Mi Negocio</button>
                 <a href="index.html" class="nav-btn view-site">Ver Sitio</a>
                 <button class="nav-btn logout" id="logoutBtn">Salir</button>
@@ -195,6 +196,38 @@
                     <button type="submit" class="btn-primary">Guardar Producto</button>
                 </div>
             </form>
+        </section>
+
+        <!-- Sección Categorías -->
+        <section class="section" id="categoriesSection" style="display: none;">
+            <div class="section-header">
+                <h2>Mis Categorías</h2>
+                <button class="btn-primary" id="addCategoryBtn">+ Nueva Categoría</button>
+            </div>
+            <p class="section-desc">Administra las categorías de productos de tu catálogo. Puedes agregar, editar o eliminar categorías.</p>
+            
+            <!-- Formulario nueva categoría -->
+            <div class="category-form-box" id="categoryFormBox" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre de la Categoría</label>
+                        <input type="text" id="categoryName" placeholder="Ej: Accesorios">
+                    </div>
+                    <div class="form-group">
+                        <label>Ícono (emoji)</label>
+                        <input type="text" id="categoryIcon" placeholder="Ej: 👜" maxlength="4">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelCategoryBtn">Cancelar</button>
+                    <button type="button" class="btn-primary" id="saveCategoryBtn">Guardar Categoría</button>
+                    <input type="hidden" id="editCategoryId">
+                </div>
+            </div>
+
+            <div class="categories-list" id="categoriesList">
+                <!-- Categorías se cargan dinámicamente -->
+            </div>
         </section>
 
         <!-- Sección Mi Negocio -->

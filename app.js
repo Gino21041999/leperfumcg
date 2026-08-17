@@ -44,6 +44,36 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('headerSlogan').textContent = business.slogan;
         document.title = business.name + ' - Catálogo';
         
+        // Populate category nav dynamically
+        const navContainer = document.querySelector('.nav');
+        navContainer.innerHTML = '';
+        
+        // "Todos" button
+        const allBtn = document.createElement('button');
+        allBtn.className = 'nav-btn active';
+        allBtn.dataset.filter = 'all';
+        allBtn.textContent = 'Todos';
+        navContainer.appendChild(allBtn);
+        
+        // Category buttons
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-btn';
+            btn.dataset.filter = cat.name.toLowerCase();
+            btn.textContent = cat.icon + ' ' + cat.name;
+            navContainer.appendChild(btn);
+        });
+        
+        // Re-attach event listeners
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.filter;
+                renderProducts();
+            });
+        });
+        
         let footerHTML = `&copy; 2026 ${business.name} - ${business.footer}`;
         document.getElementById('footerText').innerHTML = footerHTML;
         
@@ -227,15 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Category filter buttons
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            navBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentCategory = this.dataset.filter;
-            renderProducts();
-        });
-    });
-
     // Type filter chips
     document.querySelectorAll('.filter-chip[data-type]').forEach(chip => {
         chip.addEventListener('click', function() {

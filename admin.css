@@ -460,13 +460,16 @@ tr:hover {
 
 .image-preview {
     width: 100%;
-    height: 200px;
+    max-width: 250px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--primary-light);
+    border: 1px solid var(--border);
 }
 
 .image-preview img {
@@ -529,6 +532,83 @@ tr:hover {
     display: none;
 }
 
+/* Categories Section */
+.section-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.category-form-box {
+    background: var(--bg-card);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 25px;
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 20px;
+    transition: all 0.3s;
+}
+
+.category-item:hover {
+    border-color: var(--accent);
+}
+
+.category-item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.category-item-icon {
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    border-radius: 10px;
+}
+
+.category-item-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.category-item-count {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+.category-item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.category-item-default {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-style: italic;
+    margin-left: 10px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .admin-header {
@@ -573,7 +653,7 @@ tr:hover {
     }
 
     .image-preview {
-        height: 180px;
+        max-width: 200px;
     }
 
     .section-header {

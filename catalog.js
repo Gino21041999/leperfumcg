@@ -109,3 +109,19 @@ function getBusiness() {
 
 const products = getProducts();
 const business = getBusiness();
+
+// Categories
+const CATEGORIES_KEY = 'leperfumcg_categories';
+const defaultCategories = [
+    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true },
+    { id: 2, name: 'Libro', icon: '📚', isDefault: true }
+];
+
+function getCategories() {
+    const stored = localStorage.getItem(CATEGORIES_KEY);
+    if (stored) return JSON.parse(stored);
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaultCategories));
+    return defaultCategories;
+}
+
+const categories = getCategories();

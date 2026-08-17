@@ -71,6 +71,36 @@ function saveBusiness(business) {
     localStorage.setItem(BUSINESS_KEY, JSON.stringify(business));
 }
 
+// Categories functions
+const CATEGORIES_KEY = 'leperfumcg_categories';
+const defaultCategories = [
+    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true },
+    { id: 2, name: 'Libro', icon: '📚', isDefault: true }
+];
+
+function getCategories() {
+    const stored = localStorage.getItem(CATEGORIES_KEY);
+    if (stored) return JSON.parse(stored);
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaultCategories));
+    return defaultCategories;
+}
+
+function saveCategories(categories) {
+    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
+}
+
+function populateCategorySelect() {
+    const categories = getCategories();
+    const select = document.getElementById('productCategory');
+    select.innerHTML = '';
+    categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.name.toLowerCase();
+        option.textContent = cat.icon + ' ' + cat.name;
+        select.appendChild(option);
+    });
+}
+
 // DOM Elements
 const loginContainer = document.getElementById('loginContainer');
 const adminPanel = document.getElementById('adminPanel');
@@ -98,6 +128,17 @@ const filterCategory = document.getElementById('filterCategory');
 const filterType = document.getElementById('filterType');
 const filterGender = document.getElementById('filterGender');
 
+// Categories elements
+const categoriesSection = document.getElementById('categoriesSection');
+const categoriesList = document.getElementById('categoriesList');
+const addCategoryBtn = document.getElementById('addCategoryBtn');
+const categoryFormBox = document.getElementById('categoryFormBox');
+const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
+const saveCategoryBtn = document.getElementById('saveCategoryBtn');
+const categoryNameInput = document.getElementById('categoryName');
+const categoryIconInput = document.getElementById('categoryIcon');
+const editCategoryId = document.getElementById('editCategoryId');
+
 let currentImageData = '';
 
 // Check if already logged in
@@ -120,7 +161,10 @@ loginForm.addEventListener('submit', function(e) {
 function showAdminPanel() {
     loginContainer.style.display = 'none';
     adminPanel.style.display = 'block';
+    populateCategorySelect();
+    populateFilterCategory();
     renderProductsTable();
+    renderCategoriesList();
     loadBusinessInfo();
 }
 
@@ -140,6 +184,7 @@ navBtns.forEach(btn => {
         const section = this.dataset.section;
         productsSection.style.display = 'none';
         formSection.style.display = 'none';
+        categoriesSection.style.display = 'none';
         businessSection.style.display = 'none';
         
         if (section === 'products') {
@@ -147,6 +192,9 @@ navBtns.forEach(btn => {
         } else if (section === 'add') {
             resetForm();
             formSection.style.display = 'block';
+        } else if (section === 'categories') {
+            categoriesSection.style.display = 'block';
+            renderCategoriesList();
         } else if (section === 'business') {
             businessSection.style.display = 'block';
         }
@@ -155,10 +203,158 @@ navBtns.forEach(btn => {
 
 // Show/hide type and gender based on category
 document.getElementById('productCategory').addEventListener('change', function() {
-    const isPerfume = this.value === 'perfume';
+    const categories = getCategories();
+    const cat = categories.find(c => c.name.toLowerCase() === this.value);
+    const isPerfume = cat && cat.name.toLowerCase() === 'perfume';
     document.getElementById('typeGroup').style.display = isPerfume ? 'block' : 'none';
     document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
 });
+
+// Populate filter category dropdown
+function populateFilterCategory() {
+    const categories = getCategories();
+    filterCategory.innerHTML = '<option value="all">Todas las categorías</option>';
+    categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.name.toLowerCase();
+        option.textContent = cat.icon + ' ' + cat.name;
+        filterCategory.appendChild(option);
+    });
+}
+
+// Categories management
+function renderCategoriesList() {
+    const categories = getCategories();
+    const products = getProducts();
+    categoriesList.innerHTML = '';
+    
+    categories.forEach(cat => {
+        const productCount = products.filter(p => p.category === cat.name.toLowerCase()).length;
+        const item = document.createElement('div');
+        item.className = 'category-item';
+        item.innerHTML = `
+            <div class="category-item-info">
+                <div class="category-item-icon">${cat.icon}</div>
+                <div>
+                    <div class="category-item-name">${cat.name}${cat.isDefault ? '<span class="category-item-default">(default)</span>' : ''}</div>
+                    <div class="category-item-count">${productCount} producto${productCount !== 1 ? 's' : ''}</div>
+                </div>
+            </div>
+            <div class="category-item-actions">
+                <button class="btn-edit" onclick="editCategory(${cat.id})">Editar</button>
+                ${!cat.isDefault ? `<button class="btn-delete" onclick="deleteCategory(${cat.id})">Eliminar</button>` : ''}
+            </div>
+        `;
+        categoriesList.appendChild(item);
+    });
+}
+
+addCategoryBtn.addEventListener('click', function() {
+    categoryFormBox.style.display = 'block';
+    categoryNameInput.value = '';
+    categoryIconInput.value = '';
+    editCategoryId.value = '';
+    addCategoryBtn.style.display = 'none';
+});
+
+cancelCategoryBtn.addEventListener('click', function() {
+    categoryFormBox.style.display = 'none';
+    addCategoryBtn.style.display = 'block';
+});
+
+saveCategoryBtn.addEventListener('click', function() {
+    const name = categoryNameInput.value.trim();
+    const icon = categoryIconInput.value.trim() || '📦';
+    
+    if (!name) {
+        alert('Ingresa un nombre para la categoría');
+        return;
+    }
+    
+    const categories = getCategories();
+    const editId = editCategoryId.value;
+    
+    if (editId) {
+        const index = categories.findIndex(c => c.id === parseInt(editId));
+        if (index !== -1) {
+            const oldName = categories[index].name.toLowerCase();
+            categories[index].name = name;
+            categories[index].icon = icon;
+            
+            // Update products with old category name
+            if (oldName !== name.toLowerCase()) {
+                const products = getProducts();
+                products.forEach(p => {
+                    if (p.category === oldName) {
+                        p.category = name.toLowerCase();
+                    }
+                });
+                saveProducts(products);
+            }
+        }
+    } else {
+        const exists = categories.some(c => c.name.toLowerCase() === name.toLowerCase());
+        if (exists) {
+            alert('Ya existe una categoría con ese nombre');
+            return;
+        }
+        categories.push({
+            id: Date.now(),
+            name: name,
+            icon: icon,
+            isDefault: false
+        });
+    }
+    
+    saveCategories(categories);
+    populateCategorySelect();
+    populateFilterCategory();
+    renderCategoriesList();
+    renderProductsTable();
+    
+    categoryFormBox.style.display = 'none';
+    addCategoryBtn.style.display = 'block';
+});
+
+window.editCategory = function(id) {
+    const categories = getCategories();
+    const cat = categories.find(c => c.id === id);
+    if (cat) {
+        categoryNameInput.value = cat.name;
+        categoryIconInput.value = cat.icon;
+        editCategoryId.value = cat.id;
+        categoryFormBox.style.display = 'block';
+        addCategoryBtn.style.display = 'none';
+    }
+};
+
+window.deleteCategory = function(id) {
+    const categories = getCategories();
+    const cat = categories.find(c => c.id === id);
+    if (!cat || cat.isDefault) return;
+    
+    const products = getProducts();
+    const productCount = products.filter(p => p.category === cat.name.toLowerCase()).length;
+    
+    if (productCount > 0) {
+        if (!confirm(`Hay ${productCount} producto(s) en "${cat.name}". Si eliminas esta categoría, los productos se cambiarán a "Perfume". ¿Continuar?`)) {
+            return;
+        }
+        products.forEach(p => {
+            if (p.category === cat.name.toLowerCase()) {
+                p.category = 'perfume';
+            }
+        });
+        saveProducts(products);
+    }
+    
+    const newCategories = categories.filter(c => c.id !== id);
+    saveCategories(newCategories);
+    populateCategorySelect();
+    populateFilterCategory();
+    renderCategoriesList();
+    renderProductsTable();
+};
 
 // Image upload
 imageUpload.addEventListener('click', function() {
