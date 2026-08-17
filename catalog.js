@@ -14,7 +14,10 @@ const defaultProducts = [
         description: "Una fragancia misteriosa y elegante. Notas de oud, pimienta negra, rosa Damasco y ámbar oscuro.",
         features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"],
         image: "",
-        tags: ["nuevo", "exclusivo"]
+        tags: ["nuevo", "exclusivo"],
+        sku: "PERF-001",
+        stock: 10,
+        condition: "new"
     },
     {
         id: 2,
@@ -28,7 +31,10 @@ const defaultProducts = [
         description: "Fresca, aromática y magnética. Notas de limón, menta, jengibre y sándalo.",
         features: ["Frasco de diseño exclusivo", "100ml Eau de Parfum", "Duración: 8-10 horas", "Original importado"],
         image: "",
-        tags: ["bestseller"]
+        tags: ["bestseller"],
+        sku: "PERF-002",
+        stock: 5,
+        condition: "new"
     },
     {
         id: 3,
@@ -42,7 +48,10 @@ const defaultProducts = [
         description: "Un estallido de flores. Notas de patchouli, rosa, peonia y moscata.",
         features: ["100ml Eau de Parfum", "Duración: 10-12 horas", "Frasco icónico", "Original"],
         image: "",
-        tags: ["popular"]
+        tags: ["popular"],
+        sku: "PERF-003",
+        stock: 8,
+        condition: "new"
     },
     {
         id: 4,
@@ -56,7 +65,10 @@ const defaultProducts = [
         description: "Réplica de alta calidad del clásico amber oud. Notas amaderadas y especiadas.",
         features: ["100ml", "Duración: 6-8 horas", "Réplica premium", "Frasco premium"],
         image: "",
-        tags: ["oferta"]
+        tags: ["oferta"],
+        sku: "PERF-004",
+        stock: 12,
+        condition: "new"
     },
     {
         id: 5,
@@ -70,7 +82,10 @@ const defaultProducts = [
         description: "Fragancia artesanal hecha a mano con ingredientes naturales locales.",
         features: ["30ml frasco artesanal", "Ingredientes naturales", "Duración: 4-6 horas", "Edición limitada"],
         image: "",
-        tags: ["artesanal", "local"]
+        tags: ["artesanal", "local"],
+        sku: "PERF-005",
+        stock: 3,
+        condition: "new"
     }
 ];
 

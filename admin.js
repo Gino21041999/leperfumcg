@@ -1,6 +1,6 @@
-const ADMIN_PASSWORD = 'admin123';
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
+const USERS_KEY = 'leperfumcg_users';
 
 const defaultBusiness = {
     name: 'LE PERFUM CG',
@@ -18,6 +18,27 @@ const defaultBusiness = {
     footer: 'Todos los derechos reservados'
 };
 
+// Users system
+const defaultUsers = [
+    { id: 1, email: 'admin@leperfumcg.com', password: 'admin123', name: 'Administrador', role: 'admin' }
+];
+
+function getUsers() {
+    const stored = localStorage.getItem(USERS_KEY);
+    if (stored) return JSON.parse(stored);
+    localStorage.setItem(USERS_KEY, JSON.stringify(defaultUsers));
+    return defaultUsers;
+}
+
+function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+function loginUser(email, password) {
+    const users = getUsers();
+    return users.find(u => u.email === email && u.password === password);
+}
+
 const defaultProducts = [
     {
         id: 1,
@@ -31,7 +52,10 @@ const defaultProducts = [
         description: "Una fragancia misteriosa y elegante. Notas de oud, pimienta negra y ámbar oscuro.",
         features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"],
         image: "",
-        tags: ["nuevo", "exclusivo"]
+        tags: ["nuevo", "exclusivo"],
+        sku: "PERF-001",
+        stock: 10,
+        condition: "new"
     },
     {
         id: 2,
@@ -45,7 +69,10 @@ const defaultProducts = [
         description: "Fresca, aromática y magnética. Notas de limón, menta, jengibre y sándalo.",
         features: ["100ml Eau de Parfum", "Duración: 8-10 horas", "Original importado"],
         image: "",
-        tags: ["bestseller"]
+        tags: ["bestseller"],
+        sku: "PERF-002",
+        stock: 5,
+        condition: "new"
     }
 ];
 
@@ -139,6 +166,19 @@ const categoryNameInput = document.getElementById('categoryName');
 const categoryIconInput = document.getElementById('categoryIcon');
 const editCategoryId = document.getElementById('editCategoryId');
 
+// Users elements
+const usersSection = document.getElementById('usersSection');
+const usersList = document.getElementById('usersList');
+const addUserBtn = document.getElementById('addUserBtn');
+const userFormBox = document.getElementById('userFormBox');
+const cancelUserBtn = document.getElementById('cancelUserBtn');
+const saveUserBtn = document.getElementById('saveUserBtn');
+const userEmailInput = document.getElementById('userEmail');
+const userPasswordInput = document.getElementById('userPassword');
+const userNameInput = document.getElementById('userName');
+const userRoleInput = document.getElementById('userRole');
+const editUserId = document.getElementById('editUserId');
+
 let currentImageData = '';
 
 // Check if already logged in
@@ -149,12 +189,16 @@ if (sessionStorage.getItem('admin_logged_in')) {
 // Login
 loginForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    const password = document.getElementById('password').value;
-    if (password === ADMIN_PASSWORD) {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    const user = loginUser(email, password);
+    if (user) {
         sessionStorage.setItem('admin_logged_in', 'true');
+        sessionStorage.setItem('current_user', JSON.stringify(user));
         showAdminPanel();
     } else {
-        alert('Contraseña incorrecta');
+        alert('Correo o contraseña incorrectos');
     }
 });
 
@@ -165,12 +209,14 @@ function showAdminPanel() {
     populateFilterCategory();
     renderProductsTable();
     renderCategoriesList();
+    renderUsersList();
     loadBusinessInfo();
 }
 
 // Logout
 logoutBtn.addEventListener('click', function() {
     sessionStorage.removeItem('admin_logged_in');
+    sessionStorage.removeItem('current_user');
     loginContainer.style.display = 'flex';
     adminPanel.style.display = 'none';
 });
@@ -185,6 +231,7 @@ navBtns.forEach(btn => {
         productsSection.style.display = 'none';
         formSection.style.display = 'none';
         categoriesSection.style.display = 'none';
+        usersSection.style.display = 'none';
         businessSection.style.display = 'none';
         
         if (section === 'products') {
@@ -195,6 +242,9 @@ navBtns.forEach(btn => {
         } else if (section === 'categories') {
             categoriesSection.style.display = 'block';
             renderCategoriesList();
+        } else if (section === 'users') {
+            usersSection.style.display = 'block';
+            renderUsersList();
         } else if (section === 'business') {
             businessSection.style.display = 'block';
         }
@@ -452,6 +502,137 @@ window.deleteCategory = function(id) {
     renderProductsTable();
 };
 
+// Users management
+function renderUsersList() {
+    const users = getUsers();
+    usersList.innerHTML = '';
+    
+    users.forEach(user => {
+        const item = document.createElement('div');
+        item.className = 'category-item';
+        item.innerHTML = `
+            <div class="category-item-info">
+                <div class="category-item-icon">${user.role === 'admin' ? '👑' : '👤'}</div>
+                <div>
+                    <div class="category-item-name">${user.name}</div>
+                    <div class="category-item-count">${user.email} • ${user.role === 'admin' ? 'Administrador' : 'Editor'}</div>
+                </div>
+            </div>
+            <div class="category-item-actions">
+                <button class="btn-edit" onclick="editUser(${user.id})">Editar</button>
+                <button class="btn-delete" onclick="deleteUser(${user.id})">Eliminar</button>
+            </div>
+        `;
+        usersList.appendChild(item);
+    });
+}
+
+addUserBtn.addEventListener('click', function() {
+    userFormBox.style.display = 'block';
+    userEmailInput.value = '';
+    userPasswordInput.value = '';
+    userNameInput.value = '';
+    userRoleInput.value = 'editor';
+    editUserId.value = '';
+    addUserBtn.style.display = 'none';
+    document.getElementById('userFormTitle').textContent = 'Nuevo Usuario';
+});
+
+cancelUserBtn.addEventListener('click', function() {
+    userFormBox.style.display = 'none';
+    addUserBtn.style.display = 'block';
+});
+
+saveUserBtn.addEventListener('click', function() {
+    const email = userEmailInput.value.trim();
+    const password = userPasswordInput.value;
+    const name = userNameInput.value.trim();
+    const role = userRoleInput.value;
+    const editId = editUserId.value;
+    
+    if (!email || !password || !name) {
+        alert('Completa todos los campos');
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        alert('Ingresa un correo válido');
+        return;
+    }
+    
+    if (password.length < 6) {
+        alert('La contraseña debe tener al menos 6 caracteres');
+        return;
+    }
+    
+    const users = getUsers();
+    
+    if (editId) {
+        const index = users.findIndex(u => u.id === parseInt(editId));
+        if (index !== -1) {
+            users[index].email = email;
+            users[index].password = password;
+            users[index].name = name;
+            users[index].role = role;
+        }
+    } else {
+        const exists = users.some(u => u.email === email);
+        if (exists) {
+            alert('Ya existe un usuario con ese correo');
+            return;
+        }
+        users.push({
+            id: Date.now(),
+            email: email,
+            password: password,
+            name: name,
+            role: role
+        });
+    }
+    
+    saveUsers(users);
+    renderUsersList();
+    
+    userFormBox.style.display = 'none';
+    addUserBtn.style.display = 'block';
+});
+
+window.editUser = function(id) {
+    const users = getUsers();
+    const user = users.find(u => u.id === id);
+    if (user) {
+        userEmailInput.value = user.email;
+        userPasswordInput.value = user.password;
+        userNameInput.value = user.name;
+        userRoleInput.value = user.role;
+        editUserId.value = user.id;
+        userFormBox.style.display = 'block';
+        addUserBtn.style.display = 'none';
+        document.getElementById('userFormTitle').textContent = 'Editar Usuario';
+    }
+};
+
+window.deleteUser = function(id) {
+    const users = getUsers();
+    const currentUser = JSON.parse(sessionStorage.getItem('current_user'));
+    
+    if (currentUser && currentUser.id === id) {
+        alert('No puedes eliminar tu propia cuenta');
+        return;
+    }
+    
+    if (users.length <= 1) {
+        alert('Debe haber al menos un usuario');
+        return;
+    }
+    
+    if (confirm('¿Eliminar este usuario?')) {
+        const newUsers = users.filter(u => u.id !== id);
+        saveUsers(newUsers);
+        renderUsersList();
+    }
+};
+
 // Image upload
 imageUpload.addEventListener('click', function() {
     productImageInput.click();
@@ -531,6 +712,9 @@ function renderProductsTable() {
             <td>${genderLabel}</td>
             <td>${priceHTML}</td>
             <td>${product.discount > 0 ? product.discount + '%' : '-'}</td>
+            <td>${product.sku || '-'}</td>
+            <td>${product.stock || 0}</td>
+            <td>${product.condition === 'new' ? 'Nuevo' : 'Usado'}</td>
             <td class="actions-btn">
                 <button class="btn-edit" onclick="editProduct(${product.id})">Editar</button>
                 <button class="btn-delete" onclick="deleteProduct(${product.id})">Eliminar</button>
@@ -568,6 +752,9 @@ function resetForm() {
     document.getElementById('typeGroup').style.display = 'block';
     document.getElementById('genderGroup').style.display = 'block';
     document.querySelectorAll('input[name="productType"]').forEach(cb => cb.checked = false);
+    document.getElementById('productSku').value = '';
+    document.getElementById('productStock').value = '0';
+    document.getElementById('productCondition').value = 'new';
 }
 
 // Edit product
@@ -586,6 +773,9 @@ window.editProduct = function(id) {
         document.getElementById('productFeatures').value = (product.features || []).join('\n');
         document.getElementById('productTags').value = (product.tags || []).join(', ');
         document.getElementById('productGender').value = product.gender || 'unisex';
+        document.getElementById('productSku').value = product.sku || '';
+        document.getElementById('productStock').value = product.stock || 0;
+        document.getElementById('productCondition').value = product.condition || 'new';
         
         // Type checkboxes
         document.querySelectorAll('input[name="productType"]').forEach(cb => {
@@ -651,7 +841,10 @@ productForm.addEventListener('submit', function(e) {
         description: document.getElementById('productDescription').value,
         features: features,
         image: currentImageData,
-        tags: tags
+        tags: tags,
+        sku: document.getElementById('productSku').value,
+        stock: parseInt(document.getElementById('productStock').value) || 0,
+        condition: document.getElementById('productCondition').value
     };
     
     if (productId) {

@@ -11,13 +11,12 @@
     <!-- Login -->
     <div class="login-container" id="loginContainer">
         <div class="login-box">
-            <h1>LE PERFUM CG</h1>
-            <p>Panel de Administración</p>
+            <h1>Admin</h1>
             <form id="loginForm">
-                <input type="password" id="password" placeholder="Contraseña" required>
+                <input type="email" id="loginEmail" placeholder="Correo" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
                 <button type="submit">Entrar</button>
             </form>
-            <p class="hint">Contraseña: admin123</p>
         </div>
     </div>
 
@@ -29,6 +28,7 @@
                 <button class="nav-btn active" data-section="products">Productos</button>
                 <button class="nav-btn" data-section="add">Agregar</button>
                 <button class="nav-btn" data-section="categories">Categorías</button>
+                <button class="nav-btn" data-section="users">Usuarios</button>
                 <button class="nav-btn" data-section="business">Mi Negocio</button>
                 <a href="index.html" class="nav-btn view-site">Ver Sitio</a>
                 <button class="nav-btn logout" id="logoutBtn">Salir</button>
@@ -74,6 +74,9 @@
                             <th>Género</th>
                             <th>Precio</th>
                             <th>Dto.</th>
+                            <th>SKU</th>
+                            <th>Stock</th>
+                            <th>Condición</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -173,6 +176,25 @@
                     </div>
                 </div>
 
+                <!-- SKU, Stock y Condición -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>SKU</label>
+                        <input type="text" id="productSku" placeholder="Ej: PERF-001">
+                    </div>
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" id="productStock" placeholder="0" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Condición</label>
+                        <select id="productCondition">
+                            <option value="new">Nuevo</option>
+                            <option value="used">Usado</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Descripción -->
                 <div class="form-group">
                     <div class="description-header">
@@ -232,6 +254,45 @@
             <div class="categories-list" id="categoriesList">
                 <!-- Categorías se cargan dinámicamente -->
             </div>
+        </section>
+
+        <!-- Sección Usuarios -->
+        <section class="section" id="usersSection" style="display: none;">
+            <div class="section-header">
+                <h2>Gestión de Usuarios</h2>
+                <button class="btn-primary" id="addUserBtn">+ Nuevo Usuario</button>
+            </div>
+
+            <!-- Formulario de usuario -->
+            <div class="category-form-box" id="userFormBox" style="display: none;">
+                <h3 id="userFormTitle">Nuevo Usuario</h3>
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label>Correo</label>
+                    <input type="email" id="userEmail" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="userPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="userName" placeholder="Nombre del usuario" required>
+                </div>
+                <div class="form-group">
+                    <label>Rol</label>
+                    <select id="userRole">
+                        <option value="editor">Editor (puede editar productos)</option>
+                        <option value="admin">Administrador (acceso total)</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-save" id="saveUserBtn">Guardar</button>
+                    <button type="button" class="btn-cancel" id="cancelUserBtn">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="users-list" id="usersList"></div>
         </section>
 
         <!-- Sección Mi Negocio -->

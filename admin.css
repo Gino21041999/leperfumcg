@@ -39,48 +39,45 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, var(--primary) 0%, var(--primary-medium) 100%);
+    background: var(--bg-primary);
     padding: 20px;
 }
 
 .login-box {
     background: var(--bg-card);
-    padding: 55px 45px;
-    border-radius: 16px;
+    padding: 30px;
+    border-radius: 12px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 420px;
+    max-width: 320px;
     border: 1px solid var(--border);
 }
 
 .login-box h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    color: var(--accent);
+    font-size: 1.2rem;
+    color: var(--text-muted);
     margin-bottom: 8px;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
+    font-weight: 400;
 }
 
 .login-box > p {
-    color: var(--text-muted);
-    margin-bottom: 35px;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    display: none;
 }
 
 .login-box form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .login-box input {
-    padding: 16px;
+    padding: 12px;
     border: 1px solid var(--border);
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: inherit;
     background: var(--primary-light);
     color: var(--text-primary);
@@ -90,16 +87,16 @@ body {
 .login-box input:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 .login-box button {
-    padding: 16px;
+    padding: 12px;
     background: var(--accent);
     color: var(--primary);
     border: none;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -154,6 +151,62 @@ body {
     font-size: 0.75rem;
     margin-top: 5px;
     font-style: italic;
+}
+
+/* Users Section */
+.users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 20px;
+    transition: all 0.3s;
+}
+
+.user-item:hover {
+    border-color: var(--accent);
+}
+
+.user-item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-item-icon {
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    border-radius: 10px;
+}
+
+.user-item-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.user-item-email {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+.user-item-actions {
+    display: flex;
+    gap: 8px;
 }
 
 /* Admin Panel */
