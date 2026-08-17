@@ -936,6 +936,56 @@ productForm.addEventListener('submit', function(e) {
     document.querySelector('[data-section="products"]').classList.add('active');
 });
 
+// ---- Export / Import ----
+document.getElementById('exportDataBtn').addEventListener('click', function() {
+    const data = {
+        products: getProducts(),
+        business: getBusiness(),
+        categories: getCategories(),
+        exportedAt: new Date().toISOString(),
+        version: '1.0'
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'leperfumcg-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+document.getElementById('importDataBtn').addEventListener('click', function() {
+    document.getElementById('importFileInput').click();
+});
+
+document.getElementById('importFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        try {
+            const data = JSON.parse(ev.target.result);
+            if (data.products) {
+                if (confirm('Esto reemplazará todos los productos actuales (' + getProducts().length + ' productos) con los del archivo (' + data.products.length + ' productos). ¿Continuar?')) {
+                    saveProducts(data.products);
+                    renderProductsTable();
+                    alert('Productos importados correctamente: ' + data.products.length + ' productos');
+                }
+            }
+            if (data.business) {
+                localStorage.setItem(BUSINESS_KEY, JSON.stringify(data.business));
+            }
+            if (data.categories) {
+                localStorage.setItem(CATEGORIES_KEY, JSON.stringify(data.categories));
+            }
+        } catch (err) {
+            alert('Error al leer el archivo: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+    this.value = '';
+});
+
 // Load business info
 function loadBusinessInfo() {
     const business = getBusiness();
