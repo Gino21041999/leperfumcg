@@ -18,10 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ---- Price Formatting ----
     function formatPrice(price) {
         if (typeof price !== 'number') price = parseFloat(price) || 0;
-        if (business.currency === 'HNL') {
-            return 'L. ' + (price * (business.exchangeRate || 24.50)).toFixed(2);
-        }
-        return '$ ' + price.toFixed(2);
+        return 'L. ' + (price * (business.exchangeRate || 24.50)).toFixed(2);
     }
 
     function getFinalPrice(product) {
@@ -41,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.title = business.name + ' - Perfumería Fina';
 
         // Currency label
-        document.getElementById('currencyLabel').textContent = business.currency === 'HNL' ? 'L.' : '$';
+        document.getElementById('currencyLabel').textContent = 'L.';
 
         // Category nav
         const mainNav = document.getElementById('mainNav');
@@ -392,14 +389,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (wishlist.length > 0) { el.textContent = wishlist.length; el.style.display = 'flex'; }
         else { el.style.display = 'none'; }
     }
-
-    // ---- Currency Toggle ----
-    document.getElementById('currencyToggle').addEventListener('click', function() {
-        if (business.currency === 'HNL') business.currency = 'USD';
-        else business.currency = 'HNL';
-        document.getElementById('currencyLabel').textContent = business.currency === 'HNL' ? 'L.' : '$';
-        renderProducts();
-    });
 
     // ---- Search ----
     const searchWrapper = document.getElementById('searchWrapper');
