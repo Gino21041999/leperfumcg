@@ -1,6 +1,12 @@
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
 const CATEGORIES_KEY = 'leperfumcg_categories';
+const BRANDS_KEY = 'leperfumcg_brands';
+const ORDERS_KEY = 'leperfumcg_orders';
+const CUSTOMERS_KEY = 'leperfumcg_customers';
+const REVIEWS_KEY = 'leperfumcg_reviews';
+const COUPONS_KEY = 'leperfumcg_coupons';
+const BANNERS_KEY = 'leperfumcg_banners';
 const GITHUB_TOKEN_KEY = 'leperfumcg_github_token';
 const REPO_OWNER = 'LEPERFUMCG';
 const REPO_NAME = 'leperfumcg';
@@ -14,7 +20,8 @@ const defaultProducts = [
         discount: 10, description: "Una fragancia misteriosa y elegante. Notas de oud, pimienta negra, rosa Damasco y ámbar oscuro.",
         features: ["Vidrio artesanal italiano", "50ml de concentración pura", "Duración: 8-12 horas", "Edición limitada"],
         notes: { top: "Pimienta negra, Azafrán", heart: "Oud, Rosa Damasco", base: "Ámbar oscuro, almizcle" },
-        image: "", tags: ["nuevo", "exclusivo"], sku: "PERF-001", stock: 10, condition: "new"
+        image: "", tags: ["nuevo", "exclusivo"], sku: "PERF-001", stock: 10, condition: "new",
+        rating: 4.8, reviewCount: 24
     },
     {
         id: 2, name: "Bleu de Chanel", category: "perfume", type: ["disenador"], gender: "hombre",
@@ -22,7 +29,8 @@ const defaultProducts = [
         discount: 0, description: "Fresca, aromática y magnética. Notas de limón, menta, jengibre y sándalo.",
         features: ["Frasco de diseño exclusivo", "100ml Eau de Parfum", "Duración: 8-10 horas", "Original importado"],
         notes: { top: "Limón, Menta", heart: "Jengibre, Melón", base: "Sándalo, Incienso" },
-        image: "", tags: ["bestseller"], sku: "PERF-002", stock: 5, condition: "new"
+        image: "", tags: ["bestseller"], sku: "PERF-002", stock: 5, condition: "new",
+        rating: 4.9, reviewCount: 42
     },
     {
         id: 3, name: "FlowerBomb", category: "perfume", type: ["disenador"], gender: "mujer",
@@ -30,7 +38,8 @@ const defaultProducts = [
         discount: 5, description: "Un estallido de flores. Notas de patchouli, rosa, peonia y moscata.",
         features: ["100ml Eau de Parfum", "Duración: 10-12 horas", "Frasco icónico", "Original"],
         notes: { top: "Rosa, Peonia", heart: "Jazmín, Violeta", base: "Patchouli, Almizcle" },
-        image: "", tags: ["popular"], sku: "PERF-003", stock: 8, condition: "new"
+        image: "", tags: ["popular"], sku: "PERF-003", stock: 8, condition: "new",
+        rating: 4.7, reviewCount: 31
     },
     {
         id: 4, name: "Amber Oud Gold", category: "perfume", type: ["arabe", "replica"], gender: "hombre",
@@ -38,7 +47,8 @@ const defaultProducts = [
         discount: 15, description: "Réplica de alta calidad del clásico amber oud. Notas amaderadas y especiadas.",
         features: ["100ml", "Duración: 6-8 horas", "Réplica premium", "Frasco premium"],
         notes: { top: "Geranio, Bergamota", heart: "Oud, Especias", base: "Ámbar, Ámbar gris" },
-        image: "", tags: ["oferta"], sku: "PERF-004", stock: 12, condition: "new"
+        image: "", tags: ["oferta"], sku: "PERF-004", stock: 12, condition: "new",
+        rating: 4.5, reviewCount: 18
     },
     {
         id: 5, name: "Clásico Artesanal", category: "perfume", type: ["artesanal"], gender: "unisex",
@@ -46,16 +56,18 @@ const defaultProducts = [
         discount: 0, description: "Fragancia artesanal hecha a mano con ingredientes naturales locales.",
         features: ["30ml frasco artesanal", "Ingredientes naturales", "Duración: 4-6 horas", "Edición limitada"],
         notes: { top: "Limón, Naranja", heart: "Lavanda, Hierbabuena", base: "Vainilla, Cedro" },
-        image: "", tags: ["artesanal", "local"], sku: "PERF-005", stock: 3, condition: "new"
+        image: "", tags: ["artesanal", "local"], sku: "PERF-005", stock: 3, condition: "new",
+        rating: 4.3, reviewCount: 12
     }
 ];
 
 const defaultBusiness = {
-    name: 'LE PERFUM CG', slogan: 'Perfumes & Libros de Autor',
+    name: 'LE PERFUM CG', slogan: 'Perfumería Fina & Esencias de Autor',
     phone: '+504 8888-8888', whatsapp: '+504 8888-8888',
     email: 'leperfumcg@email.com', address: 'San Pedro Sula, Honduras',
     currency: 'HNL', exchangeRate: 24.50, globalDiscount: 0,
-    facebook: '', instagram: '', tiktok: '', footer: 'Todos los derechos reservados'
+    facebook: '', instagram: '', tiktok: '', footer: 'Todos los derechos reservados',
+    shippingCost: 150, freeShippingMin: 1000
 };
 
 const defaultCategories = [
@@ -63,12 +75,31 @@ const defaultCategories = [
     { id: 2, name: 'Libro', icon: '📚', isDefault: true }
 ];
 
+const defaultBrands = [
+    { id: 1, name: 'Attar Collection', logo: '', description: 'Perfumes árabes artesanales', active: true },
+    { id: 2, name: 'Chanel', logo: '', description: 'Diseñador francés de lujo', active: true },
+    { id: 3, name: 'Viktor & Rolf', logo: '', description: 'Alta costura y perfumería', active: true },
+    { id: 4, name: 'Al Haramain', logo: '', description: 'Perfumes árabes premium', active: true },
+    { id: 5, name: 'Casa Local', logo: '', description: 'Perfumería artesanal local', active: true }
+];
+
+const defaultOrders = [];
+const defaultCustomers = [];
+const defaultReviews = [];
+const defaultCoupons = [];
+const defaultBanners = [];
+
 function migrateProduct(p) {
     if (!p.olfactory) p.olfactory = '';
     if (!p.occasion) p.occasion = '';
     if (!p.notes) p.notes = { top: '', heart: '', base: '' };
     if (!p.condition) p.condition = 'new';
     if (p.stock === undefined) p.stock = 0;
+    if (p.rating === undefined) p.rating = 4.5;
+    if (p.reviewCount === undefined) p.reviewCount = 0;
+    if (!p.size) p.size = '';
+    if (!p.concentration) p.concentration = '';
+    if (!p.origin) p.origin = '';
     return p;
 }
 
@@ -135,9 +166,60 @@ function getCategoriesLocal() {
     return defaultCategories;
 }
 
+function getBrandsLocal() {
+    const stored = localStorage.getItem(BRANDS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultBrands;
+}
+
+function getOrdersLocal() {
+    const stored = localStorage.getItem(ORDERS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultOrders;
+}
+
+function getCustomersLocal() {
+    const stored = localStorage.getItem(CUSTOMERS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultCustomers;
+}
+
+function getReviewsLocal() {
+    const stored = localStorage.getItem(REVIEWS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultReviews;
+}
+
+function getCouponsLocal() {
+    const stored = localStorage.getItem(COUPONS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultCoupons;
+}
+
+function getBannersLocal() {
+    const stored = localStorage.getItem(BANNERS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultBanners;
+}
+
+function getAllLocal() {
+    return {
+        products: getProductsLocal(),
+        business: getBusinessLocal(),
+        categories: getCategoriesLocal(),
+        brands: getBrandsLocal(),
+        orders: getOrdersLocal(),
+        customers: getCustomersLocal(),
+        reviews: getReviewsLocal(),
+        coupons: getCouponsLocal(),
+        banners: getBannersLocal()
+    };
+}
+
 let products = getProductsLocal();
 let business = getBusinessLocal();
 let categories = getCategoriesLocal();
+let brands = getBrandsLocal();
 
 async function initCatalog() {
     products = await loadProducts();
@@ -190,11 +272,22 @@ async function pushToGitHub(path, data, message) {
 
 async function saveAndPublish() {
     const results = [];
-    const r1 = await pushToGitHub('data/products.json', products, 'Update products from admin panel');
-    results.push('Productos: ' + (r1.ok ? 'OK' : r1.error));
-    const r2 = await pushToGitHub('data/business.json', business, 'Update business info from admin panel');
+    const allData = getAllLocal();
+    const r1 = await pushToGitHub('data/products.json', allData.products, 'Update products from admin panel');
+    results.push('Productos: ' + (r1.ok ? 'OK (' + allData.products.length + ')' : r1.error));
+    const r2 = await pushToGitHub('data/business.json', allData.business, 'Update business info from admin panel');
     results.push('Negocio: ' + (r2.ok ? 'OK' : r2.error));
-    const r3 = await pushToGitHub('data/categories.json', categories, 'Update categories from admin panel');
+    const r3 = await pushToGitHub('data/categories.json', allData.categories, 'Update categories from admin panel');
     results.push('Categorías: ' + (r3.ok ? 'OK' : r3.error));
     return results;
+}
+
+function toast(msg, type) {
+    type = type || 'success';
+    var t = document.createElement('div');
+    t.className = 'toast toast-' + type;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function() { t.classList.add('show'); });
+    setTimeout(function() { t.classList.remove('show'); setTimeout(function() { t.remove(); }, 300); }, 2500);
 }

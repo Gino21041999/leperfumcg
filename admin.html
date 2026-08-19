@@ -8,19 +8,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <!-- Login -->
     <div class="login-container" id="loginContainer">
         <div class="login-box">
             <div class="login-brand">
-                <svg class="login-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="login-icon" viewBox="0 0 60 60" fill="none">
                     <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
                     <rect x="22" y="4" width="16" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
                     <line x1="30" y1="46" x2="30" y2="54" stroke="currentColor" stroke-width="1.5"/>
                     <line x1="24" y1="54" x2="36" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M26 18 C26 18, 30 22, 34 18 C34 18, 34 28, 30 32 C26 28, 26 18, 26 18Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
                 </svg>
                 <span>LE PERFUM CG</span>
             </div>
+            <p class="login-subtitle">Panel de Administración</p>
             <form id="loginForm">
                 <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
                 <input type="password" id="loginPassword" placeholder="Contraseña" required>
@@ -29,514 +30,304 @@
         </div>
     </div>
 
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel" style="display: none;">
+    <!-- Admin Shell -->
+    <div class="admin-shell" id="adminShell" style="display:none;">
 
-        <!-- Header / Navbar -->
-        <header class="admin-header">
-            <div class="header-left">
-                <a href="index.html" class="brand-link">
-                    <svg class="brand-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
-                        <rect x="22" y="4" width="16" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
-                        <line x1="30" y1="46" x2="30" y2="54" stroke="currentColor" stroke-width="1.5"/>
-                        <line x1="24" y1="54" x2="36" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M26 18 C26 18, 30 22, 34 18 C34 18, 34 28, 30 32 C26 28, 26 18, 26 18Z" stroke="currentColor" stroke-width="1" fill="none" opacity="0.4"/>
-                    </svg>
-                    <span class="brand-name">LE PERFUM CG</span>
-                </a>
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <svg width="24" height="24" viewBox="0 0 60 60" fill="none">
+                    <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                    <rect x="22" y="4" width="16" height="6" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="30" y1="46" x2="30" y2="54" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="24" y1="54" x2="36" y2="54" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span class="sidebar-brand-text">LE PERFUM CG</span>
             </div>
 
-            <nav class="admin-nav" id="adminNav">
-                <button class="nav-tab active" data-section="products">Productos</button>
-                <button class="nav-tab" data-section="categories">Categorías</button>
-                <button class="nav-tab" data-section="orders">Pedidos</button>
-                <button class="nav-tab" data-section="customers">Clientes</button>
-                <button class="nav-tab" data-section="users">Usuarios</button>
-                <button class="nav-tab" data-section="reports">Reportes</button>
-                <button class="nav-tab" data-section="business">Mi Negocio</button>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <button class="sidebar-link active" data-section="dashboard">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <span>Dashboard</span>
+                </button>
+                <button class="sidebar-link" data-section="products">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <span>Productos</span>
+                </button>
+                <button class="sidebar-link" data-section="categories">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <span>Categorías</span>
+                </button>
+                <button class="sidebar-link" data-section="orders">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span>Pedidos</span>
+                </button>
+                <button class="sidebar-link" data-section="customers">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>Clientes</span>
+                </button>
+                <button class="sidebar-link" data-section="users">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Usuarios</span>
+                </button>
+                <div class="sidebar-divider"></div>
+                <button class="sidebar-link" data-section="coupons">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2"/></svg>
+                    <span>Cupones</span>
+                </button>
+                <button class="sidebar-link" data-section="banners">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <span>Banners</span>
+                </button>
+                <button class="sidebar-link" data-section="reviews">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span>Reseñas</span>
+                </button>
+                <div class="sidebar-divider"></div>
+                <button class="sidebar-link" data-section="inventory">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>Inventario</span>
+                </button>
+                <button class="sidebar-link" data-section="reports">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Reportes</span>
+                </button>
+                <button class="sidebar-link" data-section="business">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 14 4.68a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Mi Negocio</span>
+                </button>
             </nav>
 
-            <div class="header-right">
-                <button class="btn-add" id="addNewBtn" title="Nuevo Producto">
-                    <span>+</span> Nuevo
-                </button>
-                <a href="index.html" class="btn-view-site" target="_blank" title="Ver Sitio">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <div class="sidebar-footer">
+                <a href="index.html" class="sidebar-view-site" target="_blank">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    Ver Tienda
                 </a>
-                <div class="account-menu" id="accountMenu">
-                    <button class="account-btn" id="accountBtn">
-                        <div class="account-avatar" id="accountAvatar">A</div>
-                        <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                    </button>
-                    <div class="account-dropdown" id="accountDropdown">
-                        <div class="dropdown-user-info">
-                            <div class="dropdown-avatar" id="dropdownAvatar">A</div>
-                            <div>
-                                <div class="dropdown-name" id="dropdownName">Administrador</div>
-                                <div class="dropdown-email" id="dropdownEmail">admin@leperfumcg.com</div>
-                            </div>
-                        </div>
+            </div>
+        </aside>
+
+        <!-- Mobile Header -->
+        <header class="mobile-header" id="mobileHeader">
+            <button class="hamburger" id="sidebarToggle">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="mobile-brand">LE PERFUM CG</div>
+            <div class="mobile-actions">
+                <button class="btn-add" id="mobileAddBtn">+</button>
+                <div class="account-menu" id="accountMenuMobile">
+                    <button class="account-btn" id="accountBtnMobile"><div class="account-avatar" id="avatarMobile">A</div></button>
+                    <div class="account-dropdown" id="accountDropdownMobile">
+                        <div class="dropdown-user-info"><div class="dropdown-avatar" id="ddAvatarMobile">A</div><div><div class="dropdown-name" id="ddNameMobile">Admin</div><div class="dropdown-email" id="ddEmailMobile"></div></div></div>
                         <div class="dropdown-divider"></div>
-                        <button class="dropdown-item" id="profileSettingsBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                            Configuración del Perfil
-                        </button>
-                        <button class="dropdown-item" id="panelSettingsBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                            Configuración del Panel
-                        </button>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item dropdown-logout" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                            Cerrar Sesión
-                        </button>
+                        <button class="dropdown-item" id="profileBtnMobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Perfil</button>
+                        <button class="dropdown-item dropdown-logout" id="logoutBtnMobile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Salir</button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Lista de Productos -->
-        <section class="section" id="productsSection">
-            <div class="section-header">
-                <h2>Mis Productos</h2>
-                <div style="display:flex;gap:8px;">
-                    <button class="btn-secondary" id="exportDataBtn" title="Exportar datos" style="font-size:0.75rem;padding:6px 14px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                        Exportar
-                    </button>
-                    <button class="btn-secondary" id="importDataBtn" title="Importar datos" style="font-size:0.75rem;padding:6px 14px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                        Importar
-                    </button>
-                    <input type="file" id="importFileInput" accept=".json" style="display:none;">
-                </div>
-            </div>
+        <!-- Main Content -->
+        <main class="admin-main" id="adminMain">
 
-            <div class="filters-bar">
-                <div class="filter-group">
-                    <label>Categoría</label>
-                    <select id="filterCategory" class="filter-select">
-                        <option value="all">Todas</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Tipo</label>
-                    <select id="filterType" class="filter-select">
-                        <option value="all">Todos</option>
-                        <option value="arabe">Árabe</option>
-                        <option value="disenador">Diseñador</option>
-                        <option value="replica">Réplica</option>
-                        <option value="artesanal">Artesanal</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Género</label>
-                    <select id="filterGender" class="filter-select">
-                        <option value="all">Todos</option>
-                        <option value="hombre">Hombre</option>
-                        <option value="mujer">Mujer</option>
-                        <option value="unisex">Unisex</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="products-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Foto</th>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Género</th>
-                            <th>Precio</th>
-                            <th>Dto.</th>
-                            <th>SKU</th>
-                            <th>Stock</th>
-                            <th>Condición</th>
-                            <th>Olfativa</th>
-                            <th>Ocasión</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="productsTableBody">
-                    </tbody>
-                </table>
-            </div>
-            <div class="empty-state" id="emptyProducts" style="display:none;">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <p>No hay productos aún. Crea tu primer producto.</p>
-            </div>
-        </section>
-
-        <!-- Formulario Agregar/Editar -->
-        <section class="section" id="formSection" style="display: none;">
-            <div class="section-header">
-                <h2 id="formTitle">Agregar Producto</h2>
-            </div>
-            <form class="product-form" id="productForm">
-                <input type="hidden" id="productId">
-
-                <div class="form-group">
-                    <label>Foto del Producto</label>
-                    <div class="image-upload" id="imageUpload">
-                        <div class="image-preview" id="imagePreview">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <!-- Top bar -->
+            <div class="topbar">
+                <div class="topbar-title" id="topbarTitle">Dashboard</div>
+                <div class="topbar-actions">
+                    <button class="btn-add" id="addNewBtn"><span>+</span> Nuevo</button>
+                    <div class="account-menu" id="accountMenu">
+                        <button class="account-btn" id="accountBtn"><div class="account-avatar" id="accountAvatar">A</div></button>
+                        <div class="account-dropdown" id="accountDropdown">
+                            <div class="dropdown-user-info"><div class="dropdown-avatar" id="dropdownAvatar">A</div><div><div class="dropdown-name" id="dropdownName">Admin</div><div class="dropdown-email" id="dropdownEmail"></div></div></div>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item" id="profileBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Perfil</button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item dropdown-logout" id="logoutBtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Salir</button>
                         </div>
-                        <input type="file" id="productImage" accept="image/*" hidden>
                     </div>
-                    <button type="button" class="btn-remove-image" id="removeImage" style="display:none;">Quitar imagen</button>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nombre del Producto</label>
-                        <input type="text" id="productName" required placeholder="Ej: Oud Royal">
-                    </div>
-                    <div class="form-group">
-                        <label>Marca</label>
-                        <input type="text" id="productBrand" placeholder="Ej: Attar Collection">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Categoría</label>
-                    <select id="productCategory" required></select>
-                </div>
-
-                <div class="form-group" id="typeGroup">
-                    <label>Tipo de Perfume</label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-label"><input type="checkbox" name="productType" value="arabe"><span class="checkbox-custom"></span>Árabe</label>
-                        <label class="checkbox-label"><input type="checkbox" name="productType" value="disenador"><span class="checkbox-custom"></span>Diseñador</label>
-                        <label class="checkbox-label"><input type="checkbox" name="productType" value="replica"><span class="checkbox-custom"></span>Réplica</label>
-                        <label class="checkbox-label"><input type="checkbox" name="productType" value="artesanal"><span class="checkbox-custom"></span>Artesanal</label>
-                    </div>
-                </div>
-
-                <div class="form-group" id="genderGroup">
-                    <label>Género</label>
-                    <select id="productGender">
-                        <option value="unisex">Unisex</option>
-                        <option value="hombre">Hombre</option>
-                        <option value="mujer">Mujer</option>
-                    </select>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Familia Olfativa</label>
-                        <select id="productOlfactory">
-                            <option value="">Seleccionar...</option>
-                            <option value="amaderado">Amaderado</option>
-                            <option value="citrico">Cítrico</option>
-                            <option value="floral">Floral</option>
-                            <option value="oriental">Oriental</option>
-                            <option value="gourmand">Gourmand</option>
-                            <option value="cuero">Cuero</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Ocasión</label>
-                        <select id="productOccasion">
-                            <option value="">Seleccionar...</option>
-                            <option value="noche">Noche</option>
-                            <option value="diario">Diario</option>
-                            <option value="verano">Verano</option>
-                            <option value="invierno">Invierno</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Precio ($)</label>
-                        <input type="number" id="productPrice" required placeholder="Ej: 85.00" step="0.01" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Descuento (%)</label>
-                        <input type="number" id="productDiscount" placeholder="0" min="0" max="100" value="0">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>SKU</label>
-                        <input type="text" id="productSku" placeholder="Ej: PERF-001">
-                    </div>
-                    <div class="form-group">
-                        <label>Stock</label>
-                        <input type="number" id="productStock" placeholder="0" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Condición</label>
-                        <select id="productCondition">
-                            <option value="new">Nuevo</option>
-                            <option value="used">Usado</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="description-header">
-                        <label>Descripción</label>
-                        <button type="button" id="regenerateDesc" class="btn-regenerate">Regenerar</button>
-                    </div>
-                    <textarea id="productDescription" rows="3" placeholder="Se genera automáticamente al escribir nombre y marca..."></textarea>
-                    <small class="auto-desc-hint">La descripción se genera automáticamente cuando escribes el nombre y la marca</small>
-                </div>
-
-                <div class="form-group">
-                    <label>Características (una por línea)</label>
-                    <textarea id="productFeatures" rows="4" placeholder="50ml&#10;Duración: 8-12 horas&#10;Edición limitada"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Etiquetas (separadas por coma)</label>
-                    <input type="text" id="productTags" placeholder="nuevo, exclusivo, oferta">
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button>
-                    <button type="submit" class="btn-primary">Guardar Producto</button>
-                </div>
-            </form>
-        </section>
-
-        <!-- Sección Categorías -->
-        <section class="section" id="categoriesSection" style="display: none;">
-            <div class="section-header">
-                <h2>Mis Categorías</h2>
-                <button class="btn-primary" id="addCategoryBtn">+ Nueva Categoría</button>
-            </div>
-            <p class="section-desc">Administra las categorías de productos de tu catálogo.</p>
-
-            <div class="category-form-box" id="categoryFormBox" style="display: none;">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Nombre de la Categoría</label>
-                        <input type="text" id="categoryName" placeholder="Ej: Accesorios">
-                    </div>
-                    <div class="form-group">
-                        <label>Ícono (emoji)</label>
-                        <input type="text" id="categoryIcon" placeholder="Ej: 👜" maxlength="4">
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" id="cancelCategoryBtn">Cancelar</button>
-                    <button type="button" class="btn-primary" id="saveCategoryBtn">Guardar Categoría</button>
-                    <input type="hidden" id="editCategoryId">
                 </div>
             </div>
 
-            <div class="categories-list" id="categoriesList"></div>
-        </section>
+            <!-- ======================== DASHBOARD ======================== -->
+            <section class="admin-section" id="dashboardSection">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon" style="background:var(--accent-bg);color:var(--accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="stat-info"><div class="stat-value" id="statProducts">0</div><div class="stat-label">Productos</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:var(--green-dim);color:var(--green);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="stat-info"><div class="stat-value" id="statOrders">0</div><div class="stat-label">Pedidos</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(100,149,237,0.15);color:#6495ED;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="stat-info"><div class="stat-value" id="statCustomers">0</div><div class="stat-label">Clientes</div></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:var(--amber-dim);color:var(--accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="stat-info"><div class="stat-value" id="statRevenue">L. 0</div><div class="stat-label">Ingresos</div></div></div>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">Pedidos Recientes</h3>
+                        <div id="recentOrdersList" class="dashboard-list"></div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3 class="dashboard-card-title">Productos con Poco Stock</h3>
+                        <div id="lowStockList" class="dashboard-list"></div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Sección Pedidos -->
-        <section class="section" id="ordersSection" style="display: none;">
-            <div class="section-header">
-                <h2>Pedidos</h2>
-            </div>
-            <div class="empty-state">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                <p>Próximamente: Gestión de pedidos y seguimiento de entregas.</p>
-            </div>
-        </section>
+            <!-- ======================== PRODUCTS ======================== -->
+            <section class="admin-section" id="productsSection" style="display:none;">
+                <div class="section-header">
+                    <h2>Mis Productos</h2>
+                    <div class="section-header-actions">
+                        <button class="btn-secondary" id="exportDataBtn">Exportar</button>
+                        <button class="btn-secondary" id="importDataBtn">Importar</button>
+                        <input type="file" id="importFileInput" accept=".json" style="display:none;">
+                    </div>
+                </div>
+                <div class="filters-bar">
+                    <div class="filter-group"><label>Categoría</label><select id="filterCategory" class="filter-select"><option value="all">Todas</option></select></div>
+                    <div class="filter-group"><label>Tipo</label><select id="filterType" class="filter-select"><option value="all">Todos</option><option value="arabe">Árabe</option><option value="disenador">Diseñador</option><option value="replica">Réplica</option><option value="artesanal">Artesanal</option></select></div>
+                    <div class="filter-group"><label>Género</label><select id="filterGender" class="filter-select"><option value="all">Todos</option><option value="hombre">Hombre</option><option value="mujer">Mujer</option><option value="unisex">Unisex</option></select></div>
+                </div>
+                <div class="products-table"><table><thead><tr><th>Foto</th><th>Nombre</th><th>Tipo</th><th>Género</th><th>Precio</th><th>Dto.</th><th>SKU</th><th>Stock</th><th>Condición</th><th>Olfativa</th><th>Ocasión</th><th>Acciones</th></tr></thead><tbody id="productsTableBody"></tbody></table></div>
+                <div class="empty-state" id="emptyProducts" style="display:none;"><p>No hay productos aún. Crea tu primer producto.</p></div>
+            </section>
 
-        <!-- Sección Clientes -->
-        <section class="section" id="customersSection" style="display: none;">
-            <div class="section-header">
-                <h2>Clientes</h2>
-            </div>
-            <div class="empty-state">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <p>Próximamente: Base de datos de clientes y historial de compras.</p>
-            </div>
-        </section>
+            <!-- ======================== PRODUCT FORM ======================== -->
+            <section class="admin-section" id="formSection" style="display:none;">
+                <div class="section-header"><h2 id="formTitle">Agregar Producto</h2></div>
+                <form class="product-form" id="productForm">
+                    <input type="hidden" id="productId">
+                    <div class="form-group"><label>Foto del Producto</label><div class="image-upload" id="imageUpload"><div class="image-preview" id="imagePreview"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><input type="file" id="productImage" accept="image/*" hidden></div><button type="button" class="btn-remove-image" id="removeImage" style="display:none;">Quitar imagen</button></div>
+                    <div class="form-row"><div class="form-group"><label>Nombre</label><input type="text" id="productName" required placeholder="Ej: Oud Royal"></div><div class="form-group"><label>Marca</label><input type="text" id="productBrand" placeholder="Ej: Attar Collection"></div></div>
+                    <div class="form-group"><label>Categoría</label><select id="productCategory" required></select></div>
+                    <div class="form-group" id="typeGroup"><label>Tipo</label><div class="checkbox-group"><label class="checkbox-label"><input type="checkbox" name="productType" value="arabe"><span class="checkbox-custom"></span>Árabe</label><label class="checkbox-label"><input type="checkbox" name="productType" value="disenador"><span class="checkbox-custom"></span>Diseñador</label><label class="checkbox-label"><input type="checkbox" name="productType" value="replica"><span class="checkbox-custom"></span>Réplica</label><label class="checkbox-label"><input type="checkbox" name="productType" value="artesanal"><span class="checkbox-custom"></span>Artesanal</label></div></div>
+                    <div class="form-group" id="genderGroup"><label>Género</label><select id="productGender"><option value="unisex">Unisex</option><option value="hombre">Hombre</option><option value="mujer">Mujer</option></select></div>
+                    <div class="form-row"><div class="form-group"><label>Familia Olfativa</label><select id="productOlfactory"><option value="">Seleccionar...</option><option value="amaderado">Amaderado</option><option value="citrico">Cítrico</option><option value="floral">Floral</option><option value="oriental">Oriental</option><option value="gourmand">Gourmand</option><option value="cuero">Cuero</option></select></div><div class="form-group"><label>Ocasión</label><select id="productOccasion"><option value="">Seleccionar...</option><option value="noche">Noche</option><option value="diario">Diario</option><option value="verano">Verano</option><option value="invierno">Invierno</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>Notas de Salida</label><input type="text" id="productNotesTop" placeholder="Ej: Limón, Bergamota"></div><div class="form-group"><label>Notas de Corazón</label><input type="text" id="productNotesHeart" placeholder="Ej: Jazmín, Rosa"></div></div>
+                    <div class="form-group"><label>Notas de Fondo</label><input type="text" id="productNotesBase" placeholder="Ej: Ámbar, Sándalo, Almizcle"></div>
+                    <div class="form-row"><div class="form-group"><label>Precio (L.)</label><input type="number" id="productPrice" required placeholder="0.00" step="0.01" min="0"></div><div class="form-group"><label>Descuento (%)</label><input type="number" id="productDiscount" placeholder="0" min="0" max="100" value="0"></div></div>
+                    <div class="form-row"><div class="form-group"><label>SKU</label><input type="text" id="productSku" placeholder="Ej: PERF-001"></div><div class="form-group"><label>Stock</label><input type="number" id="productStock" placeholder="0" min="0" value="0"></div><div class="form-group"><label>Condición</label><select id="productCondition"><option value="new">Nuevo</option><option value="used">Usado</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>Tamaño</label><input type="text" id="productSize" placeholder="Ej: 50ml, 100ml"></div><div class="form-group"><label>Concentración</label><input type="text" id="productConcentration" placeholder="Ej: Eau de Parfum"></div><div class="form-group"><label>Origen</label><input type="text" id="productOrigin" placeholder="Ej: Francia, UAE"></div></div>
+                    <div class="form-group"><div class="description-header"><label>Descripción</label><button type="button" id="regenerateDesc" class="btn-regenerate">Regenerar</button></div><textarea id="productDescription" rows="3" placeholder="Se genera automáticamente..."></textarea></div>
+                    <div class="form-group"><label>Características (una por línea)</label><textarea id="productFeatures" rows="3" placeholder="50ml&#10;Duración: 8-12 horas"></textarea></div>
+                    <div class="form-group"><label>Etiquetas (separadas por coma)</label><input type="text" id="productTags" placeholder="nuevo, exclusivo, oferta"></div>
+                    <div class="form-actions"><button type="button" class="btn-secondary" id="cancelBtn">Cancelar</button><button type="submit" class="btn-primary">Guardar Producto</button></div>
+                </form>
+            </section>
 
-        <!-- Sección Usuarios -->
-        <section class="section" id="usersSection" style="display: none;">
-            <div class="section-header">
-                <h2>Gestión de Usuarios</h2>
-                <button class="btn-primary" id="addUserBtn">+ Nuevo Usuario</button>
-            </div>
+            <!-- ======================== CATEGORIES ======================== -->
+            <section class="admin-section" id="categoriesSection" style="display:none;">
+                <div class="section-header"><h2>Categorías</h2><button class="btn-primary" id="addCategoryBtn">+ Nueva</button></div>
+                <div class="category-form-box" id="categoryFormBox" style="display:none;"><div class="form-row"><div class="form-group"><label>Nombre</label><input type="text" id="categoryName" placeholder="Ej: Accesorios"></div><div class="form-group"><label>Ícono (emoji)</label><input type="text" id="categoryIcon" placeholder="Ej: 👜" maxlength="4"></div></div><div class="form-actions"><button type="button" class="btn-secondary" id="cancelCategoryBtn">Cancelar</button><button type="button" class="btn-primary" id="saveCategoryBtn">Guardar</button><input type="hidden" id="editCategoryId"></div></div>
+                <div class="categories-list" id="categoriesList"></div>
+            </section>
 
-            <div class="category-form-box" id="userFormBox" style="display: none;">
-                <h3 id="userFormTitle">Nuevo Usuario</h3>
-                <input type="hidden" id="editUserId">
-                <div class="form-group">
-                    <label>Correo</label>
-                    <input type="email" id="userEmail" placeholder="correo@ejemplo.com" required>
+            <!-- ======================== ORDERS ======================== -->
+            <section class="admin-section" id="ordersSection" style="display:none;">
+                <div class="section-header"><h2>Pedidos</h2></div>
+                <div class="filters-bar">
+                    <div class="filter-group"><label>Estado</label><select id="filterOrderStatus" class="filter-select"><option value="all">Todos</option><option value="pendiente">Pendiente</option><option value="confirmado">Confirmado</option><option value="preparando">Preparando</option><option value="enviado">Enviado</option><option value="entregado">Entregado</option><option value="cancelado">Cancelado</option></select></div>
                 </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="userPassword" placeholder="Mínimo 6 caracteres" required>
-                </div>
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" id="userName" placeholder="Nombre del usuario" required>
-                </div>
-                <div class="form-group">
-                    <label>Rol</label>
-                    <select id="userRole">
-                        <option value="editor">Editor</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-primary" id="saveUserBtn">Guardar</button>
-                    <button type="button" class="btn-secondary" id="cancelUserBtn">Cancelar</button>
-                </div>
-            </div>
+                <div class="products-table"><table><thead><tr><th>#ID</th><th>Cliente</th><th>Teléfono</th><th>Productos</th><th>Total</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody id="ordersTableBody"></tbody></table></div>
+                <div class="empty-state" id="emptyOrders" style="display:none;"><p>No hay pedidos aún.</p></div>
+            </section>
 
-            <div class="users-list" id="usersList"></div>
-        </section>
+            <!-- ======================== CUSTOMERS ======================== -->
+            <section class="admin-section" id="customersSection" style="display:none;">
+                <div class="section-header"><h2>Clientes</h2></div>
+                <div class="products-table"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Pedidos</th><th>Total Gastado</th><th>Registro</th></tr></thead><tbody id="customersTableBody"></tbody></table></div>
+                <div class="empty-state" id="emptyCustomers" style="display:none;"><p>No hay clientes registrados.</p></div>
+            </section>
 
-        <!-- Sección Reportes -->
-        <section class="section" id="reportsSection" style="display: none;">
-            <div class="section-header">
-                <h2>Reportes</h2>
-            </div>
-            <div class="empty-state">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                <p>Próximamente: Analíticas de ventas, productos más vendidos y reportes financieros.</p>
-            </div>
-        </section>
+            <!-- ======================== USERS ======================== -->
+            <section class="admin-section" id="usersSection" style="display:none;">
+                <div class="section-header"><h2>Usuarios</h2><button class="btn-primary" id="addUserBtn">+ Nuevo</button></div>
+                <div class="category-form-box" id="userFormBox" style="display:none;"><h3 id="userFormTitle">Nuevo Usuario</h3><input type="hidden" id="editUserId"><div class="form-group"><label>Correo</label><input type="email" id="userEmail" placeholder="correo@ejemplo.com" required></div><div class="form-group"><label>Contraseña</label><input type="password" id="userPassword" placeholder="Mínimo 6 caracteres" required></div><div class="form-group"><label>Nombre</label><input type="text" id="userName" placeholder="Nombre" required></div><div class="form-group"><label>Rol</label><select id="userRole"><option value="editor">Editor</option><option value="admin">Administrador</option></select></div><div class="form-actions"><button type="button" class="btn-primary" id="saveUserBtn">Guardar</button><button type="button" class="btn-secondary" id="cancelUserBtn">Cancelar</button></div></div>
+                <div class="categories-list" id="usersList"></div>
+            </section>
 
-        <!-- Sección Mi Negocio -->
-        <section class="section" id="businessSection" style="display: none;">
-            <div class="section-header">
-                <h2>Mi Negocio</h2>
-            </div>
-            <form class="product-form" id="businessForm">
-                <div class="form-group">
-                    <label>Nombre del Negocio</label>
-                    <input type="text" id="businessName" placeholder="Ej: LE PERFUM CG">
-                </div>
-                <div class="form-group">
-                    <label>Slogan / Descripción</label>
-                    <input type="text" id="businessSlogan" placeholder="Ej: Perfumes & Libros de Autor">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Teléfono</label>
-                        <input type="tel" id="businessPhone" placeholder="Ej: +504 8888-8888">
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp</label>
-                        <input type="tel" id="businessWhatsApp" placeholder="Ej: +504 8888-8888">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" id="businessEmail" placeholder="Ej: contacto@leperfumcg.com">
-                </div>
-                <div class="form-group">
-                    <label>Dirección</label>
-                    <input type="text" id="businessAddress" placeholder="Ej: San Pedro Sula, Honduras">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Moneda</label>
-                        <select id="businessCurrency">
-                            <option value="USD">$ Dólares (USD)</option>
-                            <option value="HNL">L. Lempiras (HNL)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Tasa de Cambio (1 USD = ?)</label>
-                        <input type="number" id="businessExchangeRate" placeholder="Ej: 24.50" step="0.01" value="24.50">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Descuento Global (%)</label>
-                    <input type="number" id="businessGlobalDiscount" placeholder="0" min="0" max="100" value="0">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Facebook</label>
-                        <input type="url" id="businessFacebook" placeholder="URL de Facebook">
-                    </div>
-                    <div class="form-group">
-                        <label>Instagram</label>
-                        <input type="url" id="businessInstagram" placeholder="URL de Instagram">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>TikTok</label>
-                    <input type="url" id="businessTiktok" placeholder="URL de TikTok">
-                </div>
-                <div class="form-group">
-                    <label>Mensaje del Footer</label>
-                    <input type="text" id="businessFooter" placeholder="Ej: Todos los derechos reservados">
-                </div>
-                <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
-                <h3 style="font-size:0.9rem;margin-bottom:12px;color:var(--accent);">Publicar en GitHub</h3>
-                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:12px;">Para que los cambios se vean en la tienda pública, necesitas un token de GitHub. Ve a github.com → Settings → Developer settings → Personal access tokens → Generate new token (scope: repo).</p>
-                <div class="form-group">
-                    <label>GitHub Token</label>
-                    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Guardar Cambios</button>
-                    <button type="button" class="btn-primary" id="publishBtn" style="background:var(--green);">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-                        Publicar en Tienda
-                    </button>
-                </div>
-            </form>
-        </section>
+            <!-- ======================== COUPONS ======================== -->
+            <section class="admin-section" id="couponsSection" style="display:none;">
+                <div class="section-header"><h2>Cupones</h2><button class="btn-primary" id="addCouponBtn">+ Nuevo</button></div>
+                <div class="category-form-box" id="couponFormBox" style="display:none;"><input type="hidden" id="editCouponId"><div class="form-row"><div class="form-group"><label>Código</label><input type="text" id="couponCode" placeholder="Ej: VERANO20" required style="text-transform:uppercase;"></div><div class="form-group"><label>Tipo</label><select id="couponType"><option value="percent">Porcentaje (%)</option><option value="fixed">Monto Fijo (L.)</option></select></div></div><div class="form-row"><div class="form-group"><label>Valor</label><input type="number" id="couponValue" placeholder="Ej: 10" min="0" required></div><div class="form-group"><label>Compra Mínima (L.)</label><input type="number" id="couponMinOrder" placeholder="0" min="0" value="0"></div></div><div class="form-group"><label>Expira</label><input type="date" id="couponExpiry"></div><div class="form-actions"><button type="button" class="btn-secondary" id="cancelCouponBtn">Cancelar</button><button type="button" class="btn-primary" id="saveCouponBtn">Guardar</button></div></div>
+                <div class="categories-list" id="couponsList"></div>
+                <div class="empty-state" id="emptyCoupons" style="display:none;"><p>No hay cupones creados.</p></div>
+            </section>
 
-        <!-- Profile Settings Modal -->
-        <div class="modal-overlay" id="profileModal" style="display:none;">
-            <div class="modal-box">
-                <div class="modal-header">
-                    <h3>Configuración del Perfil</h3>
-                    <button class="modal-close" id="closeProfileModal">&times;</button>
+            <!-- ======================== BANNERS ======================== -->
+            <section class="admin-section" id="bannersSection" style="display:none;">
+                <div class="section-header"><h2>Banners</h2><button class="btn-primary" id="addBannerBtn">+ Nuevo</button></div>
+                <div class="category-form-box" id="bannerFormBox" style="display:none;"><input type="hidden" id="editBannerId"><div class="form-group"><label>Título</label><input type="text" id="bannerTitle" placeholder="Ej: Ofertas de Verano" required></div><div class="form-group"><label>Subtítulo</label><input type="text" id="bannerSubtitle" placeholder="Ej: Hasta 30% de descuento"></div><div class="form-group"><label>Texto del Botón</label><input type="text" id="bannerBtnText" placeholder="Ej: Ver Ofertas"></div><div class="form-group"><label>URL del Botón</label><input type="text" id="bannerBtnUrl" placeholder="Ej: #catalog"></div><div class="form-group"><label>URL de Imagen de Fondo (opcional)</label><input type="url" id="bannerImage" placeholder="https://..."></div><div class="form-actions"><button type="button" class="btn-secondary" id="cancelBannerBtn">Cancelar</button><button type="button" class="btn-primary" id="saveBannerBtn">Guardar</button></div></div>
+                <div class="categories-list" id="bannersList"></div>
+                <div class="empty-state" id="emptyBanners" style="display:none;"><p>No hay banners creados.</p></div>
+            </section>
+
+            <!-- ======================== REVIEWS ======================== -->
+            <section class="admin-section" id="reviewsSection" style="display:none;">
+                <div class="section-header"><h2>Reseñas</h2></div>
+                <div class="filters-bar"><div class="filter-group"><label>Producto</label><select id="filterReviewProduct" class="filter-select"><option value="all">Todos</option></select></div></div>
+                <div class="categories-list" id="reviewsList"></div>
+                <div class="empty-state" id="emptyReviews" style="display:none;"><p>No hay reseñas aún.</p></div>
+            </section>
+
+            <!-- ======================== INVENTORY ======================== -->
+            <section class="admin-section" id="inventorySection" style="display:none;">
+                <div class="section-header"><h2>Inventario</h2></div>
+                <div class="filters-bar"><div class="filter-group"><label>Stock</label><select id="filterInventoryStock" class="filter-select"><option value="all">Todos</option><option value="out">Agotados (0)</option><option value="low">Bajo stock (1-5)</option><option value="ok">En stock (6+)</option></select></div></div>
+                <div class="products-table"><table><thead><tr><th>Producto</th><th>SKU</th><th>Stock Actual</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="inventoryTableBody"></tbody></table></div>
+            </section>
+
+            <!-- ======================== REPORTS ======================== -->
+            <section class="admin-section" id="reportsSection" style="display:none;">
+                <div class="section-header"><h2>Reportes</h2></div>
+                <div class="stats-grid" style="margin-bottom:24px;">
+                    <div class="stat-card"><div class="stat-info"><div class="stat-value" id="reportTotalProducts">0</div><div class="stat-label">Total Productos</div></div></div>
+                    <div class="stat-card"><div class="stat-info"><div class="stat-value" id="reportTotalStock">0</div><div class="stat-label">Unidades en Stock</div></div></div>
+                    <div class="stat-card"><div class="stat-info"><div class="stat-value" id="reportAvgPrice">L. 0</div><div class="stat-label">Precio Promedio</div></div></div>
+                    <div class="stat-card"><div class="stat-info"><div class="stat-value" id="reportTotalOrders">0</div><div class="stat-label">Pedidos Totales</div></div></div>
                 </div>
-                <form id="profileForm">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" id="profileName" placeholder="Tu nombre">
-                    </div>
-                    <div class="form-group">
-                        <label>Correo</label>
-                        <input type="email" id="profileEmail" placeholder="Tu correo">
-                    </div>
-                    <div class="form-group">
-                        <label>Nueva Contraseña (dejar vacío para no cambiar)</label>
-                        <input type="password" id="profilePassword" placeholder="Nueva contraseña">
-                    </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card"><h3 class="dashboard-card-title">Productos por Categoría</h3><div id="reportByCategory" class="dashboard-list"></div></div>
+                    <div class="dashboard-card"><h3 class="dashboard-card-title">Productos Más Vendidos</h3><div id="reportTopProducts" class="dashboard-list"></div></div>
+                </div>
+            </section>
+
+            <!-- ======================== BUSINESS ======================== -->
+            <section class="admin-section" id="businessSection" style="display:none;">
+                <div class="section-header"><h2>Mi Negocio</h2></div>
+                <form class="product-form" id="businessForm" style="max-width:100%;">
+                    <div class="form-row"><div class="form-group"><label>Nombre del Negocio</label><input type="text" id="businessName" placeholder="Ej: LE PERFUM CG"></div><div class="form-group"><label>Slogan</label><input type="text" id="businessSlogan" placeholder="Ej: Perfumes & Libros"></div></div>
+                    <div class="form-row"><div class="form-group"><label>Teléfono</label><input type="tel" id="businessPhone" placeholder="+504 8888-8888"></div><div class="form-group"><label>WhatsApp</label><input type="tel" id="businessWhatsApp" placeholder="+504 8888-8888"></div></div>
+                    <div class="form-group"><label>Correo</label><input type="email" id="businessEmail" placeholder="contacto@ejemplo.com"></div>
+                    <div class="form-group"><label>Dirección</label><input type="text" id="businessAddress" placeholder="San Pedro Sula, Honduras"></div>
+                    <div class="form-row"><div class="form-group"><label>Tasa de Cambio (1 USD = ?)</label><input type="number" id="businessExchangeRate" step="0.01" value="24.50"></div><div class="form-group"><label>Descuento Global (%)</label><input type="number" id="businessGlobalDiscount" min="0" max="100" value="0"></div></div>
+                    <div class="form-row"><div class="form-group"><label>Facebook</label><input type="url" id="businessFacebook" placeholder="URL"></div><div class="form-group"><label>Instagram</label><input type="url" id="businessInstagram" placeholder="URL"></div></div>
+                    <div class="form-group"><label>TikTok</label><input type="url" id="businessTiktok" placeholder="URL"></div>
+                    <div class="form-group"><label>Mensaje del Footer</label><input type="text" id="businessFooter" placeholder="Todos los derechos reservados"></div>
+                    <hr style="border:none;border-top:1px solid var(--border);margin:20px 0;">
+                    <h3 style="font-size:0.9rem;margin-bottom:12px;color:var(--accent);">Publicar en GitHub</h3>
+                    <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:12px;">Genera un token en GitHub → Settings → Developer settings → Personal access tokens → repo.</p>
+                    <div class="form-group"><label>GitHub Token</label><input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off"></div>
                     <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancelProfileBtn">Cancelar</button>
-                        <button type="submit" class="btn-primary">Guardar</button>
+                        <button type="submit" class="btn-primary">Guardar Cambios</button>
+                        <button type="button" class="btn-primary" id="publishBtn" style="background:var(--green);">Publicar en Tienda</button>
                     </div>
                 </form>
-            </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-header"><h3>Configuración del Perfil</h3><button class="modal-close" id="closeProfileModal">&times;</button></div>
+            <form id="profileForm"><div class="form-group"><label>Nombre</label><input type="text" id="profileName"></div><div class="form-group"><label>Correo</label><input type="email" id="profileEmail"></div><div class="form-group"><label>Nueva Contraseña (vacío = no cambiar)</label><input type="password" id="profilePassword"></div><div class="form-actions"><button type="button" class="btn-secondary" id="cancelProfileBtn">Cancelar</button><button type="submit" class="btn-primary">Guardar</button></div></form>
         </div>
+    </div>
 
-        <!-- Panel Settings Modal -->
-        <div class="modal-overlay" id="panelModal" style="display:none;">
-            <div class="modal-box">
-                <div class="modal-header">
-                    <h3>Configuración del Panel</h3>
-                    <button class="modal-close" id="closePanelModal">&times;</button>
-                </div>
-                <form id="panelSettingsForm">
-                    <div class="form-group">
-                        <label>Nombre de la Empresa</label>
-                        <input type="text" id="panelCompanyName" placeholder="Ej: LE PERFUM CG">
-                    </div>
-                    <div class="form-group">
-                        <label>Slogan</label>
-                        <input type="text" id="panelSlogan" placeholder="Ej: Perfumes & Libros de Autor">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancelPanelBtn">Cancelar</button>
-                        <button type="submit" class="btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
+    <!-- Inventory Quick Edit Modal -->
+    <div class="modal-overlay" id="stockModal" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-header"><h3>Actualizar Stock</h3><button class="modal-close" id="closeStockModal">&times;</button></div>
+            <div class="form-group"><label>Producto</label><div id="stockProductName" style="font-weight:600;margin-bottom:12px;"></div></div>
+            <div class="form-group"><label>Nuevo Stock</label><input type="number" id="stockInput" min="0" required></div>
+            <input type="hidden" id="stockProductId">
+            <div class="form-actions"><button type="button" class="btn-secondary" id="cancelStockBtn">Cancelar</button><button type="button" class="btn-primary" id="saveStockBtn">Guardar</button></div>
         </div>
     </div>
 

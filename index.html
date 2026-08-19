@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LE PERFUM CG - Perfumería Fina & Esencias de Autor</title>
+    <title>LE PERFUM CG - Perfumería Fina & Esencias de Autor | Tienda Online Honduras</title>
+    <meta name="description" content="Descubre las mejores fragancias árabes, de diseñador y artesanales en Honduras. Envío gratis en compras mayores a L.1,000. LE PERFUM CG - Tu perfumería de confianza.">
+    <meta name="keywords" content="perfumes, fragancias, árabe, diseñador, Honduras, San Pedro Sula, ou de parfum, eau de toilette">
+    <meta property="og:title" content="LE PERFUM CG - Perfumería Fina & Esencias de Autor">
+    <meta property="og:description" content="Las mejores fragancias exclusivas. Envío rápido a toda Honduras.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://leperfumcg.github.io/leperfumcg/">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://leperfumcg.github.io/leperfumcg/">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
     <!-- Top Bar -->
     <div class="top-bar">
         <div class="container top-bar-inner">
-            <span>Envío Gratis en compras mayores a L.1,000</span>
+            <span id="topBarMsg">Envío Gratis en compras mayores a L.1,000</span>
             <div class="top-bar-links">
                 <a href="admin.html">Administración</a>
             </div>
@@ -21,7 +32,6 @@
     <!-- Header -->
     <header class="header" id="siteHeader">
         <div class="container header-inner">
-            <!-- Brand -->
             <a href="index.html" class="brand">
                 <svg class="brand-icon" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="18" y="8" width="24" height="38" rx="4" stroke="currentColor" stroke-width="1.5"/>
@@ -36,12 +46,8 @@
                 </div>
             </a>
 
-            <!-- Main Nav -->
-            <nav class="main-nav" id="mainNav">
-                <!-- Se genera dinámicamente desde app.js -->
-            </nav>
+            <nav class="main-nav" id="mainNav"></nav>
 
-            <!-- Actions -->
             <div class="header-actions">
                 <div class="search-wrapper" id="searchWrapper">
                     <button class="icon-btn" id="searchToggle" title="Buscar">
@@ -53,10 +59,6 @@
                     </div>
                 </div>
 
-                <button class="icon-btn currency-toggle" id="currencyToggle" title="Moneda">
-                    <span id="currencyLabel">L.</span>
-                </button>
-
                 <button class="icon-btn" id="wishlistBtn" title="Lista de Deseos">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                     <span class="badge-count" id="wishlistCount" style="display:none;">0</span>
@@ -67,162 +69,255 @@
                     <span class="badge-count" id="cartCount" style="display:none;">0</span>
                 </button>
 
-                <a href="admin.html" class="icon-btn" title="Mi Cuenta">
+                <button class="icon-btn" id="accountBtnStore" title="Mi Cuenta">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </a>
+                </button>
 
-                <!-- Mobile Menu Toggle -->
                 <button class="icon-btn mobile-menu-toggle" id="mobileMenuToggle">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Nav -->
-        <div class="mobile-nav" id="mobileNav">
-            <!-- Se genera dinámicamente -->
-        </div>
+        <div class="mobile-nav" id="mobileNav"></div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero" id="heroSection">
-        <div class="hero-bg"></div>
-        <div class="container hero-content">
-            <p class="hero-eyebrow">Colección Exclusiva 2026</p>
-            <h1 class="hero-title">El Arte de la<br>Perfumería Fina</h1>
-            <p class="hero-desc">Descubre fragancias únicas que definen tu esencia. Artesanal, exclusivo, inolvidable.</p>
-            <a href="#catalog" class="hero-cta">Explorar Colección</a>
+    <!-- Main Content (changes based on hash routing) -->
+    <main id="mainContent">
+        <!-- HOME VIEW -->
+        <div id="homeView">
+            <!-- Hero -->
+            <section class="hero" id="heroSection">
+                <div class="hero-bg"></div>
+                <div class="container hero-content">
+                    <p class="hero-eyebrow">Colección Exclusiva 2026</p>
+                    <h1 class="hero-title">El Arte de la<br>Perfumería Fina</h1>
+                    <p class="hero-desc">Descubre fragancias únicas que definen tu esencia. Artesanal, exclusivo, inolvidable.</p>
+                    <div class="hero-actions">
+                        <a href="#catalog" class="hero-cta">Explorar Colección</a>
+                        <a href="#catalog" class="hero-cta-outline" data-filter="bestseller">Más Vendidos</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <section class="categories-section" id="categoriesHome">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Explora por Categoría</h2>
+                        <p class="section-subtitle">Encuentra la fragancia perfecta para cada ocasión</p>
+                    </div>
+                    <div class="categories-grid" id="categoriesGrid"></div>
+                </div>
+            </section>
+
+            <!-- Featured Products -->
+            <section class="catalog-section" id="featuredSection">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Destacados</h2>
+                        <p class="section-subtitle">Nuestras selecciones más exclusivas</p>
+                    </div>
+                    <div class="products-grid" id="featuredGrid"></div>
+                </div>
+            </section>
+
+            <!-- Brands -->
+            <section class="brands-section" id="brandsSection">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Marcas que Representamos</h2>
+                        <p class="section-subtitle">Las mejores casas de perfumería mundial</p>
+                    </div>
+                    <div class="brands-marquee" id="brandsMarquee"></div>
+                </div>
+            </section>
+
+            <!-- All Products Catalog -->
+            <section class="catalog-section" id="catalog">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Nuestra Colección</h2>
+                        <p class="section-subtitle">Fragancias seleccionadas por nuestros expertos</p>
+                    </div>
+
+                    <div class="filter-bar" id="filterBar">
+                        <div class="filter-dropdowns">
+                            <div class="filter-select-wrap">
+                                <select id="filterOlfactory" class="filter-select" data-filter="olfactory">
+                                    <option value="all">Familia Olfativa</option>
+                                    <option value="amaderado">Amaderado</option>
+                                    <option value="citrico">Cítrico</option>
+                                    <option value="floral">Floral</option>
+                                    <option value="oriental">Oriental</option>
+                                    <option value="gourmand">Gourmand</option>
+                                    <option value="cuero">Cuero</option>
+                                </select>
+                                <span class="filter-dot" id="dotOlfactory"></span>
+                            </div>
+                            <div class="filter-select-wrap">
+                                <select id="filterGender" class="filter-select" data-filter="gender">
+                                    <option value="all">Género</option>
+                                    <option value="hombre">Hombre</option>
+                                    <option value="mujer">Mujer</option>
+                                    <option value="unisex">Unisex</option>
+                                </select>
+                                <span class="filter-dot" id="dotGender"></span>
+                            </div>
+                            <div class="filter-select-wrap">
+                                <select id="filterOccasion" class="filter-select" data-filter="occasion">
+                                    <option value="all">Ocasión</option>
+                                    <option value="noche">Noche</option>
+                                    <option value="diario">Diario</option>
+                                    <option value="verano">Verano</option>
+                                    <option value="invierno">Invierno</option>
+                                </select>
+                                <span class="filter-dot" id="dotOccasion"></span>
+                            </div>
+                            <div class="filter-select-wrap">
+                                <select id="filterSort" class="filter-select" data-filter="sort">
+                                    <option value="default">Ordenar</option>
+                                    <option value="newest">Más recientes</option>
+                                    <option value="price-asc">Precio: Menor a Mayor</option>
+                                    <option value="price-desc">Precio: Mayor a Menor</option>
+                                    <option value="bestselling">Más vendidos</option>
+                                    <option value="rating">Mejor valorados</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="filter-clear" id="clearFilters">Limpiar Filtros</button>
+                    </div>
+
+                    <div class="products-grid" id="productsGrid"></div>
+                    <p class="no-results" id="noResults" style="display:none;">No se encontraron productos con estos filtros.</p>
+                </div>
+            </section>
+
+            <!-- Olfactory Notes -->
+            <section class="notes-section">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Notas Olfativas</h2>
+                        <p class="section-subtitle">Comprende la composición de cada fragancia</p>
+                    </div>
+                    <div class="notes-grid">
+                        <div class="note-card">
+                            <div class="note-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+                            </div>
+                            <h3>Notas de Salida</h3>
+                            <p>La primera impresión. Cítricos, aromáticas y frutas que despiertan los sentidos al instante.</p>
+                        </div>
+                        <div class="note-card">
+                            <div class="note-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><circle cx="12" cy="12" r="4"/></svg>
+                            </div>
+                            <h3>Notas de Corazón</h3>
+                            <p>El alma de la fragancia. Flores, especias y notas mediales que definen el carácter.</p>
+                        </div>
+                        <div class="note-card">
+                            <div class="note-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
+                            </div>
+                            <h3>Notas de Fondo</h3>
+                            <p>La base persistente. Amaderados, ámbar, almizcle y vainilla que perduran por horas.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="testimonials-section">
+                <div class="container">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
+                        <p class="section-subtitle">Experiencias reales de compradores verificados</p>
+                    </div>
+                    <div class="testimonials-grid" id="testimonialsGrid">
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p class="testimonial-text">"El Oud Royal superó mis expectativas. La duración es impresionante, más de 10 horas. El empaque es de lujo, perfecto para regalo."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar">M</div>
+                                <div><strong>Maria L.</strong><span>Comprador verificado</span></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p class="testimonial-text">"Excelente servicio. El perfume llegó en perfecto estado con empaque de regalo incluido. La atención al cliente es premium."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar">C</div>
+                                <div><strong>Carlos R.</strong><span>Comprador verificado</span></div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                            <p class="testimonial-text">"Compré el Amber Oud Gold y es mi fragancia favorita. Calidad insuperable por el precio. Definitivamente volveré a comprar."</p>
+                            <div class="testimonial-author">
+                                <div class="testimonial-avatar">A</div>
+                                <div><strong>Ana P.</strong><span>Comprador verificado</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits -->
+            <section class="benefits-section">
+                <div class="container">
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                            <h4>Envío Asegurado</h4>
+                            <p>Envío rápido y protegido a toda Honduras</p>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/></svg>
+                            <h4>Empaque de Lujo</h4>
+                            <p>Empaque premium incluido en cada compra</p>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                            <h4>Muestras Gratis</h4>
+                            <p>Muestra de cortesía con cada pedido</p>
+                        </div>
+                        <div class="benefit-item">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <h4>100% Auténtico</h4>
+                            <p>Garantía de autenticidad en todos nuestros productos</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter -->
+            <section class="newsletter-section">
+                <div class="container">
+                    <div class="newsletter-inner">
+                        <div class="newsletter-text">
+                            <h3>Suscríbete a Nuestro Newsletter</h3>
+                            <p>Recibe ofertas exclusivas, nuevos lanzamientos y descuentos especiales directamente en tu correo.</p>
+                        </div>
+                        <form class="newsletter-form" id="newsletterForm">
+                            <input type="email" placeholder="Tu correo electrónico" required>
+                            <button type="submit">Suscribirme</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
 
-    <!-- Quiz Banner -->
-    <section class="quiz-banner">
-        <div class="container quiz-inner">
-            <div class="quiz-icon">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            </div>
-            <div class="quiz-text">
-                <h3>¿No sabes qué perfume elegir?</h3>
-                <p>Responde 3 preguntas y encuentra tu fragancia ideal</p>
-            </div>
-            <button class="quiz-btn" id="quizBtn">Descubrir mi Aroma</button>
-        </div>
-    </section>
+        <!-- PRODUCT DETAIL VIEW -->
+        <div id="productView" style="display:none;"></div>
 
-    <!-- Catalog -->
-    <section class="catalog-section" id="catalog">
-        <div class="container">
-            <div class="section-title-wrap">
-                <h2 class="section-title">Nuestra Colección</h2>
-                <p class="section-subtitle">Fragancias seleccionadas por nuestros expertos en perfumería</p>
-            </div>
+        <!-- CHECKOUT VIEW -->
+        <div id="checkoutView" style="display:none;"></div>
 
-            <!-- Inline Filter Bar -->
-            <div class="filter-bar" id="filterBar">
-                <div class="filter-dropdowns">
-                    <div class="filter-select-wrap">
-                        <select id="filterOlfactory" class="filter-select" data-filter="olfactory">
-                            <option value="all">Familia Olfativa</option>
-                            <option value="amaderado">Amaderado</option>
-                            <option value="citrico">Cítrico</option>
-                            <option value="floral">Floral</option>
-                            <option value="oriental">Oriental</option>
-                            <option value="gourmand">Gourmand</option>
-                            <option value="cuero">Cuero</option>
-                        </select>
-                        <span class="filter-dot" id="dotOlfactory"></span>
-                    </div>
-                    <div class="filter-select-wrap">
-                        <select id="filterGender" class="filter-select" data-filter="gender">
-                            <option value="all">Género</option>
-                            <option value="hombre">Hombre</option>
-                            <option value="mujer">Mujer</option>
-                            <option value="unisex">Unisex</option>
-                        </select>
-                        <span class="filter-dot" id="dotGender"></span>
-                    </div>
-                    <div class="filter-select-wrap">
-                        <select id="filterOccasion" class="filter-select" data-filter="occasion">
-                            <option value="all">Ocasión</option>
-                            <option value="noche">Noche</option>
-                            <option value="diario">Diario</option>
-                            <option value="verano">Verano</option>
-                            <option value="invierno">Invierno</option>
-                        </select>
-                        <span class="filter-dot" id="dotOccasion"></span>
-                    </div>
-                </div>
-                <button class="filter-clear" id="clearFilters">Limpiar Filtros</button>
-            </div>
+        <!-- ACCOUNT VIEW -->
+        <div id="accountView" style="display:none;"></div>
+    </main>
 
-            <!-- Product Grid -->
-            <div class="products-grid" id="productsGrid"></div>
-            <p class="no-results" id="noResults" style="display:none;">No se encontraron productos con estos filtros.</p>
-        </div>
-    </section>
-
-    <!-- Olfactory Notes Section -->
-    <section class="notes-section">
-        <div class="container">
-            <div class="section-title-wrap">
-                <h2 class="section-title">Notas Olfativas</h2>
-                <p class="section-subtitle">Comprende la composición de cada fragancia</p>
-            </div>
-            <div class="notes-grid">
-                <div class="note-card">
-                    <div class="note-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <h3>Notas de Salida</h3>
-                    <p>La primera impresión. Cítricos, aromáticas y frutas que despiertan los sentidos al instante.</p>
-                </div>
-                <div class="note-card">
-                    <div class="note-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><circle cx="12" cy="12" r="4"/></svg>
-                    </div>
-                    <h3>Notas de Corazón</h3>
-                    <p>El alma de la fragancia. Flores, especias y notas mediales que definen el carácter.</p>
-                </div>
-                <div class="note-card">
-                    <div class="note-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 8v8M8 12h8"/></svg>
-                    </div>
-                    <h3>Notas de Fondo</h3>
-                    <p>La base persistente. Amaderados, ámbar, almizcle y vainilla que perduran por horas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits Bar -->
-    <section class="benefits-section">
-        <div class="container">
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                    <h4>Envío Asegurado</h4>
-                    <p>Envío rápido y protegido a toda Honduras</p>
-                </div>
-                <div class="benefit-item">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"/></svg>
-                    <h4>Empaque de Lujo</h4>
-                    <p>Empaque premium incluido en cada compra</p>
-                </div>
-                <div class="benefit-item">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    <h4>Muestras Gratis</h4>
-                    <p>Muestra de cortesía con cada pedido</p>
-                </div>
-                <div class="benefit-item">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <h4>100% Auténtico</h4>
-                    <p>Garantía de autenticidad en todos nuestros productos</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Detail Modal -->
+    <!-- Product Detail Modal (legacy fallback) -->
     <div class="product-detail" id="productDetail">
         <div class="detail-content">
             <button class="close-btn" id="closeDetail">&times;</button>
@@ -234,15 +329,31 @@
                 <div class="detail-rating" id="detailRating"></div>
                 <p class="detail-description" id="detailDescription"></p>
                 <div class="detail-features" id="detailFeatures"></div>
+                <div class="detail-notes-section" id="detailNotes"></div>
                 <p class="detail-price" id="detailPrice"></p>
+                <div class="detail-qty-row">
+                    <label>Cantidad</label>
+                    <div class="qty-selector">
+                        <button class="qty-btn" id="detailQtyMinus">-</button>
+                        <span id="detailQtyValue">1</span>
+                        <button class="qty-btn" id="detailQtyPlus">+</button>
+                    </div>
+                </div>
                 <div class="detail-actions">
                     <button class="detail-cart-btn" id="detailCartBtn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         Añadir al Carrito
                     </button>
+                    <button class="detail-buy-btn" id="detailBuyBtn">Comprar Ahora</button>
                     <button class="detail-wishlist-btn" id="detailWishlistBtn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                     </button>
+                </div>
+                <div class="detail-share">
+                    <span>Compartir:</span>
+                    <button class="share-btn" data-share="whatsapp">WhatsApp</button>
+                    <button class="share-btn" data-share="facebook">Facebook</button>
+                    <button class="share-btn" data-share="copy">Copiar enlace</button>
                 </div>
             </div>
         </div>
@@ -252,31 +363,64 @@
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-panel" id="cartPanel">
         <div class="cart-header">
-            <h3>Mi Carrito</h3>
+            <h3>Mi Carrito <span id="cartItemCount">(0)</span></h3>
             <button class="cart-close" id="cartClose">&times;</button>
         </div>
         <div class="cart-items" id="cartItems">
             <p class="cart-empty">Tu carrito está vacío</p>
         </div>
+        <div class="cart-coupon" id="cartCouponArea" style="display:none;">
+            <input type="text" id="couponInput" placeholder="Código de cupón">
+            <button id="applyCouponBtn">Aplicar</button>
+        </div>
         <div class="cart-footer" id="cartFooter" style="display:none;">
-            <div class="cart-total">
-                <span>Total</span>
-                <span id="cartTotal">$0.00</span>
+            <div class="cart-summary">
+                <div class="cart-summary-row"><span>Subtotal</span><span id="cartSubtotal">L. 0.00</span></div>
+                <div class="cart-summary-row" id="cartDiscountRow" style="display:none;"><span>Descuento</span><span id="cartDiscount">- L. 0.00</span></div>
+                <div class="cart-summary-row"><span>Envío</span><span id="cartShipping">L. 0.00</span></div>
+                <div class="cart-summary-row cart-total-row"><span>Total</span><span id="cartTotal">L. 0.00</span></div>
             </div>
-            <button class="cart-checkout-btn">Finalizar Compra</button>
+            <button class="cart-checkout-btn" id="cartCheckoutBtn">Finalizar Compra</button>
+            <button class="cart-continue-btn" id="cartContinueBtn">Continuar Comprando</button>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-brand">
-                <span class="footer-logo" id="footerLogo">LE PERFUM CG</span>
-                <p class="footer-tagline" id="footerTagline">Perfumería Fina & Esencias de Autor</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <span class="footer-logo" id="footerLogo">LE PERFUM CG</span>
+                    <p class="footer-tagline" id="footerTagline">Perfumería Fina & Esencias de Autor</p>
+                    <p class="footer-desc">Tu perfumería de confianza en Honduras. Fragancias exclusivas con garantía de autenticidad.</p>
+                    <div class="social-links" id="socialLinks"></div>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#catalog">Catálogo</a></li>
+                        <li><a href="#catalog" data-filter="bestseller">Más Vendidos</a></li>
+                        <li><a href="#catalog" data-filter="new">Nuevos</a></li>
+                        <li><a href="#catalog" data-filter="oferta">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#">Envíos</a></li>
+                        <li><a href="#">Devoluciones</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <p class="contact-info" id="footerContact"></p>
+                </div>
             </div>
-            <p class="footer-copy" id="footerText">&copy; 2026 LE PERFUM CG - Todos los derechos reservados</p>
-            <p class="contact-info" id="footerContact"></p>
-            <div class="social-links" id="socialLinks"></div>
+            <div class="footer-bottom">
+                <p id="footerText">&copy; 2026 LE PERFUM CG - Todos los derechos reservados</p>
+            </div>
         </div>
     </footer>
 
