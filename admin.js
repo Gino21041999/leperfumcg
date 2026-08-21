@@ -37,6 +37,7 @@ function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
 function getOrders() { const s = localStorage.getItem(ORDERS_KEY); return s ? JSON.parse(s) : []; }
 function saveOrders(o) { localStorage.setItem(ORDERS_KEY, JSON.stringify(o)); }
 function getCustomers() { const s = localStorage.getItem(CUSTOMERS_KEY); return s ? JSON.parse(s) : []; }
+function saveCustomers(c) { localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(c)); }
 function getReviews() { const s = localStorage.getItem(REVIEWS_KEY); return s ? JSON.parse(s) : []; }
 function getCoupons() { const s = localStorage.getItem(COUPONS_KEY); return s ? JSON.parse(s) : []; }
 function saveCoupons(c) { localStorage.setItem(COUPONS_KEY, JSON.stringify(c)); }
@@ -91,7 +92,48 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     else { alert('Correo o contraseña incorrectos'); }
 });
 
-function showAdminPanel() { loginContainer.style.display = 'none'; adminShell.style.display = 'flex'; updateAccountInfo(); renderDashboard(); }
+const DATA_BASE = 'https://raw.githubusercontent.com/' + REPO_OWNER + '/' + REPO_NAME + '/' + REPO_BRANCH + '/data';
+
+async function fetchJSON(url) {
+    try { const res = await fetch(url + '?t=' + Date.now()); if (!res.ok) return null; return await res.json(); } catch (e) { return null; }
+}
+
+async function loadOrdersFromGitHub() {
+    const remote = await fetchJSON(DATA_BASE + '/orders.json');
+    if (remote && Array.isArray(remote)) { saveOrders(remote); return remote; }
+    return getOrders();
+}
+
+async function loadCustomersFromGitHub() {
+    const remote = await fetchJSON(DATA_BASE + '/customers.json');
+    if (remote && Array.isArray(remote)) { saveCustomers(remote); return remote; }
+    return getCustomers();
+}
+
+async function loadProductsFromGitHub() {
+    const remote = await fetchJSON(DATA_BASE + '/products.json');
+    if (remote && Array.isArray(remote)) { saveProducts(remote); return remote; }
+    return getProducts();
+}
+
+async function pushToGitHub(path, data, message) {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    if (!token) return { ok: false, error: 'No hay token de GitHub configurado' };
+    const apiBase = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path;
+    let sha = null;
+    try { const existing = await fetch(apiBase, { headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' } }); if (existing.ok) { const fd = await existing.json(); sha = fd.sha; } } catch (e) {}
+    const body = { message: message, content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), branch: REPO_BRANCH };
+    if (sha) body.sha = sha;
+    try { const res = await fetch(apiBase, { method: 'PUT', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' }, body: JSON.stringify(body) }); if (res.ok) return { ok: true }; const err = await res.json(); return { ok: false, error: err.message || 'Error' }; } catch (e) { return { ok: false, error: e.message }; }
+}
+
+async function showAdminPanel() {
+    loginContainer.style.display = 'none';
+    adminShell.style.display = 'flex';
+    updateAccountInfo();
+    await Promise.all([loadOrdersFromGitHub(), loadCustomersFromGitHub(), loadProductsFromGitHub()]);
+    renderDashboard();
+}
 
 function updateAccountInfo() {
     const user = JSON.parse(localStorage.getItem('current_user'));
@@ -836,25 +878,13 @@ document.getElementById('importFileInput').addEventListener('change', function(e
 // ========================================
 // GITHUB PUBLISH
 // ========================================
-async function pushToGitHub(path, data, message) {
-    const token = localStorage.getItem(GITHUB_TOKEN_KEY);
-    if (!token) return { ok: false, error: 'No hay token configurado' };
-    const api = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path;
-    let sha = null;
-    try { const res = await fetch(api, { headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' } }); if (res.ok) { const d = await res.json(); sha = d.sha; } } catch (e) {}
-    const body = { message, content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), branch: REPO_BRANCH };
-    if (sha) body.sha = sha;
-    try {
-        const res = await fetch(api, { method: 'PUT', headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' }, body: JSON.stringify(body) });
-        if (res.ok) return { ok: true };
-        const err = await res.json(); return { ok: false, error: err.message || 'Error' };
-    } catch (e) { return { ok: false, error: e.message }; }
-}
 
 async function saveAndPublish() {
     const results = [];
     const r1 = await pushToGitHub('data/products.json', getProducts(), 'Update products'); results.push('Productos: ' + (r1.ok ? 'OK' : r1.error));
     const r2 = await pushToGitHub('data/business.json', getBusiness(), 'Update business'); results.push('Negocio: ' + (r2.ok ? 'OK' : r2.error));
+    const r3 = await pushToGitHub('data/orders.json', getOrders(), 'Update orders'); results.push('Pedidos: ' + (r3.ok ? 'OK' : r3.error));
+    const r4 = await pushToGitHub('data/customers.json', getCustomers(), 'Update customers'); results.push('Clientes: ' + (r4.ok ? 'OK' : r4.error));
     return results;
 }
 

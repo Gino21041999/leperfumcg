@@ -718,6 +718,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var allOrders = JSON.parse(localStorage.getItem('leperfumcg_orders') || '[]');
             allOrders.push(order);
             localStorage.setItem('leperfumcg_orders', JSON.stringify(allOrders));
+            pushOrderToGitHub(order).catch(function() {});
 
             // Reduce stock
             var allProducts = getProductsLocal();
@@ -726,6 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (p && p.stock) p.stock = Math.max(0, p.stock - item.qty);
             });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(allProducts));
+            pushToGitHub('data/products.json', allProducts, 'Stock updated after order').catch(function() {});
 
             cart = [];
             saveCart();
@@ -800,6 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 customers.push(newCust);
                 localStorage.setItem('leperfumcg_customers', JSON.stringify(customers));
                 localStorage.setItem('leperfumcg_customer', JSON.stringify(newCust));
+                pushCustomerToGitHub(newCust).catch(function() {});
                 toast('Cuenta creada exitosamente');
                 renderAccount(container);
             });

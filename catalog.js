@@ -118,6 +118,28 @@ async function loadProducts() {
     return defaultProducts;
 }
 
+async function loadOrders() {
+    const remote = await fetchJSON(DATA_BASE + '/orders.json');
+    if (remote && Array.isArray(remote)) {
+        localStorage.setItem(ORDERS_KEY, JSON.stringify(remote));
+        return remote;
+    }
+    const stored = localStorage.getItem(ORDERS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultOrders;
+}
+
+async function loadCustomers() {
+    const remote = await fetchJSON(DATA_BASE + '/customers.json');
+    if (remote && Array.isArray(remote)) {
+        localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(remote));
+        return remote;
+    }
+    const stored = localStorage.getItem(CUSTOMERS_KEY);
+    if (stored) return JSON.parse(stored);
+    return defaultCustomers;
+}
+
 async function loadBusiness() {
     const remote = await fetchJSON(DATA_BASE + '/business.json');
     if (remote && remote.name) {
@@ -251,6 +273,18 @@ async function saveAndPublish() {
     const r2 = await pushToGitHub('data/business.json', allData.business, 'Update business info from admin panel');
     results.push('Negocio: ' + (r2.ok ? 'OK' : r2.error));
     return results;
+}
+
+async function pushOrderToGitHub(order) {
+    const orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+    const r = await pushToGitHub('data/orders.json', orders, 'New order #' + order.id);
+    return r;
+}
+
+async function pushCustomerToGitHub(customer) {
+    const customers = JSON.parse(localStorage.getItem(CUSTOMERS_KEY) || '[]');
+    const r = await pushToGitHub('data/customers.json', customers, 'New customer: ' + customer.email);
+    return r;
 }
 
 function toast(msg, type) {
