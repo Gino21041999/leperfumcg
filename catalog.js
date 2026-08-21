@@ -71,8 +71,7 @@ const defaultBusiness = {
 };
 
 const defaultCategories = [
-    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true },
-    { id: 2, name: 'Libro', icon: '📚', isDefault: true }
+    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true }
 ];
 
 const defaultBrands = [

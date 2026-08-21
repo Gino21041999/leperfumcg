@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getCategoryEmoji(product) {
-        if (product.category === 'libro') return '\uD83D\uDCDA';
         if (product.type && product.type.includes('arabe')) return '\uD83C\uDF19';
         if (product.type && product.type.includes('disenador')) return '\uD83D\uDC8E';
         return '\uD83C\uDF38';
@@ -307,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('detailBrand').textContent = product.brand || '';
         document.getElementById('detailName').textContent = product.name;
 
-        var catText = product.category === 'perfume' ? 'Perfume' : product.category === 'libro' ? 'Libro' : product.category;
+        var catText = 'Perfume';
         if (product.type && product.type.length > 0) catText += ' \u2014 ' + product.type.map(function(t) { return typeLabels[t] || t; }).join(', ');
         if (product.gender) catText += ' | ' + (genderLabels[product.gender] || product.gender);
         document.getElementById('detailCategory').textContent = catText;

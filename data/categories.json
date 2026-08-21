@@ -4,11 +4,5 @@
     "name": "Perfume",
     "icon": "🌸",
     "isDefault": true
-  },
-  {
-    "id": 2,
-    "name": "Libro",
-    "icon": "📚",
-    "isDefault": true
   }
 ]

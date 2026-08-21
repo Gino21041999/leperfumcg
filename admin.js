@@ -13,7 +13,7 @@ const REPO_NAME = 'leperfumcg';
 const REPO_BRANCH = 'main';
 
 const defaultBusiness = {
-    name: 'LE PERFUM CG', slogan: 'Perfumes & Libros de Autor', phone: '+504 8888-8888',
+    name: 'LE PERFUM CG', slogan: 'Perfumería Fina', phone: '+504 8888-8888',
     whatsapp: '+504 8888-8888', email: 'leperfumcg@email.com', address: 'San Pedro Sula, Honduras',
     currency: 'HNL', exchangeRate: 24.50, globalDiscount: 0,
     facebook: '', instagram: '', tiktok: '', footer: 'Todos los derechos reservados'
@@ -29,8 +29,7 @@ const defaultProducts = [
 ];
 
 const defaultCategories = [
-    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true },
-    { id: 2, name: 'Libro', icon: '📚', isDefault: true }
+    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true }
 ];
 
 // ---- Getters ----
