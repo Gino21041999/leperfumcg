@@ -31,7 +31,12 @@
     ],
     "sku": "PERF-001",
     "stock": 10,
-    "condition": "new"
+    "condition": "new",
+    "rating": 4.5,
+    "reviewCount": 0,
+    "size": "",
+    "concentration": "",
+    "origin": ""
   },
   {
     "name": "ASAD ",
@@ -52,6 +57,16 @@
     "condition": "new",
     "olfactory": "amaderado",
     "occasion": "noche",
-    "id": 1787004976874
+    "id": 1787004976874,
+    "notes": {
+      "top": "",
+      "heart": "",
+      "base": ""
+    },
+    "rating": 4.5,
+    "reviewCount": 0,
+    "size": "",
+    "concentration": "",
+    "origin": ""
   }
 ]
