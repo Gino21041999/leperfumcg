@@ -1,7 +1,6 @@
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
 const USERS_KEY = 'leperfumcg_users';
-const CATEGORIES_KEY = 'leperfumcg_categories';
 const ORDERS_KEY = 'leperfumcg_orders';
 const CUSTOMERS_KEY = 'leperfumcg_customers';
 const REVIEWS_KEY = 'leperfumcg_reviews';
@@ -28,10 +27,6 @@ const defaultProducts = [
     { id: 2, name: "Bleu de Chanel", category: "perfume", type: ["disenador"], gender: "hombre", brand: "Chanel", price: 120, discount: 0, description: "Fresca, aromática y magnética.", features: ["100ml EDP", "Duración: 8-10 horas"], notes: { top: "Limón, Menta", heart: "Jengibre", base: "Sándalo" }, image: "", tags: ["bestseller"], sku: "PERF-002", stock: 5, condition: "new", olfactory: "citrico", occasion: "diario", size: "100ml", concentration: "Eau de Parfum", origin: "Francia", rating: 4.5, reviewCount: 18 }
 ];
 
-const defaultCategories = [
-    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true }
-];
-
 // ---- Getters ----
 function getProducts() { const s = localStorage.getItem(STORAGE_KEY); if (s) return JSON.parse(s); localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProducts)); return defaultProducts; }
 function saveProducts(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
@@ -39,8 +34,6 @@ function getBusiness() { const s = localStorage.getItem(BUSINESS_KEY); if (s) re
 function saveBusiness(b) { localStorage.setItem(BUSINESS_KEY, JSON.stringify(b)); }
 function getUsers() { const s = localStorage.getItem(USERS_KEY); if (s) return JSON.parse(s); localStorage.setItem(USERS_KEY, JSON.stringify(defaultUsers)); return defaultUsers; }
 function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
-function getCategories() { const s = localStorage.getItem(CATEGORIES_KEY); if (s) return JSON.parse(s); localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaultCategories)); return defaultCategories; }
-function saveCategories(c) { localStorage.setItem(CATEGORIES_KEY, JSON.stringify(c)); }
 function getOrders() { const s = localStorage.getItem(ORDERS_KEY); return s ? JSON.parse(s) : []; }
 function saveOrders(o) { localStorage.setItem(ORDERS_KEY, JSON.stringify(o)); }
 function getCustomers() { const s = localStorage.getItem(CUSTOMERS_KEY); return s ? JSON.parse(s) : []; }
@@ -57,7 +50,7 @@ function formatPrice(p) { return 'L. ' + ((p || 0) * (getBusiness().exchangeRate
 const sidebarLinks = document.querySelectorAll('.sidebar-link[data-section]');
 const allSections = document.querySelectorAll('.admin-section');
 const topbarTitle = document.getElementById('topbarTitle');
-const sectionTitles = { dashboard:'Dashboard', products:'Productos', categories:'Categorías', orders:'Pedidos', customers:'Clientes', users:'Usuarios', coupons:'Cupones', banners:'Banners', reviews:'Reseñas', inventory:'Inventario', reports:'Reportes', business:'Mi Negocio' };
+const sectionTitles = { dashboard:'Dashboard', products:'Productos', orders:'Pedidos', customers:'Clientes', users:'Usuarios', coupons:'Cupones', banners:'Banners', reviews:'Reseñas', inventory:'Inventario', reports:'Reportes', business:'Mi Negocio' };
 
 sidebarLinks.forEach(link => {
     link.addEventListener('click', function() {
@@ -70,7 +63,6 @@ sidebarLinks.forEach(link => {
         document.getElementById('sidebar').classList.remove('open');
         if (sec === 'dashboard') renderDashboard();
         if (sec === 'products') renderProductsTable();
-        if (sec === 'categories') renderCategoriesList();
         if (sec === 'orders') renderOrdersTable();
         if (sec === 'customers') renderCustomersTable();
         if (sec === 'users') renderUsersList();
@@ -99,7 +91,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     else { alert('Correo o contraseña incorrectos'); }
 });
 
-function showAdminPanel() { loginContainer.style.display = 'none'; adminShell.style.display = 'flex'; updateAccountInfo(); renderDashboard(); populateCategorySelect(); populateFilterCategory(); }
+function showAdminPanel() { loginContainer.style.display = 'none'; adminShell.style.display = 'flex'; updateAccountInfo(); renderDashboard(); }
 
 function updateAccountInfo() {
     const user = JSON.parse(localStorage.getItem('current_user'));
@@ -202,29 +194,12 @@ function renderDashboard() {
 // ========================================
 // PRODUCTS TABLE
 // ========================================
-function populateCategorySelect() {
-    const cats = getCategories();
-    const sel = document.getElementById('productCategory');
-    if (!sel) return;
-    sel.innerHTML = '';
-    cats.forEach(c => { const o = document.createElement('option'); o.value = c.name.toLowerCase(); o.textContent = (c.icon || '') + ' ' + c.name; sel.appendChild(o); });
-}
-
-function populateFilterCategory() {
-    const cats = getCategories();
-    const sel = document.getElementById('filterCategory');
-    if (!sel) return;
-    sel.innerHTML = '<option value="all">Todas</option>';
-    cats.forEach(c => { const o = document.createElement('option'); o.value = c.name.toLowerCase(); o.textContent = (c.icon || '') + ' ' + c.name; sel.appendChild(o); });
-}
 
 function renderProductsTable() {
     let products = getProducts();
-    const catF = document.getElementById('filterCategory').value;
     const typeF = document.getElementById('filterType').value;
     const genderF = document.getElementById('filterGender').value;
 
-    if (catF !== 'all') products = products.filter(p => p.category === catF);
     if (typeF !== 'all') products = products.filter(p => p.type && p.type.includes(typeF));
     if (genderF !== 'all') products = products.filter(p => p.gender === genderF);
 
@@ -259,7 +234,6 @@ function renderProductsTable() {
     });
 }
 
-document.getElementById('filterCategory').addEventListener('change', renderProductsTable);
 document.getElementById('filterType').addEventListener('change', renderProductsTable);
 document.getElementById('filterGender').addEventListener('change', renderProductsTable);
 
@@ -312,26 +286,22 @@ document.getElementById('removeImage').addEventListener('click', function() {
 });
 
 // Auto description
-function generateDescription(name, brand, category, type, gender) {
+function generateDescription(name, brand, type, gender) {
     if (!name || !brand) return '';
     const typeDesc = { arabe:'con esencias orientales y árabes', disenador:'de la casa de diseñador', replica:'réplica de alta calidad', artesanal:'elaborado artesanalmente' };
     const genderDesc = { hombre:'para hombre', mujer:'para mujer', unisex:'unisex' };
-    if (category === 'perfume') {
-        const td = type.length > 0 ? typeDesc[type[0]] || '' : '';
-        const gd = genderDesc[gender] || 'unisex';
-        return brand + ' presenta ' + name + (td ? ', ' + td : '') + '. Fragancia ' + gd + ' con notas elegantes y sofisticadas.';
-    }
-    return brand + ' - ' + name + '. Producto de alta calidad.';
+    const td = type.length > 0 ? typeDesc[type[0]] || '' : '';
+    const gd = genderDesc[gender] || 'unisex';
+    return brand + ' presenta ' + name + (td ? ', ' + td : '') + '. Fragancia ' + gd + ' con notas elegantes y sofisticadas.';
 }
 
 function autoGenerateDescription() {
     const name = document.getElementById('productName').value.trim();
     const brand = document.getElementById('productBrand').value.trim();
-    const cat = document.getElementById('productCategory').value;
     const types = Array.from(document.querySelectorAll('#typeGroup input:checked')).map(cb => cb.value);
     const gender = document.getElementById('productGender').value;
     const desc = document.getElementById('productDescription');
-    if (!desc.value.trim() && name && brand) desc.value = generateDescription(name, brand, cat, types, gender);
+    if (!desc.value.trim() && name && brand) desc.value = generateDescription(name, brand, types, gender);
 }
 
 document.getElementById('productName').addEventListener('input', autoGenerateDescription);
@@ -343,15 +313,10 @@ document.getElementById('regenerateDesc').addEventListener('click', () => {
     const brand = document.getElementById('productBrand').value.trim();
     if (!name || !brand) { alert('Escribe nombre y marca primero.'); return; }
     const types = Array.from(document.querySelectorAll('#typeGroup input:checked')).map(cb => cb.value);
-    document.getElementById('productDescription').value = generateDescription(name, brand, document.getElementById('productCategory').value, types, document.getElementById('productGender').value);
+    document.getElementById('productDescription').value = generateDescription(name, brand, types, document.getElementById('productGender').value);
 });
 
-// Type/gender show/hide
-document.getElementById('productCategory').addEventListener('change', function() {
-    const isPerfume = this.value === 'perfume';
-    document.getElementById('typeGroup').style.display = isPerfume ? 'block' : 'none';
-    document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
-});
+// Type/gender always visible for perfumes
 
 // Edit product
 window.editProduct = function(id) {
@@ -360,7 +325,6 @@ window.editProduct = function(id) {
     document.getElementById('productId').value = p.id;
     document.getElementById('productName').value = p.name;
     document.getElementById('productBrand').value = p.brand || '';
-    document.getElementById('productCategory').value = p.category;
     document.getElementById('productPrice').value = p.price;
     document.getElementById('productDiscount').value = p.discount || 0;
     document.getElementById('productDescription').value = p.description || '';
@@ -381,9 +345,6 @@ window.editProduct = function(id) {
     document.querySelectorAll('input[name="productType"]').forEach(cb => cb.checked = (p.type || []).includes(cb.value));
     if (p.image) { currentImageData = p.image; document.getElementById('imagePreview').innerHTML = '<img src="' + p.image + '">'; document.getElementById('removeImage').style.display = 'block'; }
     else { currentImageData = ''; document.getElementById('imagePreview').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'; document.getElementById('removeImage').style.display = 'none'; }
-    const isPerfume = p.category === 'perfume';
-    document.getElementById('typeGroup').style.display = isPerfume ? 'block' : 'none';
-    document.getElementById('genderGroup').style.display = isPerfume ? 'block' : 'none';
     document.getElementById('formTitle').textContent = 'Editar Producto';
     showSection('formSection');
 };
@@ -405,7 +366,7 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
     const data = {
         name: document.getElementById('productName').value,
         brand: document.getElementById('productBrand').value,
-        category: document.getElementById('productCategory').value,
+        category: 'perfume',
         type: selectedTypes,
         gender: document.getElementById('productGender').value,
         price: parseFloat(document.getElementById('productPrice').value),
@@ -441,65 +402,6 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
     document.querySelector('[data-section="products"]').classList.add('active');
     renderProductsTable();
 });
-
-// ========================================
-// CATEGORIES
-// ========================================
-function renderCategoriesList() {
-    const cats = getCategories();
-    const products = getProducts();
-    const list = document.getElementById('categoriesList');
-    list.innerHTML = '';
-    cats.forEach(c => {
-        const count = products.filter(p => p.category === c.name.toLowerCase()).length;
-        const item = document.createElement('div');
-        item.className = 'category-item';
-        item.innerHTML = '<div class="category-item-info"><div class="category-item-icon">' + (c.icon || '📦') + '</div><div><div class="category-item-name">' + c.name + (c.isDefault ? '<span class="category-item-default">(default)</span>' : '') + '</div><div class="category-item-count">' + count + ' producto' + (count !== 1 ? 's' : '') + '</div></div></div><div class="category-item-actions"><button class="btn-edit" onclick="editCategory(' + c.id + ')">Editar</button><button class="btn-delete" onclick="deleteCategory(' + c.id + ')">Eliminar</button></div>';
-        list.appendChild(item);
-    });
-}
-
-document.getElementById('addCategoryBtn').addEventListener('click', () => { document.getElementById('categoryFormBox').style.display = 'block'; document.getElementById('categoryName').value = ''; document.getElementById('categoryIcon').value = ''; document.getElementById('editCategoryId').value = ''; document.getElementById('addCategoryBtn').style.display = 'none'; });
-document.getElementById('cancelCategoryBtn').addEventListener('click', () => { document.getElementById('categoryFormBox').style.display = 'none'; document.getElementById('addCategoryBtn').style.display = 'block'; });
-
-document.getElementById('saveCategoryBtn').addEventListener('click', function() {
-    const name = document.getElementById('categoryName').value.trim();
-    const icon = document.getElementById('categoryIcon').value.trim() || '📦';
-    if (!name) { alert('Ingresa un nombre'); return; }
-    const cats = getCategories();
-    const editId = document.getElementById('editCategoryId').value;
-    if (editId) {
-        const idx = cats.findIndex(c => c.id === parseInt(editId));
-        if (idx !== -1) { const oldName = cats[idx].name.toLowerCase(); cats[idx].name = name; cats[idx].icon = icon; if (oldName !== name.toLowerCase()) { getProducts().forEach(p => { if (p.category === oldName) p.category = name.toLowerCase(); }); saveProducts(getProducts()); } }
-    } else {
-        if (cats.some(c => c.name.toLowerCase() === name.toLowerCase())) { alert('Ya existe'); return; }
-        cats.push({ id: Date.now(), name: name, icon: icon, isDefault: false });
-    }
-    saveCategories(cats); populateCategorySelect(); populateFilterCategory(); renderCategoriesList();
-    document.getElementById('categoryFormBox').style.display = 'none';
-    document.getElementById('addCategoryBtn').style.display = 'block';
-});
-
-window.editCategory = function(id) {
-    const cat = getCategories().find(c => c.id === id);
-    if (!cat) return;
-    document.getElementById('categoryName').value = cat.name;
-    document.getElementById('categoryIcon').value = cat.icon || '';
-    document.getElementById('editCategoryId').value = cat.id;
-    document.getElementById('categoryFormBox').style.display = 'block';
-    document.getElementById('addCategoryBtn').style.display = 'none';
-};
-
-window.deleteCategory = function(id) {
-    const cats = getCategories();
-    const cat = cats.find(c => c.id === id);
-    if (!cat) return;
-    const count = getProducts().filter(p => p.category === cat.name.toLowerCase()).length;
-    const fallback = cats.find(c => c.id !== id);
-    if (count > 0 && !confirm('Hay ' + count + ' productos en "' + cat.name + '". Se moverán a "' + (fallback ? fallback.name : 'Sin categoría') + '". ¿Continuar?')) return;
-    if (count > 0) { getProducts().forEach(p => { if (p.category === cat.name.toLowerCase()) p.category = fallback ? fallback.name.toLowerCase() : 'sin-categoria'; }); saveProducts(getProducts()); }
-    saveCategories(cats.filter(c => c.id !== id)); populateCategorySelect(); populateFilterCategory(); renderCategoriesList(); renderProductsTable();
-};
 
 // ========================================
 // ORDERS
@@ -903,7 +805,7 @@ document.getElementById('businessForm').addEventListener('submit', function(e) {
 // EXPORT / IMPORT
 // ========================================
 document.getElementById('exportDataBtn').addEventListener('click', function() {
-    const data = { products: getProducts(), business: getBusiness(), categories: getCategories(), coupons: getCoupons(), banners: getBanners(), orders: getOrders(), customers: getCustomers(), reviews: getReviews(), exportedAt: new Date().toISOString() };
+    const data = { products: getProducts(), business: getBusiness(), coupons: getCoupons(), banners: getBanners(), orders: getOrders(), customers: getCustomers(), reviews: getReviews(), exportedAt: new Date().toISOString() };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = 'leperfumcg-backup-' + new Date().toISOString().slice(0, 10) + '.json'; a.click();
@@ -920,7 +822,6 @@ document.getElementById('importFileInput').addEventListener('change', function(e
             const data = JSON.parse(ev.target.result);
             if (data.products) { saveProducts(data.products); }
             if (data.business) { saveBusiness(data.business); }
-            if (data.categories) { saveCategories(data.categories); }
             if (data.coupons) { saveCoupons(data.coupons); }
             if (data.banners) { saveBanners(data.banners); }
             if (data.orders) { saveOrders(data.orders); }
@@ -954,7 +855,6 @@ async function saveAndPublish() {
     const results = [];
     const r1 = await pushToGitHub('data/products.json', getProducts(), 'Update products'); results.push('Productos: ' + (r1.ok ? 'OK' : r1.error));
     const r2 = await pushToGitHub('data/business.json', getBusiness(), 'Update business'); results.push('Negocio: ' + (r2.ok ? 'OK' : r2.error));
-    const r3 = await pushToGitHub('data/categories.json', getCategories(), 'Update categories'); results.push('Categorías: ' + (r3.ok ? 'OK' : r3.error));
     return results;
 }
 

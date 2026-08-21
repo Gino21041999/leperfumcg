@@ -407,8 +407,6 @@ body {
    CATEGORIES HOME
    ======================================== */
 
-.categories-section { padding: 60px 0; overflow: hidden; }
-
 .section-title-wrap { text-align: center; margin-bottom: 40px; }
 
 .section-title {
@@ -421,25 +419,6 @@ body {
 }
 
 .section-subtitle { font-size: 0.85rem; color: var(--text-muted); }
-
-.categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
-
-.category-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 32px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all var(--transition);
-    text-decoration: none;
-    color: var(--text-primary);
-}
-
-.category-card:hover { border-color: var(--accent-dim); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-.category-card-icon { font-size: 2.5rem; margin-bottom: 12px; }
-.category-card-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; }
-.category-card-count { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ========================================
    BRANDS
@@ -1218,9 +1197,6 @@ body {
     .hero-desc { font-size: 0.85rem; }
     .hero-cta { padding: 12px 28px; font-size: 0.8rem; }
 
-    .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .category-card { padding: 20px 16px; }
-
     .brands-marquee { gap: 16px; }
     .brand-item { padding: 12px 20px; font-size: 0.9rem; }
 
@@ -1278,10 +1254,6 @@ body {
     .hero-title { font-size: 1.7rem; }
     .hero-actions { flex-direction: column; align-items: center; }
     .hero-cta, .hero-cta-outline { width: 100%; max-width: 280px; text-align: center; }
-
-    .categories-grid { grid-template-columns: 1fr 1fr; }
-    .category-card-icon { font-size: 1.8rem; }
-    .category-card-name { font-size: 0.9rem; }
 
     .filter-dropdowns { gap: 6px; }
     .filter-select { font-size: 0.68rem; padding: 7px 28px 7px 10px; }

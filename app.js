@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var detailQty = 1;
     var appliedCoupon = null;
 
-    var currentCategory = 'all';
     var currentOlfactory = 'all';
     var currentGender = 'all';
     var currentOccasion = 'all';
@@ -17,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function formatPrice(price) {
         if (typeof price !== 'number') price = parseFloat(price) || 0;
-        return 'L. ' + (price * (business.exchangeRate || 24.50)).toFixed(2);
+        return 'L. ' + price.toFixed(2);
     }
 
     function getFinalPrice(product) {
@@ -33,12 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
-    }
-
-    function getCategoryEmoji(product) {
-        if (product.type && product.type.includes('arabe')) return '\uD83C\uDF19';
-        if (product.type && product.type.includes('disenador')) return '\uD83D\uDC8E';
-        return '\uD83C\uDF38';
     }
 
     function renderStars(rating) {
@@ -61,37 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var topMsg = document.getElementById('topBarMsg');
         if (topMsg) topMsg.textContent = 'Envío Gratis en compras mayores a ' + formatPrice(business.shippingCost || 40);
 
-        var mainNav = document.getElementById('mainNav');
-        var mobileNav = document.getElementById('mobileNav');
-        mainNav.innerHTML = '';
-        mobileNav.innerHTML = '';
-
-        var allBtn = document.createElement('button');
-        allBtn.className = 'nav-link active';
-        allBtn.dataset.filter = 'all';
-        allBtn.textContent = 'Todos';
-        mainNav.appendChild(allBtn);
-        mobileNav.appendChild(allBtn.cloneNode(true));
-
-        categories.forEach(function(cat) {
-            var btn = document.createElement('button');
-            btn.className = 'nav-link';
-            btn.dataset.filter = cat.name.toLowerCase();
-            btn.textContent = (cat.icon || '') + ' ' + cat.name;
-            mainNav.appendChild(btn);
-            mobileNav.appendChild(btn.cloneNode(true));
-        });
-
-        document.querySelectorAll('.nav-link').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.nav-link').forEach(function(b) { b.classList.remove('active'); });
-                this.classList.add('active');
-                currentCategory = this.dataset.filter;
-                renderProducts();
-                mobileNav.classList.remove('active');
-            });
-        });
-
         document.getElementById('footerText').innerHTML = '&copy; 2026 ' + business.name + ' - ' + (business.footer || '');
 
         var contactParts = [];
@@ -110,31 +72,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (business.tiktok) socialHTML += '<a href="' + business.tiktok + '" target="_blank" class="social-link">TikTok</a>';
         document.getElementById('socialLinks').innerHTML = socialHTML;
 
-        renderCategoriesHome();
         renderBrands();
         renderFeatured();
-    }
-
-    function renderCategoriesHome() {
-        var grid = document.getElementById('categoriesGrid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        categories.forEach(function(cat) {
-            var count = products.filter(function(p) { return p.category === cat.name.toLowerCase(); }).length;
-            var card = document.createElement('a');
-            card.className = 'category-card';
-            card.href = '#catalog';
-            card.innerHTML = '<div class="category-card-icon">' + (cat.icon || '') + '</div>' +
-                '<div class="category-card-name">' + escapeHTML(cat.name) + '</div>' +
-                '<div class="category-card-count">' + count + ' producto' + (count !== 1 ? 's' : '') + '</div>';
-            card.addEventListener('click', function(e) {
-                currentCategory = cat.name.toLowerCase();
-                document.querySelectorAll('.nav-link').forEach(function(b) {
-                    b.classList.toggle('active', b.dataset.filter === currentCategory);
-                });
-            });
-            grid.appendChild(card);
-        });
     }
 
     function renderBrands() {
@@ -180,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var priceInfo = getFinalPrice(product);
         var imageHTML = product.image
             ? '<img src="' + product.image + '" alt="' + escapeHTML(product.name) + '" class="product-img">'
-            : '<span class="product-emoji">' + getCategoryEmoji(product) + '</span>';
+            : '<span class="product-emoji">\uD83D\uDCE6</span>';
 
         var badgesHTML = '';
         if (priceInfo.discount > 0) badgesHTML += '<span class="badge badge-discount">-' + priceInfo.discount + '%</span>';
@@ -260,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
         productsGrid.innerHTML = '';
         var filtered = products.slice();
 
-        if (currentCategory !== 'all') filtered = filtered.filter(function(p) { return p.category === currentCategory; });
         if (currentOlfactory !== 'all') filtered = filtered.filter(function(p) { return p.olfactory === currentOlfactory; });
         if (currentGender !== 'all') filtered = filtered.filter(function(p) { return p.gender === currentGender; });
         if (currentOccasion !== 'all') filtered = filtered.filter(function(p) { return p.occasion === currentOccasion; });
@@ -299,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (product.image) {
             imageEl.innerHTML = '<img src="' + product.image + '" alt="' + escapeHTML(product.name) + '">';
         } else {
-            imageEl.innerHTML = getCategoryEmoji(product);
+            imageEl.innerHTML = '\uD83D\uDCE6';
             imageEl.style.fontSize = '5rem';
         }
 
@@ -601,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var div = document.createElement('div');
             div.className = 'search-result-item';
             div.innerHTML =
-                '<div class="search-result-img">' + (p.image ? '<img src="' + p.image + '">' : getCategoryEmoji(p)) + '</div>' +
+                '<div class="search-result-img">' + (p.image ? '<img src="' + p.image + '">' : '\uD83D\uDCE6') + '</div>' +
                 '<div><div class="search-result-name">' + escapeHTML(p.name) + '</div><div class="search-result-brand">' + escapeHTML(p.brand || '') + '</div></div>';
             div.addEventListener('click', function() {
                 searchWrapper.classList.remove('open');

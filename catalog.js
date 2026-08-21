@@ -1,6 +1,5 @@
 const STORAGE_KEY = 'leperfumcg_products';
 const BUSINESS_KEY = 'leperfumcg_business';
-const CATEGORIES_KEY = 'leperfumcg_categories';
 const BRANDS_KEY = 'leperfumcg_brands';
 const ORDERS_KEY = 'leperfumcg_orders';
 const CUSTOMERS_KEY = 'leperfumcg_customers';
@@ -70,10 +69,6 @@ const defaultBusiness = {
     shippingCost: 150, freeShippingMin: 1000
 };
 
-const defaultCategories = [
-    { id: 1, name: 'Perfume', icon: '🌸', isDefault: true }
-];
-
 const defaultBrands = [
     { id: 1, name: 'Attar Collection', logo: '', description: 'Perfumes árabes artesanales', active: true },
     { id: 2, name: 'Chanel', logo: '', description: 'Diseñador francés de lujo', active: true },
@@ -135,18 +130,6 @@ async function loadBusiness() {
     return defaultBusiness;
 }
 
-async function loadCategories() {
-    const remote = await fetchJSON(DATA_BASE + '/categories.json');
-    if (remote && Array.isArray(remote)) {
-        localStorage.setItem(CATEGORIES_KEY, JSON.stringify(remote));
-        return remote;
-    }
-    const stored = localStorage.getItem(CATEGORIES_KEY);
-    if (stored) return JSON.parse(stored);
-    localStorage.setItem(CATEGORIES_KEY, JSON.stringify(defaultCategories));
-    return defaultCategories;
-}
-
 function getProductsLocal() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) return JSON.parse(stored).map(migrateProduct);
@@ -157,12 +140,6 @@ function getBusinessLocal() {
     const stored = localStorage.getItem(BUSINESS_KEY);
     if (stored) return JSON.parse(stored);
     return defaultBusiness;
-}
-
-function getCategoriesLocal() {
-    const stored = localStorage.getItem(CATEGORIES_KEY);
-    if (stored) return JSON.parse(stored);
-    return defaultCategories;
 }
 
 function getBrandsLocal() {
@@ -205,7 +182,6 @@ function getAllLocal() {
     return {
         products: getProductsLocal(),
         business: getBusinessLocal(),
-        categories: getCategoriesLocal(),
         brands: getBrandsLocal(),
         orders: getOrdersLocal(),
         customers: getCustomersLocal(),
@@ -217,14 +193,12 @@ function getAllLocal() {
 
 let products = getProductsLocal();
 let business = getBusinessLocal();
-let categories = getCategoriesLocal();
 let brands = getBrandsLocal();
 
 async function initCatalog() {
     products = await loadProducts();
     business = await loadBusiness();
-    categories = await loadCategories();
-    return { products, business, categories };
+    return { products, business };
 }
 
 async function pushToGitHub(path, data, message) {
@@ -276,8 +250,6 @@ async function saveAndPublish() {
     results.push('Productos: ' + (r1.ok ? 'OK (' + allData.products.length + ')' : r1.error));
     const r2 = await pushToGitHub('data/business.json', allData.business, 'Update business info from admin panel');
     results.push('Negocio: ' + (r2.ok ? 'OK' : r2.error));
-    const r3 = await pushToGitHub('data/categories.json', allData.categories, 'Update categories from admin panel');
-    results.push('Categorías: ' + (r3.ok ? 'OK' : r3.error));
     return results;
 }
 
